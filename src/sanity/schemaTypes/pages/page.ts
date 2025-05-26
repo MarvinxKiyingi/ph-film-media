@@ -23,7 +23,9 @@ export const page = defineType({
   fields: [
     defineField({
       name: 'title',
+      title: 'Title',
       type: 'string',
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'slug',
@@ -31,6 +33,7 @@ export const page = defineType({
       options: {
         source: 'title',
       },
+      validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'blockList',
@@ -49,7 +52,7 @@ export const page = defineType({
   preview: {
     select: {
       title: 'title',
-      media: 'blockList.0.mediaCard.content.image.imageType.image',
+      media: 'blockList.0.mediaCard.content.image.mediaType.image',
       updatedAt: '_updatedAt',
     },
     prepare(selection) {

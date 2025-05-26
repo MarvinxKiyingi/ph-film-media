@@ -1,5 +1,5 @@
 export { mediaGallery } from './mediaGallery';
-export { imageType } from './imageType';
+export { mediaType } from './mediaType';
 export { linkType } from './linkType';
 export { richText } from './richText';
 export { seo } from './seo';

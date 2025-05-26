@@ -18,7 +18,7 @@ export const seo = defineType({
     defineField({
       name: 'socialImage',
       title: 'Social Share Image',
-      type: 'imageType',
+      type: 'mediaType',
     }),
   ],
 });

@@ -11,17 +11,16 @@ export const movieHero = defineType({
     defineField({
       name: 'mediaItems',
       title: 'Media Items',
-      type: 'imageType',
+      type: 'mediaType',
     }),
   ],
   preview: {
     select: {
-      title: 'title',
       media: 'mediaItems.image',
     },
-    prepare({ title, media }) {
+    prepare({ media }) {
       return {
-        title: title || 'Movie Hero',
+        title: 'Movie Hero',
         media: media || ImageIcon,
       };
     },

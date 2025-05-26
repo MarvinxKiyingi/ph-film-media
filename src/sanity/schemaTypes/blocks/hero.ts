@@ -1,4 +1,4 @@
-import { ImageIcon } from '@sanity/icons';
+import { ImagesIcon, ImageIcon } from '@sanity/icons';
 
 import { defineField, defineType } from 'sanity';
 
@@ -6,7 +6,7 @@ export const hero = defineType({
   name: 'hero',
   title: 'Hero',
   type: 'object',
-  icon: ImageIcon,
+  icon: ImagesIcon,
   fields: [
     defineField({
       name: 'mediaCard',
@@ -19,8 +19,8 @@ export const hero = defineType({
           title: 'Content',
           fields: [
             {
-              name: 'image',
-              type: 'imageType',
+              name: 'cardImage',
+              type: 'mediaType',
             },
             {
               name: 'title',
@@ -54,30 +54,45 @@ export const hero = defineType({
               type: 'string',
             },
             {
-              name: 'buttonLink',
-              title: 'Button Link',
-              type: 'linkType',
-            },
-            {
-              name: 'internalLink',
-              title: 'Internal Link',
+              name: 'internalButtonLink',
+              title: 'Button Link (Internal)',
               type: 'reference',
               to: [{ type: 'page' }],
             },
+            {
+              name: 'externalButtonLink',
+              title: 'Button Link (External)',
+              type: 'linkType',
+            },
           ],
+          preview: {
+            select: {
+              title: 'title',
+              media: 'cardImage.media',
+            },
+            prepare({ title, media }) {
+              return {
+                title: title || 'No title',
+                media: media || ImageIcon,
+              };
+            },
+          },
         },
       ],
+    }),
+    defineField({
+      name: 'logo',
+      title: 'Logo',
+      type: 'mediaType',
     }),
   ],
   preview: {
     select: {
-      title: 'mediaCard.content.title',
-      media: 'mediaCard.content.image.imageType.image',
-      updatedAt: '_updatedAt',
+      media: 'mediaCard.0.cardImage.media',
     },
-    prepare({ title, media }) {
+    prepare({ media }) {
       return {
-        title: title || 'Hero',
+        title: 'Hero',
         media: media || ImageIcon,
       };
     },

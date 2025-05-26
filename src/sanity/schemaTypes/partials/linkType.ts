@@ -22,12 +22,10 @@ export const linkType = defineType({
   preview: {
     select: {
       title: 'href',
-      updatedAt: '_updatedAt',
     },
-    prepare({ title, updatedAt }) {
+    prepare({ title }) {
       return {
-        title: title || 'href',
-        subtitle: `Last edited: ${updatedAt}`,
+        title: title || 'No link selected',
       };
     },
   },

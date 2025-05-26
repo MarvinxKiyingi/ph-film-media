@@ -14,7 +14,7 @@
 
 // Source: schema.json
 export type SanityImagePaletteSwatch = {
-  _type: "sanity.imagePaletteSwatch";
+  _type: 'sanity.imagePaletteSwatch';
   background?: string;
   foreground?: string;
   population?: number;
@@ -22,7 +22,7 @@ export type SanityImagePaletteSwatch = {
 };
 
 export type SanityImagePalette = {
-  _type: "sanity.imagePalette";
+  _type: 'sanity.imagePalette';
   darkMuted?: SanityImagePaletteSwatch;
   lightVibrant?: SanityImagePaletteSwatch;
   darkVibrant?: SanityImagePaletteSwatch;
@@ -33,7 +33,7 @@ export type SanityImagePalette = {
 };
 
 export type SanityImageDimensions = {
-  _type: "sanity.imageDimensions";
+  _type: 'sanity.imageDimensions';
   height?: number;
   width?: number;
   aspectRatio?: number;
@@ -41,7 +41,7 @@ export type SanityImageDimensions = {
 
 export type SanityFileAsset = {
   _id: string;
-  _type: "sanity.fileAsset";
+  _type: 'sanity.fileAsset';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -62,7 +62,7 @@ export type SanityFileAsset = {
 };
 
 export type Geopoint = {
-  _type: "geopoint";
+  _type: 'geopoint';
   lat?: number;
   lng?: number;
   alt?: number;
@@ -70,136 +70,152 @@ export type Geopoint = {
 
 export type Settings = {
   _id: string;
-  _type: "settings";
+  _type: 'settings';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   seo?: {
     title?: string;
     description?: string;
-    socialImage?: ImageType;
-    _type: "seo";
+    socialImage?: mediaType;
+    _type: 'seo';
   };
 };
 
 export type Header = {
   _id: string;
-  _type: "header";
+  _type: 'header';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  linkReference?: Array<{
-    linkLabel?: string;
-    page?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "page";
-    };
-    _type: "internalLink";
-    _key: string;
-  } | {
-    linkLabel?: string;
-    link?: LinkType;
-    _type: "externalLink";
-    _key: string;
-  }>;
+  linkReference?: Array<
+    | {
+        linkLabel?: string;
+        page?: {
+          _ref: string;
+          _type: 'reference';
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: 'page';
+        };
+        _type: 'internalLink';
+        _key: string;
+      }
+    | {
+        linkLabel?: string;
+        link?: LinkType;
+        _type: 'externalLink';
+        _key: string;
+      }
+  >;
 };
 
 export type Footer = {
   _id: string;
-  _type: "footer";
+  _type: 'footer';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   title?: string;
-  text?: Array<{
-    children?: Array<{
-      marks?: Array<string>;
-      text?: string;
-      _type: "span";
-      _key: string;
-    }>;
-    style?: "normal" | "h2" | "h3" | "blockquote";
-    listItem?: "bullet";
-    markDefs?: Array<{
-      _key: string;
-    } & LinkType>;
-    level?: number;
-    _type: "block";
-    _key: string;
-  } | {
-    _key: string;
-  } & ImageType>;
-  services?: Array<{
-    linkLabel?: string;
-    page?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "services";
-    };
-    _type: "footerShortText";
-    _key: string;
-  } | {
-    shortText?: string;
-    _type: "footerShortTextCustom";
-    _key: string;
-  }>;
+  text?: Array<
+    | {
+        children?: Array<{
+          marks?: Array<string>;
+          text?: string;
+          _type: 'span';
+          _key: string;
+        }>;
+        style?: 'normal' | 'h2' | 'h3' | 'blockquote';
+        listItem?: 'bullet';
+        markDefs?: Array<
+          {
+            _key: string;
+          } & LinkType
+        >;
+        level?: number;
+        _type: 'block';
+        _key: string;
+      }
+    | ({
+        _key: string;
+      } & mediaType)
+  >;
+  services?: Array<
+    | {
+        linkLabel?: string;
+        page?: {
+          _ref: string;
+          _type: 'reference';
+          _weak?: boolean;
+          [internalGroqTypeReferenceTo]?: 'services';
+        };
+        _type: 'footerShortText';
+        _key: string;
+      }
+    | {
+        shortText?: string;
+        _type: 'footerShortTextCustom';
+        _key: string;
+      }
+  >;
   rights?: string;
 };
 
 export type Seo = {
   _id: string;
-  _type: "seo";
+  _type: 'seo';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   title?: string;
   description?: string;
-  socialImage?: ImageType;
+  socialImage?: mediaType;
 };
 
-export type RichText = Array<{
-  children?: Array<{
-    marks?: Array<string>;
-    text?: string;
-    _type: "span";
-    _key: string;
-  }>;
-  style?: "normal" | "h2" | "h3" | "blockquote";
-  listItem?: "bullet";
-  markDefs?: Array<{
-    _key: string;
-  } & LinkType>;
-  level?: number;
-  _type: "block";
-  _key: string;
-} | {
-  _key: string;
-} & ImageType>;
+export type RichText = Array<
+  | {
+      children?: Array<{
+        marks?: Array<string>;
+        text?: string;
+        _type: 'span';
+        _key: string;
+      }>;
+      style?: 'normal' | 'h2' | 'h3' | 'blockquote';
+      listItem?: 'bullet';
+      markDefs?: Array<
+        {
+          _key: string;
+        } & LinkType
+      >;
+      level?: number;
+      _type: 'block';
+      _key: string;
+    }
+  | ({
+      _key: string;
+    } & mediaType)
+>;
 
 export type MediaGallery = {
-  _type: "mediaGallery";
+  _type: 'mediaGallery';
   mediaItems?: Array<{
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
     _key: string;
   }>;
 };
 
 export type Writers = {
   _id: string;
-  _type: "writers";
+  _type: 'writers';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -208,7 +224,7 @@ export type Writers = {
 
 export type Services = {
   _id: string;
-  _type: "services";
+  _type: 'services';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -217,7 +233,7 @@ export type Services = {
 
 export type Movies = {
   _id: string;
-  _type: "movies";
+  _type: 'movies';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -227,31 +243,31 @@ export type Movies = {
   duration?: string;
   languages?: Array<{
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: "languages";
+    [internalGroqTypeReferenceTo]?: 'languages';
   }>;
   director?: Array<{
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: "directors";
+    [internalGroqTypeReferenceTo]?: 'directors';
   }>;
   writers?: Array<{
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: "writers";
+    [internalGroqTypeReferenceTo]?: 'writers';
   }>;
   actors?: Array<{
     _ref: string;
-    _type: "reference";
+    _type: 'reference';
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: "actors";
+    [internalGroqTypeReferenceTo]?: 'actors';
   }>;
   rating?: number;
   ticketLabel?: string;
@@ -259,13 +275,13 @@ export type Movies = {
   buttonLabel?: string;
   buttonLink?: LinkType;
   trailer?: LinkType;
-  image?: ImageType;
-  moviePoster?: ImageType;
+  image?: mediaType;
+  moviePoster?: mediaType;
 };
 
 export type Languages = {
   _id: string;
-  _type: "languages";
+  _type: 'languages';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -274,7 +290,7 @@ export type Languages = {
 
 export type Directors = {
   _id: string;
-  _type: "directors";
+  _type: 'directors';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -283,7 +299,7 @@ export type Directors = {
 
 export type Actors = {
   _id: string;
-  _type: "actors";
+  _type: 'actors';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -291,61 +307,64 @@ export type Actors = {
 };
 
 export type MovieHero = {
-  _type: "movieHero";
-  mediaItems?: ImageType;
+  _type: 'movieHero';
+  mediaItems?: mediaType;
 };
 
 export type Hero = {
-  _type: "hero";
+  _type: 'hero';
   mediaCard?: Array<{
-    image?: ImageType;
+    image?: mediaType;
     title?: string;
     infoItems?: Array<{
       infoItemTitle?: string;
-      _type: "infoItem";
+      _type: 'infoItem';
       _key: string;
     }>;
     buttonLabel?: string;
     buttonLink?: LinkType;
     internalLink?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "page";
+      [internalGroqTypeReferenceTo]?: 'page';
     };
-    _type: "content";
+    _type: 'content';
     _key: string;
   }>;
 };
 
 export type Page = {
   _id: string;
-  _type: "page";
+  _type: 'page';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   title?: string;
   slug?: Slug;
-  blockList?: Array<{
-    _key: string;
-  } & Hero | {
-    _key: string;
-  } & MovieHero>;
+  blockList?: Array<
+    | ({
+        _key: string;
+      } & Hero)
+    | ({
+        _key: string;
+      } & MovieHero)
+  >;
   seo?: {
     title?: string;
     description?: string;
-    socialImage?: ImageType;
-    _type: "seo";
+    socialImage?: mediaType;
+    _type: 'seo';
   };
 };
 
 export type LinkType = {
-  _type: "linkType";
+  _type: 'linkType';
   href?: string;
 };
 
 export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
+  _type: 'sanity.imageCrop';
   top?: number;
   bottom?: number;
   left?: number;
@@ -353,7 +372,7 @@ export type SanityImageCrop = {
 };
 
 export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
+  _type: 'sanity.imageHotspot';
   x?: number;
   y?: number;
   height?: number;
@@ -362,7 +381,7 @@ export type SanityImageHotspot = {
 
 export type SanityImageAsset = {
   _id: string;
-  _type: "sanity.imageAsset";
+  _type: 'sanity.imageAsset';
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -384,14 +403,14 @@ export type SanityImageAsset = {
 };
 
 export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
+  _type: 'sanity.assetSourceData';
   name?: string;
   id?: string;
   url?: string;
 };
 
 export type SanityImageMetadata = {
-  _type: "sanity.imageMetadata";
+  _type: 'sanity.imageMetadata';
   location?: Geopoint;
   dimensions?: SanityImageDimensions;
   palette?: SanityImagePalette;
@@ -401,30 +420,58 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type ImageType = {
-  _type: "imageType";
+export type mediaType = {
+  _type: 'mediaType';
   image?: {
     asset?: {
       _ref: string;
-      _type: "reference";
+      _type: 'reference';
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: "image";
+    _type: 'image';
   };
 };
 
 export type Slug = {
-  _type: "slug";
+  _type: 'slug';
   current?: string;
   source?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Settings | Header | Footer | Seo | RichText | MediaGallery | Writers | Services | Movies | Languages | Directors | Actors | MovieHero | Hero | Page | LinkType | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | ImageType | Slug;
+export type AllSanitySchemaTypes =
+  | SanityImagePaletteSwatch
+  | SanityImagePalette
+  | SanityImageDimensions
+  | SanityFileAsset
+  | Geopoint
+  | Settings
+  | Header
+  | Footer
+  | Seo
+  | RichText
+  | MediaGallery
+  | Writers
+  | Services
+  | Movies
+  | Languages
+  | Directors
+  | Actors
+  | MovieHero
+  | Hero
+  | Page
+  | LinkType
+  | SanityImageCrop
+  | SanityImageHotspot
+  | SanityImageAsset
+  | SanityAssetSourceData
+  | SanityImageMetadata
+  | mediaType
+  | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/app/page.tsx
 // Variable: query
@@ -434,9 +481,9 @@ export type QueryResult = {
 } | null;
 
 // Query TypeMap
-import "@sanity/client";
-declare module "@sanity/client" {
+import '@sanity/client';
+declare module '@sanity/client' {
   interface SanityQueries {
-    "*[_type == \"page\" && slug.current == $slug][0]{title}": QueryResult;
+    '*[_type == "page" && slug.current == $slug][0]{title}': QueryResult;
   }
 }

@@ -1,4 +1,5 @@
-import { LinkIcon } from '@sanity/icons';
+import { LinkIcon, LaunchIcon } from '@sanity/icons';
+
 import { defineField, defineType } from 'sanity';
 
 export const header = defineType({
@@ -14,7 +15,7 @@ export const header = defineType({
       of: [
         {
           name: 'internalLink',
-          title: 'Internal Link',
+          title: 'Link (Internal)',
           type: 'object',
           description: 'Used to link to an existing page',
           fields: [
@@ -30,11 +31,25 @@ export const header = defineType({
               to: [{ type: 'page' }],
             },
           ],
+          preview: {
+            select: {
+              title: 'linkLabel',
+              pageTitle: 'page.title',
+            },
+            prepare({ title, pageTitle }) {
+              return {
+                title: title ? title : pageTitle || 'No label',
+                subtitle: pageTitle
+                  ? `Link to: ${pageTitle}`
+                  : 'No page selected',
+              };
+            },
+          },
         },
         {
           type: 'object',
           name: 'externalLink',
-          title: 'External Link',
+          title: 'Link (External)',
           description: 'Used to override the default label for the page',
           fields: [
             {
@@ -48,28 +63,28 @@ export const header = defineType({
               type: 'linkType',
             },
           ],
+          preview: {
+            select: {
+              title: 'linkLabel',
+              url: 'link.href',
+            },
+            prepare({ title, url }) {
+              return {
+                title: title || 'No label',
+                subtitle: url ? `Link to: ${url}` : 'No URL',
+                media: LaunchIcon,
+              };
+            },
+          },
         },
       ],
     }),
   ],
   preview: {
-    select: {
-      title: 'linkReference.0.internalLink.0.page.title',
-      media: 'linkReference.0.internalLink.0.page.mediaItems.0.image',
-      updatedAt: '_updatedAt',
-    },
-    prepare({ title, media, updatedAt }) {
-      const formattedDate = updatedAt
-        ? new Date(updatedAt).toLocaleDateString('en-US', {
-            year: 'numeric',
-            month: 'short',
-            day: 'numeric',
-          })
-        : 'No edits yet';
+    prepare() {
       return {
-        title: title || 'Navigation',
-        subtitle: `Last edited: ${formattedDate}`,
-        media: media || LinkIcon,
+        title: 'Navigation Items',
+        media: LinkIcon,
       };
     },
   },

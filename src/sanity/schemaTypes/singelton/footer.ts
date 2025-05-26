@@ -6,52 +6,89 @@ export const footer = defineType({
   title: 'Footer',
   type: 'document',
   icon: DoubleChevronDownIcon,
+  groups: [
+    {
+      name: 'text',
+      title: 'Text',
+    },
+    {
+      name: 'socialMedia',
+      title: 'Social Media',
+    },
+  ],
   fields: [
     defineField({
       name: 'title',
       title: 'Title',
       type: 'string',
+      group: 'text',
     }),
+
     defineField({
       name: 'text',
       type: 'richText',
       description: 'The text to display underneath the title.',
+      group: 'text',
+    }),
+    defineField({
+      name: 'socialMediaLinks',
+      title: 'Social Media Links',
+      description: 'The links to the social media pages.',
+      group: 'socialMedia',
+      type: 'array',
+      of: [{ type: 'linkType' }],
     }),
     defineField({
       name: 'services',
       title: 'Services',
       type: 'array',
+      group: 'text',
       of: [
         {
           type: 'object',
-          name: 'footerShortText',
-          title: 'Footer Short Text',
+          name: 'serviceReference',
+          title: 'Service Reference',
           fields: [
             {
-              name: 'linkLabel',
-              title: 'Link Label',
-              type: 'string',
-            },
-            {
-              name: 'page',
-              title: 'Page',
+              name: 'serviceItems',
+              title: 'Service Items',
               type: 'reference',
               to: [{ type: 'services' }],
             },
           ],
+          preview: {
+            select: {
+              title: 'serviceItems.service',
+            },
+            prepare({ title }) {
+              return {
+                title: title || 'No service selected',
+              };
+            },
+          },
         },
         {
           type: 'object',
-          name: 'footerShortTextCustom',
-          title: 'Footer Short Text Custom',
-          description: 'Custom services short text short. ',
+          name: 'customServiceLabel',
+          title: 'Custom Service Label',
+          description: 'Custom services label. ',
           fields: [
             {
-              name: 'shortText',
-              title: 'Short Text',
+              name: 'label',
+              title: 'Label',
               type: 'string',
             },
           ],
+          preview: {
+            select: {
+              title: 'label',
+            },
+            prepare({ title }) {
+              return {
+                title: title || 'No label',
+              };
+            },
+          },
         },
       ],
     }),
@@ -61,6 +98,7 @@ export const footer = defineType({
       title: 'Rights',
       type: 'string',
       description: 'The rights text to display in the footer.',
+      group: 'text',
     }),
   ],
 

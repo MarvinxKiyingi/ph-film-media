@@ -54,7 +54,7 @@ export const richText = defineType({
     defineArrayMember({
       icon: ImageIcon,
       title: 'Image',
-      type: 'imageType',
+      type: 'mediaType',
     }),
   ],
 });

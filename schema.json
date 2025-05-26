@@ -383,7 +383,7 @@
               "type": "objectAttribute",
               "value": {
                 "type": "inline",
-                "name": "imageType"
+                "name": "mediaType"
               },
               "optional": true
             },
@@ -745,7 +745,7 @@
                 },
                 "rest": {
                   "type": "inline",
-                  "name": "imageType"
+                  "name": "mediaType"
                 }
               }
             ]
@@ -917,7 +917,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "imageType"
+          "name": "mediaType"
         },
         "optional": true
       }
@@ -1080,7 +1080,7 @@
             },
             "rest": {
               "type": "inline",
-              "name": "imageType"
+              "name": "mediaType"
             }
           }
         ]
@@ -1570,7 +1570,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "imageType"
+          "name": "mediaType"
         },
         "optional": true
       },
@@ -1578,7 +1578,7 @@
         "type": "objectAttribute",
         "value": {
           "type": "inline",
-          "name": "imageType"
+          "name": "mediaType"
         },
         "optional": true
       }
@@ -1733,7 +1733,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "inline",
-            "name": "imageType"
+            "name": "mediaType"
           },
           "optional": true
         }
@@ -1764,7 +1764,7 @@
                   "type": "objectAttribute",
                   "value": {
                     "type": "inline",
-                    "name": "imageType"
+                    "name": "mediaType"
                   },
                   "optional": true
                 },
@@ -1998,7 +1998,7 @@
               "type": "objectAttribute",
               "value": {
                 "type": "inline",
-                "name": "imageType"
+                "name": "mediaType"
               },
               "optional": true
             },
@@ -2376,7 +2376,7 @@
     }
   },
   {
-    "name": "imageType",
+    "name": "mediaType",
     "type": "type",
     "value": {
       "type": "object",
@@ -2385,7 +2385,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "imageType"
+            "value": "mediaType"
           }
         },
         "image": {

@@ -1,11 +1,11 @@
-import { FaceHappyIcon } from '@sanity/icons';
+import { UserIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
 
 export const directors = defineType({
   name: 'directors',
   title: 'Directors',
   type: 'document',
-  icon: FaceHappyIcon,
+  icon: UserIcon,
   fields: [
     defineField({
       name: 'director',
