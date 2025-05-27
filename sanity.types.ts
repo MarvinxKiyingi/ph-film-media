@@ -14,7 +14,7 @@
 
 // Source: schema.json
 export type SanityImagePaletteSwatch = {
-  _type: 'sanity.imagePaletteSwatch';
+  _type: "sanity.imagePaletteSwatch";
   background?: string;
   foreground?: string;
   population?: number;
@@ -22,7 +22,7 @@ export type SanityImagePaletteSwatch = {
 };
 
 export type SanityImagePalette = {
-  _type: 'sanity.imagePalette';
+  _type: "sanity.imagePalette";
   darkMuted?: SanityImagePaletteSwatch;
   lightVibrant?: SanityImagePaletteSwatch;
   darkVibrant?: SanityImagePaletteSwatch;
@@ -33,7 +33,7 @@ export type SanityImagePalette = {
 };
 
 export type SanityImageDimensions = {
-  _type: 'sanity.imageDimensions';
+  _type: "sanity.imageDimensions";
   height?: number;
   width?: number;
   aspectRatio?: number;
@@ -41,7 +41,7 @@ export type SanityImageDimensions = {
 
 export type SanityFileAsset = {
   _id: string;
-  _type: 'sanity.fileAsset';
+  _type: "sanity.fileAsset";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -62,7 +62,7 @@ export type SanityFileAsset = {
 };
 
 export type Geopoint = {
-  _type: 'geopoint';
+  _type: "geopoint";
   lat?: number;
   lng?: number;
   alt?: number;
@@ -70,170 +70,270 @@ export type Geopoint = {
 
 export type Settings = {
   _id: string;
-  _type: 'settings';
+  _type: "settings";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   seo?: {
     title?: string;
     description?: string;
-    socialImage?: mediaType;
-    _type: 'seo';
+    socialImage?: MediaType;
+    _type: "seo";
   };
 };
 
 export type Header = {
   _id: string;
-  _type: 'header';
+  _type: "header";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  linkReference?: Array<
-    | {
-        linkLabel?: string;
-        page?: {
-          _ref: string;
-          _type: 'reference';
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: 'page';
-        };
-        _type: 'internalLink';
-        _key: string;
-      }
-    | {
-        linkLabel?: string;
-        link?: LinkType;
-        _type: 'externalLink';
-        _key: string;
-      }
-  >;
+  linkReference?: Array<{
+    linkLabel?: string;
+    page?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "page";
+    };
+    _type: "internalLink";
+    _key: string;
+  } | {
+    linkLabel?: string;
+    link?: LinkType;
+    _type: "externalLink";
+    _key: string;
+  }>;
 };
 
 export type Footer = {
   _id: string;
-  _type: 'footer';
+  _type: "footer";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   title?: string;
-  text?: Array<
-    | {
-        children?: Array<{
-          marks?: Array<string>;
-          text?: string;
-          _type: 'span';
-          _key: string;
-        }>;
-        style?: 'normal' | 'h2' | 'h3' | 'blockquote';
-        listItem?: 'bullet';
-        markDefs?: Array<
-          {
-            _key: string;
-          } & LinkType
-        >;
-        level?: number;
-        _type: 'block';
-        _key: string;
-      }
-    | ({
-        _key: string;
-      } & mediaType)
-  >;
-  services?: Array<
-    | {
-        linkLabel?: string;
-        page?: {
-          _ref: string;
-          _type: 'reference';
-          _weak?: boolean;
-          [internalGroqTypeReferenceTo]?: 'services';
-        };
-        _type: 'footerShortText';
-        _key: string;
-      }
-    | {
-        shortText?: string;
-        _type: 'footerShortTextCustom';
-        _key: string;
-      }
-  >;
+  text?: Array<{
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "normal" | "h2" | "h3" | "blockquote";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      _key: string;
+    } & LinkType>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  } | {
+    _key: string;
+  } & MediaType>;
+  socialMediaLinks?: Array<{
+    _key: string;
+  } & LinkType>;
+  services?: Array<{
+    serviceItems?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "services";
+    };
+    _type: "serviceReference";
+    _key: string;
+  } | {
+    label?: string;
+    _type: "customServiceLabel";
+    _key: string;
+  }>;
   rights?: string;
 };
 
 export type Seo = {
   _id: string;
-  _type: 'seo';
+  _type: "seo";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   title?: string;
   description?: string;
-  socialImage?: mediaType;
+  socialImage?: MediaType;
 };
 
-export type RichText = Array<
-  | {
-      children?: Array<{
-        marks?: Array<string>;
-        text?: string;
-        _type: 'span';
-        _key: string;
-      }>;
-      style?: 'normal' | 'h2' | 'h3' | 'blockquote';
-      listItem?: 'bullet';
-      markDefs?: Array<
-        {
-          _key: string;
-        } & LinkType
-      >;
-      level?: number;
-      _type: 'block';
-      _key: string;
-    }
-  | ({
-      _key: string;
-    } & mediaType)
->;
+export type RichText = Array<{
+  children?: Array<{
+    marks?: Array<string>;
+    text?: string;
+    _type: "span";
+    _key: string;
+  }>;
+  style?: "normal" | "h2" | "h3" | "blockquote";
+  listItem?: "bullet";
+  markDefs?: Array<{
+    _key: string;
+  } & LinkType>;
+  level?: number;
+  _type: "block";
+  _key: string;
+} | {
+  _key: string;
+} & MediaType>;
 
 export type MediaGallery = {
-  _type: 'mediaGallery';
+  _type: "mediaGallery";
   mediaItems?: Array<{
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: 'image';
+    _type: "image";
     _key: string;
   }>;
 };
 
-export type Writers = {
-  _id: string;
-  _type: 'writers';
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  writer?: string;
-};
-
 export type Services = {
   _id: string;
-  _type: 'services';
+  _type: "services";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   service?: string;
 };
 
+export type Languages = {
+  _id: string;
+  _type: "languages";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  language?: string;
+};
+
+export type MovieList = {
+  _type: "movieList";
+  movies?: Array<{
+    movie?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "movies";
+    };
+    _type: "movie";
+    _key: string;
+  }>;
+};
+
+export type MovieHero = {
+  _type: "movieHero";
+  mediaItems?: MediaType;
+};
+
+export type MediaCarousel = {
+  _type: "mediaCarousel";
+  carouselItems?: Array<{
+    mediaItem?: MediaType;
+    title?: string;
+    _type: "carouselItem";
+    _key: string;
+  }>;
+};
+
+export type LogoCarousel = {
+  _type: "logoCarousel";
+  logoItems?: Array<{
+    mediaItem?: MediaType;
+    _type: "logoItem";
+    _key: string;
+  }>;
+};
+
+export type ImageWithText = {
+  _type: "imageWithText";
+  mediaItem?: MediaType;
+  mediaTitle?: string;
+  textSection?: Array<{
+    title?: string;
+    richText?: RichText;
+    _type: "textItem";
+    _key: string;
+  } | {
+    title?: string;
+    services?: Array<{
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      _key: string;
+      [internalGroqTypeReferenceTo]?: "services";
+    }>;
+    _type: "servicesList";
+    _key: string;
+  }>;
+};
+
+export type Hero = {
+  _type: "hero";
+  mediaCard?: Array<{
+    cardImage?: MediaType;
+    title?: string;
+    infoItems?: Array<{
+      infoItemTitle?: string;
+      _type: "infoItem";
+      _key: string;
+    }>;
+    buttonLabel?: string;
+    internalButtonLink?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "page";
+    };
+    externalButtonLink?: LinkType;
+    _type: "content";
+    _key: string;
+  }>;
+  logo?: MediaType;
+};
+
+export type Page = {
+  _id: string;
+  _type: "page";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  slug?: Slug;
+  blockList?: Array<{
+    _key: string;
+  } & Hero | {
+    _key: string;
+  } & ImageWithText | {
+    _key: string;
+  } & LogoCarousel | {
+    _key: string;
+  } & MediaCarousel | {
+    _key: string;
+  } & MovieHero | {
+    _key: string;
+  } & MovieList>;
+  seo?: {
+    title?: string;
+    description?: string;
+    socialImage?: MediaType;
+    _type: "seo";
+  };
+};
+
 export type Movies = {
   _id: string;
-  _type: 'movies';
+  _type: "movies";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -243,31 +343,52 @@ export type Movies = {
   duration?: string;
   languages?: Array<{
     _ref: string;
-    _type: 'reference';
+    _type: "reference";
     _weak?: boolean;
     _key: string;
-    [internalGroqTypeReferenceTo]?: 'languages';
+    [internalGroqTypeReferenceTo]?: "languages";
   }>;
   director?: Array<{
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
+    directorItems?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "directors";
+    };
+    _type: "directorReference";
     _key: string;
-    [internalGroqTypeReferenceTo]?: 'directors';
+  } | {
+    text?: RichText;
+    _type: "customDirectorText";
+    _key: string;
   }>;
   writers?: Array<{
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
+    writerItem?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "writers";
+    };
+    _type: "writerReference";
     _key: string;
-    [internalGroqTypeReferenceTo]?: 'writers';
+  } | {
+    text?: RichText;
+    _type: "customWriterText";
+    _key: string;
   }>;
   actors?: Array<{
-    _ref: string;
-    _type: 'reference';
-    _weak?: boolean;
+    actorItem?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "actors";
+    };
+    _type: "actorReference";
     _key: string;
-    [internalGroqTypeReferenceTo]?: 'actors';
+  } | {
+    text?: RichText;
+    _type: "customActorText";
+    _key: string;
   }>;
   rating?: number;
   ticketLabel?: string;
@@ -275,96 +396,44 @@ export type Movies = {
   buttonLabel?: string;
   buttonLink?: LinkType;
   trailer?: LinkType;
-  image?: mediaType;
-  moviePoster?: mediaType;
-};
-
-export type Languages = {
-  _id: string;
-  _type: 'languages';
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  language?: string;
-};
-
-export type Directors = {
-  _id: string;
-  _type: 'directors';
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  director?: string;
+  movieBanner?: MediaType;
+  moviePoster?: MediaType;
 };
 
 export type Actors = {
   _id: string;
-  _type: 'actors';
+  _type: "actors";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
   actor?: string;
 };
 
-export type MovieHero = {
-  _type: 'movieHero';
-  mediaItems?: mediaType;
-};
-
-export type Hero = {
-  _type: 'hero';
-  mediaCard?: Array<{
-    image?: mediaType;
-    title?: string;
-    infoItems?: Array<{
-      infoItemTitle?: string;
-      _type: 'infoItem';
-      _key: string;
-    }>;
-    buttonLabel?: string;
-    buttonLink?: LinkType;
-    internalLink?: {
-      _ref: string;
-      _type: 'reference';
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'page';
-    };
-    _type: 'content';
-    _key: string;
-  }>;
-};
-
-export type Page = {
+export type Writers = {
   _id: string;
-  _type: 'page';
+  _type: "writers";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
-  slug?: Slug;
-  blockList?: Array<
-    | ({
-        _key: string;
-      } & Hero)
-    | ({
-        _key: string;
-      } & MovieHero)
-  >;
-  seo?: {
-    title?: string;
-    description?: string;
-    socialImage?: mediaType;
-    _type: 'seo';
-  };
+  writer?: string;
+};
+
+export type Directors = {
+  _id: string;
+  _type: "directors";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  director?: string;
 };
 
 export type LinkType = {
-  _type: 'linkType';
+  _type: "linkType";
   href?: string;
 };
 
 export type SanityImageCrop = {
-  _type: 'sanity.imageCrop';
+  _type: "sanity.imageCrop";
   top?: number;
   bottom?: number;
   left?: number;
@@ -372,7 +441,7 @@ export type SanityImageCrop = {
 };
 
 export type SanityImageHotspot = {
-  _type: 'sanity.imageHotspot';
+  _type: "sanity.imageHotspot";
   x?: number;
   y?: number;
   height?: number;
@@ -381,7 +450,7 @@ export type SanityImageHotspot = {
 
 export type SanityImageAsset = {
   _id: string;
-  _type: 'sanity.imageAsset';
+  _type: "sanity.imageAsset";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -403,14 +472,14 @@ export type SanityImageAsset = {
 };
 
 export type SanityAssetSourceData = {
-  _type: 'sanity.assetSourceData';
+  _type: "sanity.assetSourceData";
   name?: string;
   id?: string;
   url?: string;
 };
 
 export type SanityImageMetadata = {
-  _type: 'sanity.imageMetadata';
+  _type: "sanity.imageMetadata";
   location?: Geopoint;
   dimensions?: SanityImageDimensions;
   palette?: SanityImagePalette;
@@ -420,70 +489,97 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type mediaType = {
-  _type: 'mediaType';
-  image?: {
+export type MediaType = {
+  _type: "mediaType";
+  media?: {
     asset?: {
       _ref: string;
-      _type: 'reference';
+      _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: 'sanity.imageAsset';
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
     };
     media?: unknown;
     hotspot?: SanityImageHotspot;
     crop?: SanityImageCrop;
     alt?: string;
-    _type: 'image';
+    _type: "image";
   };
 };
 
 export type Slug = {
-  _type: 'slug';
+  _type: "slug";
   current?: string;
   source?: string;
 };
 
-export type AllSanitySchemaTypes =
-  | SanityImagePaletteSwatch
-  | SanityImagePalette
-  | SanityImageDimensions
-  | SanityFileAsset
-  | Geopoint
-  | Settings
-  | Header
-  | Footer
-  | Seo
-  | RichText
-  | MediaGallery
-  | Writers
-  | Services
-  | Movies
-  | Languages
-  | Directors
-  | Actors
-  | MovieHero
-  | Hero
-  | Page
-  | LinkType
-  | SanityImageCrop
-  | SanityImageHotspot
-  | SanityImageAsset
-  | SanityAssetSourceData
-  | SanityImageMetadata
-  | mediaType
-  | Slug;
+export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Settings | Header | Footer | Seo | RichText | MediaGallery | Services | Languages | MovieList | MovieHero | MediaCarousel | LogoCarousel | ImageWithText | Hero | Page | Movies | Actors | Writers | Directors | LinkType | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | MediaType | Slug;
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./src/app/page.tsx
-// Variable: query
-// Query: *[_type == "page" && slug.current == $slug][0]{title}
-export type QueryResult = {
+// Source: ./src/sanity/lib/queries.ts
+// Variable: settingsQuery
+// Query: *[_type == "settings"][0]{    _id,    title,    description,    image {      _type,      asset    }  }
+export type SettingsQueryResult = {
+  _id: string;
+  title: null;
+  description: null;
+  image: null;
+} | null;
+// Variable: fetchHome
+// Query: *[_type == "page" && slug.current == '/'][0]{  _id,  title,  slug,  blockList[],  seo {    title,    description,    image {      asset->{        _id,        url      }    }  }}
+export type FetchHomeResult = {
+  _id: string;
   title: string | null;
+  slug: Slug | null;
+  blockList: Array<{
+    _key: string;
+  } & Hero | {
+    _key: string;
+  } & ImageWithText | {
+    _key: string;
+  } & LogoCarousel | {
+    _key: string;
+  } & MediaCarousel | {
+    _key: string;
+  } & MovieHero | {
+    _key: string;
+  } & MovieList> | null;
+  seo: {
+    title: string | null;
+    description: string | null;
+    image: null;
+  } | null;
+} | null;
+// Variable: fetchPage
+// Query: *[_type == "page" && slug.current == $slug][0]{    _id,    title,    slug,    blockList[],    seo {      title,      description,      image {        asset->{          _id,          url        }      }    }  }
+export type FetchPageResult = {
+  _id: string;
+  title: string | null;
+  slug: Slug | null;
+  blockList: Array<{
+    _key: string;
+  } & Hero | {
+    _key: string;
+  } & ImageWithText | {
+    _key: string;
+  } & LogoCarousel | {
+    _key: string;
+  } & MediaCarousel | {
+    _key: string;
+  } & MovieHero | {
+    _key: string;
+  } & MovieList> | null;
+  seo: {
+    title: string | null;
+    description: string | null;
+    image: null;
+  } | null;
 } | null;
 
 // Query TypeMap
-import '@sanity/client';
-declare module '@sanity/client' {
+import "@sanity/client";
+declare module "@sanity/client" {
   interface SanityQueries {
-    '*[_type == "page" && slug.current == $slug][0]{title}': QueryResult;
+    "\n  *[_type == \"settings\"][0]{\n    _id,\n    title,\n    description,\n    image {\n      _type,\n      asset\n    }\n  }\n  ": SettingsQueryResult;
+    "\n*[_type == \"page\" && slug.current == '/'][0]{\n  _id,\n  title,\n  slug,\n  blockList[],\n  seo {\n    title,\n    description,\n    image {\n      asset->{\n        _id,\n        url\n      }\n    }\n  }\n}\n": FetchHomeResult;
+    "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    blockList[],\n    seo {\n      title,\n      description,\n      image {\n        asset->{\n          _id,\n          url\n        }\n      }\n    }\n  }\n  ": FetchPageResult;
   }
 }

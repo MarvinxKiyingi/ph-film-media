@@ -1,32 +1,24 @@
-// ./src/app/[slug]/page.tsx
-
-import { defineQuery } from 'next-sanity';
 import { draftMode } from 'next/headers';
 import { client } from '@/sanity/lib/client';
+import { fetchHome } from '@/sanity/lib/queries';
+import { token } from '@/sanity/lib/token';
+import { generateMetadata } from '@/utils/generateMetadata';
 
-const query = defineQuery(
-  `*[_type == "page" && slug.current == $slug][0]{title}`
-);
+export { generateMetadata };
 
-export default async function Page({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
-  const { slug } = await params;
+export default async function HomePage() {
   const { isEnabled } = await draftMode();
-
   const data = await client.fetch(
-    query,
-    { slug },
+    fetchHome,
+    { slug: '/' },
     isEnabled
       ? {
           perspective: 'previewDrafts',
           useCdn: false,
           stega: true,
+          token: token,
         }
       : undefined
   );
-
-  return <h1>{data.title}</h1>;
+  return <h1>{data?.title || 'Home'}</h1>;
 }
