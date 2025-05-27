@@ -20,5 +20,5 @@ export default async function HomePage() {
         }
       : undefined
   );
-  return <h1>{data?.title || 'Home'}</h1>;
+  return <h1 className=''>{data?.title || 'Home'}</h1>;
 }

@@ -6,6 +6,12 @@ export const header = defineType({
   title: 'Header',
   type: 'document',
   icon: LinkIcon,
+  groups: [
+    {
+      name: 'socialMedia',
+      title: 'Social Media',
+    },
+  ],
   fields: [
     defineField({
       name: 'linkReference',
@@ -79,6 +85,15 @@ export const header = defineType({
           },
         },
       ],
+    }),
+    defineField({
+      name: 'socialMediaLinks',
+      title: 'Social Media Links',
+      description: 'The links to the social media pages.',
+      group: 'socialMedia',
+      type: 'array',
+      of: [{ type: 'linkType' }],
+      validation: (Rule) => Rule.max(5),
     }),
   ],
   preview: {

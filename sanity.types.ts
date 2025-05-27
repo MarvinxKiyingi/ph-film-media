@@ -104,6 +104,9 @@ export type Header = {
     _type: "externalLink";
     _key: string;
   }>;
+  socialMediaLinks?: Array<{
+    _key: string;
+  } & LinkType>;
 };
 
 export type Footer = {

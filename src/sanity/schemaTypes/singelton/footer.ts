@@ -37,12 +37,14 @@ export const footer = defineType({
       group: 'socialMedia',
       type: 'array',
       of: [{ type: 'linkType' }],
+      validation: (Rule) => Rule.max(3),
     }),
     defineField({
       name: 'services',
       title: 'Services',
       type: 'array',
       group: 'text',
+      validation: (Rule) => Rule.max(4),
       of: [
         {
           type: 'object',
