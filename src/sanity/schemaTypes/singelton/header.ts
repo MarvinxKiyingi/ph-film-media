@@ -93,7 +93,7 @@ export const header = defineType({
       group: 'socialMedia',
       type: 'array',
       of: [{ type: 'linkType' }],
-      validation: (Rule) => Rule.max(5),
+      validation: (Rule) => Rule.max(3),
     }),
   ],
   preview: {

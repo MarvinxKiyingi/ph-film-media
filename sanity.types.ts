@@ -13,61 +13,6 @@
  */
 
 // Source: schema.json
-export type SanityImagePaletteSwatch = {
-  _type: "sanity.imagePaletteSwatch";
-  background?: string;
-  foreground?: string;
-  population?: number;
-  title?: string;
-};
-
-export type SanityImagePalette = {
-  _type: "sanity.imagePalette";
-  darkMuted?: SanityImagePaletteSwatch;
-  lightVibrant?: SanityImagePaletteSwatch;
-  darkVibrant?: SanityImagePaletteSwatch;
-  vibrant?: SanityImagePaletteSwatch;
-  dominant?: SanityImagePaletteSwatch;
-  lightMuted?: SanityImagePaletteSwatch;
-  muted?: SanityImagePaletteSwatch;
-};
-
-export type SanityImageDimensions = {
-  _type: "sanity.imageDimensions";
-  height?: number;
-  width?: number;
-  aspectRatio?: number;
-};
-
-export type SanityFileAsset = {
-  _id: string;
-  _type: "sanity.fileAsset";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  originalFilename?: string;
-  label?: string;
-  title?: string;
-  description?: string;
-  altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
-  uploadId?: string;
-  path?: string;
-  url?: string;
-  source?: SanityAssetSourceData;
-};
-
-export type Geopoint = {
-  _type: "geopoint";
-  lat?: number;
-  lng?: number;
-  alt?: number;
-};
-
 export type Settings = {
   _id: string;
   _type: "settings";
@@ -435,12 +380,47 @@ export type LinkType = {
   href?: string;
 };
 
-export type SanityImageCrop = {
-  _type: "sanity.imageCrop";
-  top?: number;
-  bottom?: number;
-  left?: number;
-  right?: number;
+export type MediaType = {
+  _type: "mediaType";
+  media?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+};
+
+export type SanityImagePaletteSwatch = {
+  _type: "sanity.imagePaletteSwatch";
+  background?: string;
+  foreground?: string;
+  population?: number;
+  title?: string;
+};
+
+export type SanityImagePalette = {
+  _type: "sanity.imagePalette";
+  darkMuted?: SanityImagePaletteSwatch;
+  lightVibrant?: SanityImagePaletteSwatch;
+  darkVibrant?: SanityImagePaletteSwatch;
+  vibrant?: SanityImagePaletteSwatch;
+  dominant?: SanityImagePaletteSwatch;
+  lightMuted?: SanityImagePaletteSwatch;
+  muted?: SanityImagePaletteSwatch;
+};
+
+export type SanityImageDimensions = {
+  _type: "sanity.imageDimensions";
+  height?: number;
+  width?: number;
+  aspectRatio?: number;
 };
 
 export type SanityImageHotspot = {
@@ -449,6 +429,36 @@ export type SanityImageHotspot = {
   y?: number;
   height?: number;
   width?: number;
+};
+
+export type SanityImageCrop = {
+  _type: "sanity.imageCrop";
+  top?: number;
+  bottom?: number;
+  left?: number;
+  right?: number;
+};
+
+export type SanityFileAsset = {
+  _id: string;
+  _type: "sanity.fileAsset";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
+  uploadId?: string;
+  path?: string;
+  url?: string;
+  source?: SanityAssetSourceData;
 };
 
 export type SanityImageAsset = {
@@ -474,13 +484,6 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
-  name?: string;
-  id?: string;
-  url?: string;
-};
-
 export type SanityImageMetadata = {
   _type: "sanity.imageMetadata";
   location?: Geopoint;
@@ -492,21 +495,11 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type MediaType = {
-  _type: "mediaType";
-  media?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  };
+export type Geopoint = {
+  _type: "geopoint";
+  lat?: number;
+  lng?: number;
+  alt?: number;
 };
 
 export type Slug = {
@@ -515,21 +508,111 @@ export type Slug = {
   source?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Settings | Header | Footer | Seo | RichText | MediaGallery | Services | Languages | MovieList | MovieHero | MediaCarousel | LogoCarousel | ImageWithText | Hero | Page | Movies | Actors | Writers | Directors | LinkType | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | MediaType | Slug;
+export type SanityAssetSourceData = {
+  _type: "sanity.assetSourceData";
+  name?: string;
+  id?: string;
+  url?: string;
+};
+
+export type AllSanitySchemaTypes = Settings | Header | Footer | Seo | RichText | MediaGallery | Services | Languages | MovieList | MovieHero | MediaCarousel | LogoCarousel | ImageWithText | Hero | Page | Movies | Actors | Writers | Directors | LinkType | MediaType | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: settingsQuery
-// Query: *[_type == "settings"][0]{    _id,    title,    description,    image {      _type,      asset    }  }
+// Query: *[_type == "settings"][0]{      _id,      _type,      title,      description,      image {        _type,        _id,        asset      }    }
 export type SettingsQueryResult = {
   _id: string;
+  _type: "settings";
   title: null;
   description: null;
   image: null;
 } | null;
+// Variable: fetchHeader
+// Query: *[_type == "header"][0]{   _id,   _type,  linkReference[]{    _key,    _type,    _id,    // For internal links    _type == "internalLink" => {      _type,      page->{        _id,        _type,        title,        slug      }    },    // For external links    _type == "externalLink" => {      _type,      linkLabel,      link{        _type,        _id,        href      }    }  },  socialMediaLinks[]{    _key,    _type,    _id,    href,    title  }}
+export type FetchHeaderResult = {
+  _id: string;
+  _type: "header";
+  linkReference: Array<{
+    _key: string;
+    _type: "externalLink";
+    _id: null;
+    linkLabel: string | null;
+    link: {
+      _type: "linkType";
+      _id: null;
+      href: string | null;
+    } | null;
+  } | {
+    _key: string;
+    _type: "internalLink";
+    _id: null;
+    page: {
+      _id: string;
+      _type: "page";
+      title: string | null;
+      slug: Slug | null;
+    } | null;
+  }> | null;
+  socialMediaLinks: Array<{
+    _key: string;
+    _type: "linkType";
+    _id: null;
+    href: string | null;
+    title: null;
+  }> | null;
+} | null;
+// Variable: fetchFooter
+// Query: *[_type == "footer"][0]{    _id,    _type,    title,    text[],    socialMediaLinks[]{      _key,      _type,      _id,      href,    },    services[]{      _key,      _type,      _id,      // For serviceReference      _type == "serviceReference" => {        _type,        _id,        serviceItems->{          _id,          _type,          service        }      },      // For customServiceLabel      _type == "customServiceLabel" => {        _type,        _id,        label      }    },    rights  }
+export type FetchFooterResult = {
+  _id: string;
+  _type: "footer";
+  title: string | null;
+  text: Array<{
+    _key: string;
+  } & MediaType | {
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h2" | "h3" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      _key: string;
+    } & LinkType>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  socialMediaLinks: Array<{
+    _key: string;
+    _type: "linkType";
+    _id: null;
+    href: string | null;
+  }> | null;
+  services: Array<{
+    _key: string;
+    _type: "customServiceLabel";
+    _id: null;
+    label: string | null;
+  } | {
+    _key: string;
+    _type: "serviceReference";
+    _id: null;
+    serviceItems: {
+      _id: string;
+      _type: "services";
+      service: string | null;
+    } | null;
+  }> | null;
+  rights: string | null;
+} | null;
 // Variable: fetchHome
-// Query: *[_type == "page" && slug.current == '/'][0]{  _id,  title,  slug,  blockList[],  seo {    title,    description,    image {      asset->{        _id,        url      }    }  }}
+// Query: *[_type == "page" && slug.current == '/'][0]{  _id,  _type,  title,  slug,  blockList[],  seo {    title,    description,    image {      asset->{        _id,        url      }    }  }}
 export type FetchHomeResult = {
   _id: string;
+  _type: "page";
   title: string | null;
   slug: Slug | null;
   blockList: Array<{
@@ -552,9 +635,10 @@ export type FetchHomeResult = {
   } | null;
 } | null;
 // Variable: fetchPage
-// Query: *[_type == "page" && slug.current == $slug][0]{    _id,    title,    slug,    blockList[],    seo {      title,      description,      image {        asset->{          _id,          url        }      }    }  }
+// Query: *[_type == "page" && slug.current == $slug][0]{    _id,    _type,    title,    slug,    blockList[],    seo {      title,      description,      image {        asset->{          _id,          url        }      }    }  }
 export type FetchPageResult = {
   _id: string;
+  _type: "page";
   title: string | null;
   slug: Slug | null;
   blockList: Array<{
@@ -581,8 +665,10 @@ export type FetchPageResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type == \"settings\"][0]{\n    _id,\n    title,\n    description,\n    image {\n      _type,\n      asset\n    }\n  }\n  ": SettingsQueryResult;
-    "\n*[_type == \"page\" && slug.current == '/'][0]{\n  _id,\n  title,\n  slug,\n  blockList[],\n  seo {\n    title,\n    description,\n    image {\n      asset->{\n        _id,\n        url\n      }\n    }\n  }\n}\n": FetchHomeResult;
-    "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    blockList[],\n    seo {\n      title,\n      description,\n      image {\n        asset->{\n          _id,\n          url\n        }\n      }\n    }\n  }\n  ": FetchPageResult;
+    "\n    *[_type == \"settings\"][0]{\n      _id,\n      _type,\n      title,\n      description,\n      image {\n        _type,\n        _id,\n        asset\n      }\n    }\n    ": SettingsQueryResult;
+    "\n *[_type == \"header\"][0]{\n   _id,\n   _type,\n  linkReference[]{\n    _key,\n    _type,\n    _id,\n    // For internal links\n    _type == \"internalLink\" => {\n      _type,\n      page->{\n        _id,\n        _type,\n        title,\n        slug\n      }\n    },\n    // For external links\n    _type == \"externalLink\" => {\n      _type,\n      linkLabel,\n      link{\n        _type,\n        _id,\n        href\n      }\n    }\n  },\n  socialMediaLinks[]{\n    _key,\n    _type,\n    _id,\n    href,\n    title\n  }\n}\n": FetchHeaderResult;
+    "\n  *[_type == \"footer\"][0]{\n    _id,\n    _type,\n    title,\n    text[],\n    socialMediaLinks[]{\n      _key,\n      _type,\n      _id,\n      href,\n    },\n    services[]{\n      _key,\n      _type,\n      _id,\n      // For serviceReference\n      _type == \"serviceReference\" => {\n        _type,\n        _id,\n        serviceItems->{\n          _id,\n          _type,\n          service\n        }\n      },\n      // For customServiceLabel\n      _type == \"customServiceLabel\" => {\n        _type,\n        _id,\n        label\n      }\n    },\n    rights\n  }\n": FetchFooterResult;
+    "\n*[_type == \"page\" && slug.current == '/'][0]{\n  _id,\n  _type,\n  title,\n  slug,\n  blockList[],\n  seo {\n    title,\n    description,\n    image {\n      asset->{\n        _id,\n        url\n      }\n    }\n  }\n}\n": FetchHomeResult;
+    "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    slug,\n    blockList[],\n    seo {\n      title,\n      description,\n      image {\n        asset->{\n          _id,\n          url\n        }\n      }\n    }\n  }\n  ": FetchPageResult;
   }
 }

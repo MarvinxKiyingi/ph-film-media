@@ -2,19 +2,10 @@
 @tailwind utilities;
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --font-oswald: 'Oswald';
-  --font-lato: 'Lato';
-  --font-family-title: var(--font-oswald), Arial, sans-serif;
-  --font-family-body: var(--font-lato), Arial, sans-serif;
-  --font-family-mono: 'Fira Mono', 'Roboto Mono', 'Courier New', monospace;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-chivo: var(--font-chivo);
+  --font-oswald: var(--font-oswald);
   --font-lato: var(--font-lato);
 }
 
@@ -37,20 +28,14 @@
   --text-b-xl: 1.75rem; /* 28px */
 
   --color-black: rgba(10, 10, 10, 1);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-gray: rgba(129, 129, 129, 1);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: var(--font-family-body);
-  line-height: 1.2;
+  background: var(--color-black);
+  color: var(--color-white);
+
+  @apply font-lato min-h-svh lg:min-h-screen bg-black text-white;
 }
 
 h1,
@@ -59,5 +44,5 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: var(--font-family-title);
+  @apply font-oswald;
 }
