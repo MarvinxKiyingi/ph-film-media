@@ -2,33 +2,22 @@
 
 'use client';
 
-import { useTransition } from 'react';
-import { useRouter } from 'next/navigation';
-import { disableDraftMode } from '@/app/actions';
+import { useDraftModeEnvironment } from 'next-sanity/hooks';
 
 export function DisableDraftMode() {
-  const router = useRouter();
-  const [pending, startTransition] = useTransition();
+  const environment = useDraftModeEnvironment();
 
-  if (window !== window.parent || !!window.opener) {
+  // Only show the disable draft mode button when outside of Presentation Tool
+  if (environment !== 'live' && environment !== 'unknown') {
     return null;
   }
 
-  const disable = () =>
-    startTransition(async () => {
-      await disableDraftMode();
-      router.refresh();
-    });
-
   return (
-    <div>
-      {pending ? (
-        'Disabling draft mode...'
-      ) : (
-        <button type='button' onClick={disable}>
-          Disable draft mode
-        </button>
-      )}
-    </div>
+    <a
+      href='/api/draft-mode/disable'
+      className='fixed bottom-4 right-4 bg-gray-50 px-8 py-4 rounded-[8px]'
+    >
+      Disable Draft Mode
+    </a>
   );
 }
