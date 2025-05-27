@@ -1,5 +1,4 @@
 import { LinkIcon, LaunchIcon } from '@sanity/icons';
-
 import { defineField, defineType } from 'sanity';
 
 export const header = defineType({
@@ -22,6 +21,8 @@ export const header = defineType({
             {
               name: 'linkLabel',
               title: 'Link Label',
+              description:
+                'Used to override the default label for the page, if not provided, the page title will be used',
               type: 'string',
             },
             {

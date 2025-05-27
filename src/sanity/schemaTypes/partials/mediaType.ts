@@ -1,5 +1,4 @@
 import { ImageIcon } from '@sanity/icons';
-
 import { defineField, defineType } from 'sanity';
 
 export const mediaType = defineType({

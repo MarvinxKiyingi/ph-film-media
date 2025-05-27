@@ -1,5 +1,4 @@
 import { PlayIcon, ListIcon, UserIcon } from '@sanity/icons';
-
 import { defineField, defineType } from 'sanity';
 
 export const movies = defineType({
@@ -291,8 +290,8 @@ export const movies = defineType({
       group: 'media',
     }),
     defineField({
-      name: 'image',
-      title: 'Image',
+      name: 'movieBanner',
+      title: 'Movie Banner',
       type: 'mediaType',
       group: 'media',
     }),
@@ -307,9 +306,10 @@ export const movies = defineType({
     select: {
       title: 'title',
       updatedAt: '_updatedAt',
-      moviePoster: 'moviePoster',
+      moviePoster: 'moviePoster.media',
+      movieBanner: 'movieBanner.media',
     },
-    prepare({ title, updatedAt, moviePoster }) {
+    prepare({ title, updatedAt, moviePoster, movieBanner }) {
       const formattedDate = updatedAt
         ? new Date(updatedAt).toLocaleDateString('en-US', {
             year: 'numeric',
@@ -321,7 +321,7 @@ export const movies = defineType({
       return {
         title: title || 'Movie',
         subtitle: `Last edited: ${formattedDate}`,
-        media: moviePoster ? moviePoster : PlayIcon,
+        media: moviePoster ? moviePoster : movieBanner ? movieBanner : PlayIcon,
       };
     },
   },
