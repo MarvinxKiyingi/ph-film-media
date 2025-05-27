@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PH Film Media
+
+A small business website for showcasing upcoming projects and general information about the business owner. Built with Next.js, Sanity CMS, and Tailwind CSS.
+
+## Features
+
+- Dynamic pages for business information and upcoming projects
+- Content management via Sanity Studio (accessible at `/studio`)
+- SEO fields for better search engine visibility
+- Responsive design with Tailwind CSS
+
+## Tech Stack
+
+- [Next.js](https://nextjs.org/)
+- [Sanity CMS](https://www.sanity.io/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [TypeScript](https://www.typescriptlang.org/)
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Node.js (v18 or higher recommended)
+- Yarn, npm, pnpm, or bun
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Setup
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+1. **Clone the repository:**
+   ```bash
+   git clone <your-repo-url>
+   cd ph-film-media
+   ```
+2. **Install dependencies:**
+   ```bash
+   yarn install
+   # or
+   npm install
+   # or
+   pnpm install
+   # or
+   bun install
+   ```
+3. **Configure environment variables:**
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+   - Copy `.env.example` to `.env.local` and fill in the required values:
+     - `NEXT_PUBLIC_SANITY_API_VERSION`
+     - `NEXT_PUBLIC_SANITY_DATASET`
+     - `NEXT_PUBLIC_SANITY_PROJECT_ID`
+     - `NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL`
 
-## Learn More
+4. **Run the development server:**
 
-To learn more about Next.js, take a look at the following resources:
+   ```bash
+   yarn dev
+   # or
+   npm run dev
+   # or
+   pnpm dev
+   # or
+   bun dev
+   ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+5. **Open the app:**
+   - Visit [http://localhost:3000](http://localhost:3000) to view the site.
+   - Visit [http://localhost:3000/studio](http://localhost:3000/studio) for Sanity Studio (content management).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Usage
 
-## Deploy on Vercel
+- Edit content and manage projects via Sanity Studio.
+- The site auto-updates as you edit content in the CMS.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributing
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Contributions are welcome! Please open an issue or submit a pull request.
