@@ -72,6 +72,8 @@ const Header = ({ data }: IHeader) => {
               key={link._key}
               href={link.link?.href || ''}
               className='max-lg:py-3 lg:hover:underline lg:hover:underline-offset-[6px] lg:pl-8'
+              target='_blank'
+              rel='noopener noreferrer'
             >
               {link.linkLabel}
             </Link>

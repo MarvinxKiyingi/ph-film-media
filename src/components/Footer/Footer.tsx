@@ -41,9 +41,9 @@ const Footer = ({ data }: IFooter) => {
         </div>
 
         <div className='grid gap-4 lg:col-span-1'>
-          <h2 className='text-h-lg uppercase lg:border-b lg:border-gray lg:pb-1'>
+          <h3 className='text-h-lg uppercase lg:border-b lg:border-gray lg:pb-1'>
             {title}
-          </h2>
+          </h3>
           {text && <RichText content={text} className='text-b-sm gap-2' />}
         </div>
       </div>
