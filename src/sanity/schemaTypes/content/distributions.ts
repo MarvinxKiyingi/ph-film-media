@@ -1,5 +1,5 @@
-import {PlayIcon, ListIcon, UserIcon, InlineElementIcon} from '@sanity/icons'
-import {defineField, defineType} from 'sanity'
+import { PlayIcon, UserIcon, InlineElementIcon } from '@sanity/icons';
+import { defineField, defineType } from 'sanity';
 
 export const distributions = defineType({
   name: 'distributions',
@@ -54,7 +54,7 @@ export const distributions = defineType({
       name: 'languages',
       title: 'Languages',
       type: 'array',
-      of: [{type: 'reference', to: [{type: 'languages'}]}],
+      of: [{ type: 'reference', to: [{ type: 'languages' }] }],
       group: 'text',
     }),
 
@@ -72,18 +72,18 @@ export const distributions = defineType({
               name: 'directorItems',
               title: 'Director Items ',
               type: 'reference',
-              to: [{type: 'directors'}],
+              to: [{ type: 'directors' }],
             },
           ],
           preview: {
             select: {
               title: 'directorItems.director',
             },
-            prepare({title}) {
+            prepare({ title }) {
               return {
                 title: title || 'No director selected',
                 media: UserIcon,
-              }
+              };
             },
           },
         },
@@ -104,18 +104,18 @@ export const distributions = defineType({
               name: 'writerItem',
               title: 'Writer Item',
               type: 'reference',
-              to: [{type: 'writers'}],
+              to: [{ type: 'writers' }],
             },
           ],
           preview: {
             select: {
               title: 'writerItem.writer',
             },
-            prepare({title}) {
+            prepare({ title }) {
               return {
                 title: title || 'No writer selected',
                 media: UserIcon,
-              }
+              };
             },
           },
         },
@@ -136,18 +136,18 @@ export const distributions = defineType({
               name: 'actorItem',
               title: 'Actor Item',
               type: 'reference',
-              to: [{type: 'actors'}],
+              to: [{ type: 'actors' }],
             },
           ],
           preview: {
             select: {
               title: 'actorItem.actor',
             },
-            prepare({title}) {
+            prepare({ title }) {
               return {
                 title: title || 'No actor selected',
                 media: UserIcon,
-              }
+              };
             },
           },
         },
@@ -206,20 +206,20 @@ export const distributions = defineType({
       moviePoster: 'moviePoster.media',
       movieBanner: 'movieBanner.media',
     },
-    prepare({title, updatedAt, moviePoster, movieBanner}) {
+    prepare({ title, updatedAt, moviePoster, movieBanner }) {
       const formattedDate = updatedAt
         ? new Date(updatedAt).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
           })
-        : 'No edits yet'
+        : 'No edits yet';
 
       return {
         title: title || 'Movie',
         subtitle: `Last edited: ${formattedDate}`,
         media: moviePoster ? moviePoster : movieBanner ? movieBanner : PlayIcon,
-      }
+      };
     },
   },
-})
+});

@@ -1,4 +1,11 @@
 import { defineQuery } from 'next-sanity';
+
+export const fetchAllPageSlugs = defineQuery(`
+  *[_type == "page" && defined(slug.current)]{
+    "slug": slug.current
+  }
+`);
+
 export const settingsQuery = defineQuery(`
     *[_type == "settings"][0]{
       _id,

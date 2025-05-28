@@ -505,6 +505,11 @@ export type SanityAssetSourceData = {
 export type AllSanitySchemaTypes = Settings | Header | Footer | Seo | RichText | MediaGallery | Languages | MovieHero | MovieClubList | MediaCarousel | LogoCarousel | ImageWithText | Hero | DistributionList | Page | MovieClub | Distributions | MediaType | LinkType | Actors | Writers | Directors | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
+// Variable: fetchAllPageSlugs
+// Query: *[_type == "page" && defined(slug.current)]{    "slug": slug.current  }
+export type FetchAllPageSlugsResult = Array<{
+  slug: string | null;
+}>;
 // Variable: settingsQuery
 // Query: *[_type == "settings"][0]{      _id,      _type,      seo {        metaTitle,        metaDescription,        metaImage {          media {            _type,            alt,            asset->{              _id,              _ref,              _type,            },          }        }      },      distributionMovieDetailTitles {        directorsLabel,        writersLabel,        actorsLabel,        languagesLabel,        releaseDateLabel,        durationLabel      }    }
 export type SettingsQueryResult = {
@@ -675,6 +680,7 @@ export type FetchPageResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
+    "\n  *[_type == \"page\" && defined(slug.current)]{\n    \"slug\": slug.current\n  }\n": FetchAllPageSlugsResult;
     "\n    *[_type == \"settings\"][0]{\n      _id,\n      _type,\n      seo {\n        metaTitle,\n        metaDescription,\n        metaImage {\n          media {\n            _type,\n            alt,\n            asset->{\n              _id,\n              _ref,\n              _type,\n            },\n          }\n        }\n      },\n      distributionMovieDetailTitles {\n        directorsLabel,\n        writersLabel,\n        actorsLabel,\n        languagesLabel,\n        releaseDateLabel,\n        durationLabel\n      }\n    }\n    ": SettingsQueryResult;
     "\n *[_type == \"header\"][0]{\n  linkReference[]{\n    _key,\n    _type,\n    _id,\n    // For internal links\n    _type == \"internalLink\" => {\n      linkLabel,\n      page->{\n        _id,\n        title,\n        slug\n      }\n    },\n    // For external links\n    _type == \"externalLink\" => {\n      linkLabel,\n      link{\n        href\n      }\n    }\n  },\n  socialMediaLinks[]{\n    href\n  }\n}\n": FetchHeaderResult;
     "\n  *[_type == \"footer\"][0]{\n    _id,\n    _type,\n    title,\n    text[],\n    socialMediaLinks[]{\n      _key,\n      _type,\n      _id,\n      href\n    },\n    rights\n  }\n": FetchFooterResult;
