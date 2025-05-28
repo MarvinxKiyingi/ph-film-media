@@ -1,5 +1,5 @@
-import { ImageIcon } from '@sanity/icons';
-import { defineField, defineType } from 'sanity';
+import {ImageIcon} from '@sanity/icons'
+import {defineField, defineType} from 'sanity'
 
 export const movieHero = defineType({
   name: 'movieHero',
@@ -17,11 +17,11 @@ export const movieHero = defineType({
     select: {
       media: 'mediaItems.image',
     },
-    prepare({ media }) {
+    prepare({media}) {
       return {
         title: 'Movie Hero',
         media: media || ImageIcon,
-      };
+      }
     },
   },
-});
+})

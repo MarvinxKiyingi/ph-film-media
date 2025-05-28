@@ -1,11 +1,11 @@
-import { PlayIcon, ListIcon, UserIcon } from '@sanity/icons';
-import { defineField, defineType } from 'sanity';
+import {PlayIcon, ListIcon, UserIcon, InlineElementIcon} from '@sanity/icons'
+import {defineField, defineType} from 'sanity'
 
-export const movies = defineType({
-  name: 'movies',
-  title: 'Movies',
+export const distributions = defineType({
+  name: 'distributions',
+  title: 'Distributions',
   type: 'document',
-  icon: PlayIcon,
+  icon: InlineElementIcon,
   groups: [
     {
       name: 'text',
@@ -17,7 +17,7 @@ export const movies = defineType({
     },
     {
       name: 'media',
-      title: 'Media',
+      title: 'Media (Bilder)',
     },
   ],
   fields: [
@@ -31,7 +31,8 @@ export const movies = defineType({
     }),
     defineField({
       name: 'releaseDate',
-      title: 'Release Date',
+      title: 'Release Date (Premiär)',
+      description: 'The release date of the movie.',
       type: 'date',
       group: 'text',
     }),
@@ -41,78 +42,48 @@ export const movies = defineType({
       type: 'richText',
       group: 'text',
     }),
+
     defineField({
       name: 'duration',
       title: 'Duration',
       type: 'string',
       group: 'text',
     }),
+
     defineField({
       name: 'languages',
       title: 'Languages',
       type: 'array',
-      of: [{ type: 'reference', to: [{ type: 'languages' }] }],
+      of: [{type: 'reference', to: [{type: 'languages'}]}],
       group: 'text',
     }),
+
     defineField({
       name: 'director',
-      title: 'Director',
+      title: 'Director (Regissör)',
       type: 'array',
       of: [
         {
           type: 'object',
           name: 'directorReference',
-          title: 'Director Reference',
+          title: 'Director Reference ',
           fields: [
             {
               name: 'directorItems',
-              title: 'Director Items',
+              title: 'Director Items ',
               type: 'reference',
-              to: [{ type: 'directors' }],
+              to: [{type: 'directors'}],
             },
           ],
           preview: {
             select: {
               title: 'directorItems.director',
             },
-            prepare({ title }) {
+            prepare({title}) {
               return {
                 title: title || 'No director selected',
                 media: UserIcon,
-              };
-            },
-          },
-        },
-        {
-          type: 'object',
-          name: 'customDirectorText',
-          title: 'Custom Director Text',
-          fields: [
-            {
-              name: 'text',
-              title: 'Text',
-              type: 'richText',
-            },
-          ],
-          preview: {
-            select: {
-              text: 'text',
-            },
-            prepare({ text }) {
-              // text is an array of blocks; get the first block's children text
-              if (Array.isArray(text) && text.length > 0 && text[0].children) {
-                const plain = text[0].children
-                  .map((child: { text: string }) => child.text)
-                  .join('');
-                return {
-                  title: plain || 'No director selected',
-                  media: ListIcon,
-                };
               }
-              return {
-                title: 'No director selected',
-                media: ListIcon,
-              };
             },
           },
         },
@@ -121,7 +92,7 @@ export const movies = defineType({
     }),
     defineField({
       name: 'writers',
-      title: 'Writers',
+      title: 'Writers (Skribenter)',
       type: 'array',
       of: [
         {
@@ -133,50 +104,18 @@ export const movies = defineType({
               name: 'writerItem',
               title: 'Writer Item',
               type: 'reference',
-              to: [{ type: 'writers' }],
+              to: [{type: 'writers'}],
             },
           ],
           preview: {
             select: {
               title: 'writerItem.writer',
             },
-            prepare({ title }) {
+            prepare({title}) {
               return {
                 title: title || 'No writer selected',
                 media: UserIcon,
-              };
-            },
-          },
-        },
-        {
-          type: 'object',
-          name: 'customWriterText',
-          title: 'Custom Writer Text',
-          fields: [
-            {
-              name: 'text',
-              title: 'Text',
-              type: 'richText',
-            },
-          ],
-          preview: {
-            select: {
-              text: 'text',
-            },
-            prepare({ text }) {
-              if (Array.isArray(text) && text.length > 0 && text[0].children) {
-                const plain = text[0].children
-                  .map((child: { text: string }) => child.text)
-                  .join('');
-                return {
-                  title: plain || 'No writer selected',
-                  media: ListIcon,
-                };
               }
-              return {
-                title: 'No writer selected',
-                media: ListIcon,
-              };
             },
           },
         },
@@ -185,7 +124,7 @@ export const movies = defineType({
     }),
     defineField({
       name: 'actors',
-      title: 'Actors',
+      title: 'Actors (Medverkande)',
       type: 'array',
       of: [
         {
@@ -197,64 +136,23 @@ export const movies = defineType({
               name: 'actorItem',
               title: 'Actor Item',
               type: 'reference',
-              to: [{ type: 'actors' }],
+              to: [{type: 'actors'}],
             },
           ],
           preview: {
             select: {
               title: 'actorItem.actor',
             },
-            prepare({ title }) {
+            prepare({title}) {
               return {
                 title: title || 'No actor selected',
                 media: UserIcon,
-              };
-            },
-          },
-        },
-        {
-          type: 'object',
-          name: 'customActorText',
-          title: 'Custom Actor Text',
-          fields: [
-            {
-              name: 'text',
-              title: 'Text',
-              type: 'richText',
-            },
-          ],
-          preview: {
-            select: {
-              text: 'text',
-            },
-            prepare({ text }) {
-              if (Array.isArray(text) && text.length > 0 && text[0].children) {
-                const plain = text[0].children
-                  .map((child: { text: string }) => child.text)
-                  .join('');
-                return {
-                  title: plain || 'No actor selected',
-                  media: ListIcon,
-                };
               }
-              return {
-                title: 'No actor selected',
-                media: ListIcon,
-              };
             },
           },
         },
       ],
       group: 'text',
-    }),
-    defineField({
-      name: 'rating',
-      title: 'Rating',
-      type: 'number',
-      group: 'text',
-      validation: (Rule) =>
-        Rule.min(1).max(5).error('Rating must be between 1 and 5.'),
-      description: 'Rating out of 5, 1 = 1 star, 5 = 5 stars',
     }),
     // ----- Buttons -----
     defineField({
@@ -263,7 +161,6 @@ export const movies = defineType({
       type: 'string',
       group: 'buttons',
     }),
-
     defineField({
       name: 'ticketLink',
       title: 'Ticket Link',
@@ -309,20 +206,20 @@ export const movies = defineType({
       moviePoster: 'moviePoster.media',
       movieBanner: 'movieBanner.media',
     },
-    prepare({ title, updatedAt, moviePoster, movieBanner }) {
+    prepare({title, updatedAt, moviePoster, movieBanner}) {
       const formattedDate = updatedAt
         ? new Date(updatedAt).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
           })
-        : 'No edits yet';
+        : 'No edits yet'
 
       return {
         title: title || 'Movie',
         subtitle: `Last edited: ${formattedDate}`,
         media: moviePoster ? moviePoster : movieBanner ? movieBanner : PlayIcon,
-      };
+      }
     },
   },
-});
+})

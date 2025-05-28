@@ -1,9 +1,9 @@
-import { ListIcon } from '@sanity/icons';
-import { defineField, defineType } from 'sanity';
+import {ListIcon} from '@sanity/icons'
+import {defineField, defineType} from 'sanity'
 
-export const movieList = defineType({
-  name: 'movieList',
-  title: 'Movie List',
+export const movieClubList = defineType({
+  name: 'movieClubList',
+  title: 'Movie Club List',
   type: 'object',
   icon: ListIcon,
   fields: [
@@ -21,7 +21,7 @@ export const movieList = defineType({
               name: 'movie',
               title: 'Movie',
               type: 'reference',
-              to: [{ type: 'movies' }],
+              to: [{type: 'movieClub'}],
             },
           ],
           preview: {
@@ -30,15 +30,11 @@ export const movieList = defineType({
               moviePoster: 'movie.moviePoster.media',
               movieBanner: 'movie.movieBanner.media',
             },
-            prepare({ title, moviePoster, movieBanner }) {
+            prepare({title, moviePoster, movieBanner}) {
               return {
                 title: title || 'No movie selected',
-                media: moviePoster
-                  ? moviePoster
-                  : movieBanner
-                    ? movieBanner
-                    : ListIcon,
-              };
+                media: moviePoster ? moviePoster : movieBanner ? movieBanner : ListIcon,
+              }
             },
           },
         },
@@ -50,11 +46,11 @@ export const movieList = defineType({
       moviePoster: 'movies.0.movie.moviePoster.media',
       movieBanner: 'movies.0.movie.movieBanner.media',
     },
-    prepare({ moviePoster, movieBanner }) {
+    prepare({moviePoster, movieBanner}) {
       return {
         title: 'Movie List',
         media: moviePoster ? moviePoster : movieBanner ? movieBanner : ListIcon,
-      };
+      }
     },
   },
-});
+})

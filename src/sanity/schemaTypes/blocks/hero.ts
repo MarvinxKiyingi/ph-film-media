@@ -1,5 +1,5 @@
-import { ImagesIcon, ImageIcon } from '@sanity/icons';
-import { defineField, defineType } from 'sanity';
+import {ImagesIcon, ImageIcon} from '@sanity/icons'
+import {defineField, defineType} from 'sanity'
 
 export const hero = defineType({
   name: 'hero',
@@ -29,8 +29,7 @@ export const hero = defineType({
             {
               name: 'infoItems',
               title: 'Info Items',
-              description:
-                'Add info items to the media card, to highlight the title',
+              description: 'Add info items to the media card, to highlight the title',
               type: 'array',
               of: [
                 {
@@ -56,7 +55,7 @@ export const hero = defineType({
               name: 'internalButtonLink',
               title: 'Button Link (Internal)',
               type: 'reference',
-              to: [{ type: 'page' }],
+              to: [{type: 'page'}],
             },
             {
               name: 'externalButtonLink',
@@ -69,11 +68,11 @@ export const hero = defineType({
               title: 'title',
               media: 'cardImage.media',
             },
-            prepare({ title, media }) {
+            prepare({title, media}) {
               return {
                 title: title || 'No title',
                 media: media || ImageIcon,
-              };
+              }
             },
           },
         },
@@ -89,11 +88,11 @@ export const hero = defineType({
     select: {
       media: 'mediaCard.0.cardImage.media',
     },
-    prepare({ media }) {
+    prepare({media}) {
       return {
         title: 'Hero',
         media: media || ImageIcon,
-      };
+      }
     },
   },
-});
+})

@@ -30,7 +30,7 @@ export const mediaCarousel = defineType({
           ],
           preview: {
             select: {
-              title: 'mediaItem.media.alt',
+              title: 'title',
               media: 'mediaItem.media',
             },
           },
