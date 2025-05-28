@@ -48,7 +48,7 @@ const Footer = ({ data }: IFooter) => {
         </div>
       </div>
 
-      <p className='text-b-xs font-bold'>
+      <p className='text-b-xs font-bold lg:w-full lg:text-end'>
         {rights} ⏤ {new Date().getFullYear()} ©
       </p>
     </footer>
