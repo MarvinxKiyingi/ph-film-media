@@ -1,7 +1,7 @@
 import type { Metadata, ResolvingMetadata } from 'next';
 import { sanityFetch } from '@/sanity/lib/live';
 import { urlForImage } from '@/sanity/lib/utils';
-import { FetchHomeResult, FetchPageResult } from '../../sanity.types';
+import { FetchHomeResult, FetchPageResult, Settings } from '../../sanity.types';
 import { settingsQuery } from '@/sanity/lib/queries';
 
 // You may want to import your fetchPage query if you want to fetch page data by slug
@@ -21,7 +21,7 @@ export async function generateMetadata(
   await params;
 
   // Fetch settings
-  const { data: settingsData } = await sanityFetch({
+  const { data: settings } = await sanityFetch({
     query: settingsQuery,
     stega: false,
   });
@@ -29,63 +29,73 @@ export async function generateMetadata(
   // Fetch page data if slug is provided (implement your actual fetchPage logic here)
   const page: PageData | null = null;
 
-  function hasTitle(obj: unknown): obj is { title: string | null } {
-    return !!obj && typeof obj === 'object' && 'title' in obj;
-  }
-  let title: string = 'PH Film & Media';
-  if (page && typeof page === 'object') {
-    const pageWithSeo = page as FetchHomeResult | FetchPageResult | null;
-    if (pageWithSeo && pageWithSeo.seo && pageWithSeo.seo.title) {
-      title = pageWithSeo.seo.title;
-    } else if (pageWithSeo && hasTitle(pageWithSeo) && pageWithSeo.title) {
-      title = pageWithSeo.title;
-    } else if (settingsData?.title) {
-      title = settingsData.title;
-    }
-  } else if (settingsData?.title) {
-    title = settingsData.title;
-  }
-  let description: string = 'Default description';
-  if (page && typeof page === 'object') {
-    const pageWithSeo = page as FetchHomeResult | FetchPageResult | null;
-    if (pageWithSeo && pageWithSeo.seo && pageWithSeo.seo.description) {
-      description = pageWithSeo.seo.description;
-    } else if (settingsData?.description) {
-      description = settingsData.description;
-    }
-  } else if (settingsData?.description) {
-    description = settingsData.description;
-  }
+  // Title and description logic
+  const pageTyped = page as FetchHomeResult | FetchPageResult | null;
+  const settingsTyped = settings as Settings | null;
+  const pageSeo = pageTyped?.seo;
+  const settingsSeo = settingsTyped?.seo;
+
+  const pageTitle =
+    page && typeof page === 'object' && 'title' in page
+      ? (page as FetchHomeResult | FetchPageResult)?.title
+      : undefined;
+  const title =
+    pageSeo?.metaTitle ??
+    pageTitle ??
+    settingsSeo?.metaTitle ??
+    'PH Film & Media';
+
+  const fullTitle =
+    pageSeo?.metaTitle && settingsSeo?.metaTitle
+      ? `${pageSeo.metaTitle} | ${settingsSeo.metaTitle}`
+      : pageTitle && settingsSeo?.metaTitle
+        ? `${pageTitle} | ${settingsSeo.metaTitle}`
+        : title;
+
+  const description =
+    pageSeo?.metaDescription ??
+    settingsSeo?.metaDescription ??
+    'Default description';
 
   // Image logic
-  let imageUrl = '';
-  if (page && typeof page === 'object') {
-    const pageWithSeo = page as FetchHomeResult | FetchPageResult | null;
-    if (pageWithSeo && pageWithSeo.seo && pageWithSeo.seo.image) {
-      imageUrl = urlForImage(pageWithSeo.seo.image)?.url() ?? '';
-    } else if (settingsData?.image) {
-      imageUrl = urlForImage(settingsData.image)?.url() ?? '';
-    }
-  } else if (settingsData?.image) {
-    imageUrl = urlForImage(settingsData.image)?.url() ?? '';
-  }
-
+  const imageUrl =
+    urlForImage(pageSeo?.metaImage ?? settingsSeo?.metaImage)?.url() ??
+    'https://your-default-image.png';
   // Optionally extend parent metadata
   const previousImages = (await parent).openGraph?.images || [];
 
   return {
-    title: title,
+    title: fullTitle,
     description,
     openGraph: {
-      title: title,
+      title,
       description,
-      images: imageUrl ? [imageUrl, ...previousImages] : previousImages,
+      images: [imageUrl, ...previousImages],
     },
     twitter: {
       card: 'summary_large_image',
-      title: title,
+      title,
       description,
-      images: imageUrl ? [imageUrl] : [],
+      images: [imageUrl],
+    },
+    metadataBase: new URL(
+      process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL ||
+        'http://localhost:3000'
+    ),
+    alternates: {
+      canonical:
+        process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL ||
+        'http://localhost:3000',
+    },
+    other: {
+      'og:site_name': settings?.seo?.metaTitle || 'PH Film & Media',
+      'og:locale': 'en_US',
+      'og:type': 'website',
+      'og:image:width': '1200',
+      'og:image:height': '630',
+      'og:image:alt': title,
+      'og:image:secure_url': imageUrl,
+      'og:image:type': 'image/jpeg',
     },
   };
 }
