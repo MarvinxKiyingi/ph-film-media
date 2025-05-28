@@ -20,10 +20,18 @@ export type Settings = {
   _updatedAt: string;
   _rev: string;
   seo?: {
-    title?: string;
-    description?: string;
-    socialImage?: MediaType;
+    metaTitle?: string;
+    metaDescription?: string;
+    metaImage?: MediaType;
     _type: "seo";
+  };
+  distributionMovieDetailTitles?: {
+    directorsLabel?: string;
+    writersLabel?: string;
+    actorsLabel?: string;
+    languagesLabel?: string;
+    releaseDateLabel?: string;
+    durationLabel?: string;
   };
 };
 
@@ -82,20 +90,6 @@ export type Footer = {
   socialMediaLinks?: Array<{
     _key: string;
   } & LinkType>;
-  services?: Array<{
-    serviceItems?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "services";
-    };
-    _type: "serviceReference";
-    _key: string;
-  } | {
-    label?: string;
-    _type: "customServiceLabel";
-    _key: string;
-  }>;
   rights?: string;
 };
 
@@ -105,9 +99,9 @@ export type Seo = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
-  description?: string;
-  socialImage?: MediaType;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaImage?: MediaType;
 };
 
 export type RichText = Array<{
@@ -147,15 +141,6 @@ export type MediaGallery = {
   }>;
 };
 
-export type Services = {
-  _id: string;
-  _type: "services";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  service?: string;
-};
-
 export type Languages = {
   _id: string;
   _type: "languages";
@@ -165,23 +150,23 @@ export type Languages = {
   language?: string;
 };
 
-export type MovieList = {
-  _type: "movieList";
+export type MovieHero = {
+  _type: "movieHero";
+  mediaItems?: MediaType;
+};
+
+export type MovieClubList = {
+  _type: "movieClubList";
   movies?: Array<{
     movie?: {
       _ref: string;
       _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "movies";
+      [internalGroqTypeReferenceTo]?: "movieClub";
     };
     _type: "movie";
     _key: string;
   }>;
-};
-
-export type MovieHero = {
-  _type: "movieHero";
-  mediaItems?: MediaType;
 };
 
 export type MediaCarousel = {
@@ -212,17 +197,6 @@ export type ImageWithText = {
     richText?: RichText;
     _type: "textItem";
     _key: string;
-  } | {
-    title?: string;
-    services?: Array<{
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      _key: string;
-      [internalGroqTypeReferenceTo]?: "services";
-    }>;
-    _type: "servicesList";
-    _key: string;
   }>;
 };
 
@@ -250,6 +224,20 @@ export type Hero = {
   logo?: MediaType;
 };
 
+export type DistributionList = {
+  _type: "distributionList";
+  movies?: Array<{
+    movie?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "distributions";
+    };
+    _type: "movie";
+    _key: string;
+  }>;
+};
+
 export type Page = {
   _id: string;
   _type: "page";
@@ -260,6 +248,8 @@ export type Page = {
   slug?: Slug;
   blockList?: Array<{
     _key: string;
+  } & DistributionList | {
+    _key: string;
   } & Hero | {
     _key: string;
   } & ImageWithText | {
@@ -268,20 +258,30 @@ export type Page = {
     _key: string;
   } & MediaCarousel | {
     _key: string;
-  } & MovieHero | {
+  } & MovieClubList | {
     _key: string;
-  } & MovieList>;
+  } & MovieHero>;
   seo?: {
-    title?: string;
-    description?: string;
-    socialImage?: MediaType;
+    metaTitle?: string;
+    metaDescription?: string;
+    metaImage?: MediaType;
     _type: "seo";
   };
 };
 
-export type Movies = {
+export type MovieClub = {
   _id: string;
-  _type: "movies";
+  _type: "movieClub";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  movieBanner?: MediaType;
+};
+
+export type Distributions = {
+  _id: string;
+  _type: "distributions";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -305,10 +305,6 @@ export type Movies = {
     };
     _type: "directorReference";
     _key: string;
-  } | {
-    text?: RichText;
-    _type: "customDirectorText";
-    _key: string;
   }>;
   writers?: Array<{
     writerItem?: {
@@ -318,10 +314,6 @@ export type Movies = {
       [internalGroqTypeReferenceTo]?: "writers";
     };
     _type: "writerReference";
-    _key: string;
-  } | {
-    text?: RichText;
-    _type: "customWriterText";
     _key: string;
   }>;
   actors?: Array<{
@@ -333,12 +325,7 @@ export type Movies = {
     };
     _type: "actorReference";
     _key: string;
-  } | {
-    text?: RichText;
-    _type: "customActorText";
-    _key: string;
   }>;
-  rating?: number;
   ticketLabel?: string;
   ticketLink?: LinkType;
   buttonLabel?: string;
@@ -346,6 +333,28 @@ export type Movies = {
   trailer?: LinkType;
   movieBanner?: MediaType;
   moviePoster?: MediaType;
+};
+
+export type MediaType = {
+  _type: "mediaType";
+  media?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+};
+
+export type LinkType = {
+  _type: "linkType";
+  href?: string;
 };
 
 export type Actors = {
@@ -373,28 +382,6 @@ export type Directors = {
   _updatedAt: string;
   _rev: string;
   director?: string;
-};
-
-export type LinkType = {
-  _type: "linkType";
-  href?: string;
-};
-
-export type MediaType = {
-  _type: "mediaType";
-  media?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  };
 };
 
 export type SanityImagePaletteSwatch = {
@@ -515,54 +502,66 @@ export type SanityAssetSourceData = {
   url?: string;
 };
 
-export type AllSanitySchemaTypes = Settings | Header | Footer | Seo | RichText | MediaGallery | Services | Languages | MovieList | MovieHero | MediaCarousel | LogoCarousel | ImageWithText | Hero | Page | Movies | Actors | Writers | Directors | LinkType | MediaType | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
+export type AllSanitySchemaTypes = Settings | Header | Footer | Seo | RichText | MediaGallery | Languages | MovieHero | MovieClubList | MediaCarousel | LogoCarousel | ImageWithText | Hero | DistributionList | Page | MovieClub | Distributions | MediaType | LinkType | Actors | Writers | Directors | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
 // Variable: settingsQuery
-// Query: *[_type == "settings"][0]{      _id,      _type,      title,      description,      image {        _type,        _id,        asset      }    }
+// Query: *[_type == "settings"][0]{      _id,      _type,      seo {        metaTitle,        metaDescription,        metaImage {          media {            _type,            alt,            asset->{              _id,              _ref,              _type,            },          }        }      },      distributionMovieDetailTitles {        directorsLabel,        writersLabel,        actorsLabel,        languagesLabel,        releaseDateLabel,        durationLabel      }    }
 export type SettingsQueryResult = {
   _id: string;
   _type: "settings";
-  title: null;
-  description: null;
-  image: null;
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaImage: {
+      media: {
+        _type: "image";
+        alt: string | null;
+        asset: {
+          _id: string;
+          _ref: null;
+          _type: "sanity.imageAsset";
+        } | null;
+      } | null;
+    } | null;
+  } | null;
+  distributionMovieDetailTitles: {
+    directorsLabel: string | null;
+    writersLabel: string | null;
+    actorsLabel: string | null;
+    languagesLabel: string | null;
+    releaseDateLabel: string | null;
+    durationLabel: string | null;
+  } | null;
 } | null;
 // Variable: fetchHeader
-// Query: *[_type == "header"][0]{   _id,   _type,  linkReference[]{    _key,    _type,    _id,    // For internal links    _type == "internalLink" => {      _type,      page->{        _id,        _type,        title,        slug      }    },    // For external links    _type == "externalLink" => {      _type,      linkLabel,      link{        _type,        _id,        href      }    }  },  socialMediaLinks[]{    _key,    _type,    _id,    href,    title  }}
+// Query: *[_type == "header"][0]{  linkReference[]{    _key,    _type,    _id,    // For internal links    _type == "internalLink" => {      linkLabel,      page->{        _id,        title,        slug      }    },    // For external links    _type == "externalLink" => {      linkLabel,      link{        href      }    }  },  socialMediaLinks[]{    href  }}
 export type FetchHeaderResult = {
-  _id: string;
-  _type: "header";
   linkReference: Array<{
     _key: string;
     _type: "externalLink";
     _id: null;
     linkLabel: string | null;
     link: {
-      _type: "linkType";
-      _id: null;
       href: string | null;
     } | null;
   } | {
     _key: string;
     _type: "internalLink";
     _id: null;
+    linkLabel: string | null;
     page: {
       _id: string;
-      _type: "page";
       title: string | null;
       slug: Slug | null;
     } | null;
   }> | null;
   socialMediaLinks: Array<{
-    _key: string;
-    _type: "linkType";
-    _id: null;
     href: string | null;
-    title: null;
   }> | null;
 } | null;
 // Variable: fetchFooter
-// Query: *[_type == "footer"][0]{    _id,    _type,    title,    text[],    socialMediaLinks[]{      _key,      _type,      _id,      href,    },    services[]{      _key,      _type,      _id,      // For serviceReference      _type == "serviceReference" => {        _type,        _id,        serviceItems->{          _id,          _type,          service        }      },      // For customServiceLabel      _type == "customServiceLabel" => {        _type,        _id,        label      }    },    rights  }
+// Query: *[_type == "footer"][0]{    _id,    _type,    title,    text[],    socialMediaLinks[]{      _key,      _type,      _id,      href    },    rights  }
 export type FetchFooterResult = {
   _id: string;
   _type: "footer";
@@ -591,25 +590,10 @@ export type FetchFooterResult = {
     _id: null;
     href: string | null;
   }> | null;
-  services: Array<{
-    _key: string;
-    _type: "customServiceLabel";
-    _id: null;
-    label: string | null;
-  } | {
-    _key: string;
-    _type: "serviceReference";
-    _id: null;
-    serviceItems: {
-      _id: string;
-      _type: "services";
-      service: string | null;
-    } | null;
-  }> | null;
   rights: string | null;
 } | null;
 // Variable: fetchHome
-// Query: *[_type == "page" && slug.current == '/'][0]{  _id,  _type,  title,  slug,  blockList[],  seo {    title,    description,    image {      asset->{        _id,        url      }    }  }}
+// Query: *[_type == "page" && slug.current == '/'][0]{  _id,  _type,  title,  slug,  blockList[],  seo {    metaTitle,    metaDescription,    metaImage {      _type,      media {        _type,        alt,        asset->{          _id,          _ref,          _type,        },      }    }  }}
 export type FetchHomeResult = {
   _id: string;
   _type: "page";
@@ -617,6 +601,8 @@ export type FetchHomeResult = {
   slug: Slug | null;
   blockList: Array<{
     _key: string;
+  } & DistributionList | {
+    _key: string;
   } & Hero | {
     _key: string;
   } & ImageWithText | {
@@ -625,17 +611,28 @@ export type FetchHomeResult = {
     _key: string;
   } & MediaCarousel | {
     _key: string;
-  } & MovieHero | {
+  } & MovieClubList | {
     _key: string;
-  } & MovieList> | null;
+  } & MovieHero> | null;
   seo: {
-    title: string | null;
-    description: string | null;
-    image: null;
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaImage: {
+      _type: "mediaType";
+      media: {
+        _type: "image";
+        alt: string | null;
+        asset: {
+          _id: string;
+          _ref: null;
+          _type: "sanity.imageAsset";
+        } | null;
+      } | null;
+    } | null;
   } | null;
 } | null;
 // Variable: fetchPage
-// Query: *[_type == "page" && slug.current == $slug][0]{    _id,    _type,    title,    slug,    blockList[],    seo {      title,      description,      image {        asset->{          _id,          url        }      }    }  }
+// Query: *[_type == "page" && slug.current == $slug][0]{    _id,    _type,    title,    slug,    blockList[],    seo {      metaTitle,      metaDescription,      metaImage {        _type,        media {          _type,          alt,          asset->{            _id,            _ref,            _type,          },        }      }    }  }
 export type FetchPageResult = {
   _id: string;
   _type: "page";
@@ -643,6 +640,8 @@ export type FetchPageResult = {
   slug: Slug | null;
   blockList: Array<{
     _key: string;
+  } & DistributionList | {
+    _key: string;
   } & Hero | {
     _key: string;
   } & ImageWithText | {
@@ -651,13 +650,24 @@ export type FetchPageResult = {
     _key: string;
   } & MediaCarousel | {
     _key: string;
-  } & MovieHero | {
+  } & MovieClubList | {
     _key: string;
-  } & MovieList> | null;
+  } & MovieHero> | null;
   seo: {
-    title: string | null;
-    description: string | null;
-    image: null;
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaImage: {
+      _type: "mediaType";
+      media: {
+        _type: "image";
+        alt: string | null;
+        asset: {
+          _id: string;
+          _ref: null;
+          _type: "sanity.imageAsset";
+        } | null;
+      } | null;
+    } | null;
   } | null;
 } | null;
 
@@ -665,10 +675,10 @@ export type FetchPageResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n    *[_type == \"settings\"][0]{\n      _id,\n      _type,\n      title,\n      description,\n      image {\n        _type,\n        _id,\n        asset\n      }\n    }\n    ": SettingsQueryResult;
-    "\n *[_type == \"header\"][0]{\n   _id,\n   _type,\n  linkReference[]{\n    _key,\n    _type,\n    _id,\n    // For internal links\n    _type == \"internalLink\" => {\n      _type,\n      page->{\n        _id,\n        _type,\n        title,\n        slug\n      }\n    },\n    // For external links\n    _type == \"externalLink\" => {\n      _type,\n      linkLabel,\n      link{\n        _type,\n        _id,\n        href\n      }\n    }\n  },\n  socialMediaLinks[]{\n    _key,\n    _type,\n    _id,\n    href,\n    title\n  }\n}\n": FetchHeaderResult;
-    "\n  *[_type == \"footer\"][0]{\n    _id,\n    _type,\n    title,\n    text[],\n    socialMediaLinks[]{\n      _key,\n      _type,\n      _id,\n      href,\n    },\n    services[]{\n      _key,\n      _type,\n      _id,\n      // For serviceReference\n      _type == \"serviceReference\" => {\n        _type,\n        _id,\n        serviceItems->{\n          _id,\n          _type,\n          service\n        }\n      },\n      // For customServiceLabel\n      _type == \"customServiceLabel\" => {\n        _type,\n        _id,\n        label\n      }\n    },\n    rights\n  }\n": FetchFooterResult;
-    "\n*[_type == \"page\" && slug.current == '/'][0]{\n  _id,\n  _type,\n  title,\n  slug,\n  blockList[],\n  seo {\n    title,\n    description,\n    image {\n      asset->{\n        _id,\n        url\n      }\n    }\n  }\n}\n": FetchHomeResult;
-    "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    slug,\n    blockList[],\n    seo {\n      title,\n      description,\n      image {\n        asset->{\n          _id,\n          url\n        }\n      }\n    }\n  }\n  ": FetchPageResult;
+    "\n    *[_type == \"settings\"][0]{\n      _id,\n      _type,\n      seo {\n        metaTitle,\n        metaDescription,\n        metaImage {\n          media {\n            _type,\n            alt,\n            asset->{\n              _id,\n              _ref,\n              _type,\n            },\n          }\n        }\n      },\n      distributionMovieDetailTitles {\n        directorsLabel,\n        writersLabel,\n        actorsLabel,\n        languagesLabel,\n        releaseDateLabel,\n        durationLabel\n      }\n    }\n    ": SettingsQueryResult;
+    "\n *[_type == \"header\"][0]{\n  linkReference[]{\n    _key,\n    _type,\n    _id,\n    // For internal links\n    _type == \"internalLink\" => {\n      linkLabel,\n      page->{\n        _id,\n        title,\n        slug\n      }\n    },\n    // For external links\n    _type == \"externalLink\" => {\n      linkLabel,\n      link{\n        href\n      }\n    }\n  },\n  socialMediaLinks[]{\n    href\n  }\n}\n": FetchHeaderResult;
+    "\n  *[_type == \"footer\"][0]{\n    _id,\n    _type,\n    title,\n    text[],\n    socialMediaLinks[]{\n      _key,\n      _type,\n      _id,\n      href\n    },\n    rights\n  }\n": FetchFooterResult;
+    "\n*[_type == \"page\" && slug.current == '/'][0]{\n  _id,\n  _type,\n  title,\n  slug,\n  blockList[],\n  seo {\n    metaTitle,\n    metaDescription,\n    metaImage {\n      _type,\n      media {\n        _type,\n        alt,\n        asset->{\n          _id,\n          _ref,\n          _type,\n        },\n      }\n    }\n  }\n}\n": FetchHomeResult;
+    "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    slug,\n    blockList[],\n    seo {\n      metaTitle,\n      metaDescription,\n      metaImage {\n        _type,\n        media {\n          _type,\n          alt,\n          asset->{\n            _id,\n            _ref,\n            _type,\n          },\n        }\n      }\n    }\n  }\n  ": FetchPageResult;
   }
 }

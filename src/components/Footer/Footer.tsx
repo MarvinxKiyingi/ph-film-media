@@ -19,7 +19,7 @@ type IFooter = {
 
 const Footer = ({ data }: IFooter) => {
   if (!data) return null;
-  const { title, text, socialMediaLinks, services } = data;
+  const { title, text, socialMediaLinks, rights } = data;
 
   return (
     <footer className='grid gap-y-10 px-5 py-10 lg:p-10'>
@@ -48,20 +48,9 @@ const Footer = ({ data }: IFooter) => {
         </div>
       </div>
 
-      <ul className='flex flex-wrap gap-2 lg:grid lg:grid-cols-4'>
-        {services?.map((service) => (
-          <li
-            className='col-span-1 text-b-sm font-bold text-gray'
-            key={service._key}
-          >
-            {service._type === 'serviceReference' && service.serviceItems ? (
-              <span>{service.serviceItems.service}</span>
-            ) : service._type === 'customServiceLabel' ? (
-              <span>{service.label}</span>
-            ) : null}
-          </li>
-        ))}
-      </ul>
+      <p className='text-b-xs font-bold'>
+        {rights} ⏤ {new Date().getFullYear()} ©
+      </p>
     </footer>
   );
 };

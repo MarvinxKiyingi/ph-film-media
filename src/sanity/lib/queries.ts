@@ -3,54 +3,61 @@ export const settingsQuery = defineQuery(`
     *[_type == "settings"][0]{
       _id,
       _type,
-      title,
-      description,
-      image {
-        _type,
-        _id,
-        asset
+      seo {
+        metaTitle,
+        metaDescription,
+        metaImage {
+          media {
+            _type,
+            alt,
+            asset->{
+              _id,
+              _ref,
+              _type,
+            },
+          }
+        }
+      },
+      distributionMovieDetailTitles {
+        directorsLabel,
+        writersLabel,
+        actorsLabel,
+        languagesLabel,
+        releaseDateLabel,
+        durationLabel
       }
     }
     `);
 
 export const fetchHeader = defineQuery(`
  *[_type == "header"][0]{
-   _id,
-   _type,
   linkReference[]{
     _key,
     _type,
     _id,
     // For internal links
     _type == "internalLink" => {
-      _type,
+      linkLabel,
       page->{
         _id,
-        _type,
         title,
         slug
       }
     },
     // For external links
     _type == "externalLink" => {
-      _type,
       linkLabel,
       link{
-        _type,
-        _id,
         href
       }
     }
   },
   socialMediaLinks[]{
-    _key,
-    _type,
-    _id,
-    href,
-    title
+    href
   }
 }
 `);
+
 export const fetchFooter = defineQuery(`
   *[_type == "footer"][0]{
     _id,
@@ -61,28 +68,7 @@ export const fetchFooter = defineQuery(`
       _key,
       _type,
       _id,
-      href,
-    },
-    services[]{
-      _key,
-      _type,
-      _id,
-      // For serviceReference
-      _type == "serviceReference" => {
-        _type,
-        _id,
-        serviceItems->{
-          _id,
-          _type,
-          service
-        }
-      },
-      // For customServiceLabel
-      _type == "customServiceLabel" => {
-        _type,
-        _id,
-        label
-      }
+      href
     },
     rights
   }
@@ -96,12 +82,18 @@ export const fetchHome = defineQuery(`
   slug,
   blockList[],
   seo {
-    title,
-    description,
-    image {
-      asset->{
-        _id,
-        url
+    metaTitle,
+    metaDescription,
+    metaImage {
+      _type,
+      media {
+        _type,
+        alt,
+        asset->{
+          _id,
+          _ref,
+          _type,
+        },
       }
     }
   }
@@ -115,12 +107,18 @@ export const fetchPage = defineQuery(`
     slug,
     blockList[],
     seo {
-      title,
-      description,
-      image {
-        asset->{
-          _id,
-          url
+      metaTitle,
+      metaDescription,
+      metaImage {
+        _type,
+        media {
+          _type,
+          alt,
+          asset->{
+            _id,
+            _ref,
+            _type,
+          },
         }
       }
     }
