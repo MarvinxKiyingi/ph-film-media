@@ -10,11 +10,10 @@ const imageBuilder = createImageUrlBuilder({
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const urlForImage = (source: any) => {
-  // Ensure that source image contains a valid reference
-  if (!source?.asset?._ref) {
+  // Accept either _ref or _id for the asset
+  if (!source?.asset?._ref && !source?.asset?._id) {
     return undefined;
   }
-
   return imageBuilder?.image(source).auto('format').fit('max');
 };
 

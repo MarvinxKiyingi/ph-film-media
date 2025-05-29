@@ -511,7 +511,7 @@ export type FetchAllPageSlugsResult = Array<{
   slug: string | null;
 }>;
 // Variable: settingsQuery
-// Query: *[_type == "settings"][0]{      _id,      _type,      seo {        metaTitle,        metaDescription,        metaImage {          media {            _type,            alt,            asset->{              _id,              _ref,              _type,            },          }        }      },      distributionMovieDetailTitles {        directorsLabel,        writersLabel,        actorsLabel,        languagesLabel,        releaseDateLabel,        durationLabel      }    }
+// Query: *[_type == "settings"][0]{      _id,      _type,      seo {        metaTitle,        metaDescription,        metaImage {          media {            _type,            alt,            crop,            hotspot,            asset->{              _id,              _ref,              _type,            },          }        }      },      distributionMovieDetailTitles {        directorsLabel,        writersLabel,        actorsLabel,        languagesLabel,        releaseDateLabel,        durationLabel      }    }
 export type SettingsQueryResult = {
   _id: string;
   _type: "settings";
@@ -522,6 +522,8 @@ export type SettingsQueryResult = {
       media: {
         _type: "image";
         alt: string | null;
+        crop: SanityImageCrop | null;
+        hotspot: SanityImageHotspot | null;
         asset: {
           _id: string;
           _ref: null;
@@ -598,7 +600,7 @@ export type FetchFooterResult = {
   rights: string | null;
 } | null;
 // Variable: fetchHome
-// Query: *[_type == "page" && slug.current == '/'][0]{  _id,  _type,  title,  slug,  blockList[],  seo {    metaTitle,    metaDescription,    metaImage {      _type,      media {        _type,        alt,        asset->{          _id,          _ref,          _type,        },      }    }  }}
+// Query: *[_type == "page" && slug.current == '/'][0]{  _id,  _type,  title,  slug,  blockList[],  seo {    metaTitle,    metaDescription,    metaImage {      _type,      media {        _type,        alt,        crop,        hotspot,        asset->{          _id,          _ref,          _type,        },      }    }  }}
 export type FetchHomeResult = {
   _id: string;
   _type: "page";
@@ -627,6 +629,8 @@ export type FetchHomeResult = {
       media: {
         _type: "image";
         alt: string | null;
+        crop: SanityImageCrop | null;
+        hotspot: SanityImageHotspot | null;
         asset: {
           _id: string;
           _ref: null;
@@ -637,7 +641,7 @@ export type FetchHomeResult = {
   } | null;
 } | null;
 // Variable: fetchPage
-// Query: *[_type == "page" && slug.current == $slug][0]{    _id,    _type,    title,    slug,    blockList[],    seo {      metaTitle,      metaDescription,      metaImage {        _type,        media {          _type,          alt,          asset->{            _id,            _ref,            _type,          },        }      }    }  }
+// Query: *[_type == "page" && slug.current == $slug][0]{    _id,    _type,    title,    slug,    blockList[],    seo {      metaTitle,      metaDescription,      metaImage {        _type,        media {          _type,          alt,          crop,          hotspot,          asset->{            _id,            _ref,            _type,          },        }      }    }  }
 export type FetchPageResult = {
   _id: string;
   _type: "page";
@@ -666,6 +670,8 @@ export type FetchPageResult = {
       media: {
         _type: "image";
         alt: string | null;
+        crop: SanityImageCrop | null;
+        hotspot: SanityImageHotspot | null;
         asset: {
           _id: string;
           _ref: null;
@@ -681,10 +687,10 @@ import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
     "\n  *[_type == \"page\" && defined(slug.current)]{\n    \"slug\": slug.current\n  }\n": FetchAllPageSlugsResult;
-    "\n    *[_type == \"settings\"][0]{\n      _id,\n      _type,\n      seo {\n        metaTitle,\n        metaDescription,\n        metaImage {\n          media {\n            _type,\n            alt,\n            asset->{\n              _id,\n              _ref,\n              _type,\n            },\n          }\n        }\n      },\n      distributionMovieDetailTitles {\n        directorsLabel,\n        writersLabel,\n        actorsLabel,\n        languagesLabel,\n        releaseDateLabel,\n        durationLabel\n      }\n    }\n    ": SettingsQueryResult;
+    "\n    *[_type == \"settings\"][0]{\n      _id,\n      _type,\n      seo {\n        metaTitle,\n        metaDescription,\n        metaImage {\n          media {\n            _type,\n            alt,\n            crop,\n            hotspot,\n            asset->{\n              _id,\n              _ref,\n              _type,\n            },\n          }\n        }\n      },\n      distributionMovieDetailTitles {\n        directorsLabel,\n        writersLabel,\n        actorsLabel,\n        languagesLabel,\n        releaseDateLabel,\n        durationLabel\n      }\n    }\n    ": SettingsQueryResult;
     "\n *[_type == \"header\"][0]{\n  linkReference[]{\n    _key,\n    _type,\n    _id,\n    // For internal links\n    _type == \"internalLink\" => {\n      linkLabel,\n      page->{\n        _id,\n        title,\n        slug\n      }\n    },\n    // For external links\n    _type == \"externalLink\" => {\n      linkLabel,\n      link{\n        href\n      }\n    }\n  },\n  socialMediaLinks[]{\n    href\n  }\n}\n": FetchHeaderResult;
     "\n  *[_type == \"footer\"][0]{\n    _id,\n    _type,\n    title,\n    text[],\n    socialMediaLinks[]{\n      _key,\n      _type,\n      _id,\n      href\n    },\n    rights\n  }\n": FetchFooterResult;
-    "\n*[_type == \"page\" && slug.current == '/'][0]{\n  _id,\n  _type,\n  title,\n  slug,\n  blockList[],\n  seo {\n    metaTitle,\n    metaDescription,\n    metaImage {\n      _type,\n      media {\n        _type,\n        alt,\n        asset->{\n          _id,\n          _ref,\n          _type,\n        },\n      }\n    }\n  }\n}\n": FetchHomeResult;
-    "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    slug,\n    blockList[],\n    seo {\n      metaTitle,\n      metaDescription,\n      metaImage {\n        _type,\n        media {\n          _type,\n          alt,\n          asset->{\n            _id,\n            _ref,\n            _type,\n          },\n        }\n      }\n    }\n  }\n  ": FetchPageResult;
+    "\n*[_type == \"page\" && slug.current == '/'][0]{\n  _id,\n  _type,\n  title,\n  slug,\n  blockList[],\n  seo {\n    metaTitle,\n    metaDescription,\n    metaImage {\n      _type,\n      media {\n        _type,\n        alt,\n        crop,\n        hotspot,\n        asset->{\n          _id,\n          _ref,\n          _type,\n        },\n      }\n    }\n  }\n}\n": FetchHomeResult;
+    "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    slug,\n    blockList[],\n    seo {\n      metaTitle,\n      metaDescription,\n      metaImage {\n        _type,\n        media {\n          _type,\n          alt,\n          crop,\n          hotspot,\n          asset->{\n            _id,\n            _ref,\n            _type,\n          },\n        }\n      }\n    }\n  }\n  ": FetchPageResult;
   }
 }

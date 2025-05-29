@@ -17,6 +17,8 @@ export const settingsQuery = defineQuery(`
           media {
             _type,
             alt,
+            crop,
+            hotspot,
             asset->{
               _id,
               _ref,
@@ -96,6 +98,8 @@ export const fetchHome = defineQuery(`
       media {
         _type,
         alt,
+        crop,
+        hotspot,
         asset->{
           _id,
           _ref,
@@ -121,6 +125,8 @@ export const fetchPage = defineQuery(`
         media {
           _type,
           alt,
+          crop,
+          hotspot,
           asset->{
             _id,
             _ref,

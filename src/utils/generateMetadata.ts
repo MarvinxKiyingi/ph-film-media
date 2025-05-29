@@ -1,100 +1,110 @@
 import type { Metadata, ResolvingMetadata } from 'next';
-import { sanityFetch } from '@/sanity/lib/live';
-import { urlForImage } from '@/sanity/lib/utils';
-import { FetchHomeResult, FetchPageResult, Settings } from '../../sanity.types';
-import { settingsQuery } from '@/sanity/lib/queries';
-
-// You may want to import your fetchPage query if you want to fetch page data by slug
-// import { fetchPage } from '@/sanity/lib/queries';
-
-type PageData = FetchHomeResult | FetchPageResult;
+import { resolveOpenGraphImage } from '@/sanity/lib/utils';
+import { fetchHome, fetchPage, settingsQuery } from '@/sanity/lib/queries';
+import { client } from '@/sanity/lib/client';
+import type {
+  FetchHomeResult,
+  SettingsQueryResult,
+  FetchPageResult,
+} from '../../sanity.types';
 
 type Props = {
   params: Promise<{ slug: string }>;
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 };
+const DEFAULT_TITLE = 'PH Film & Media';
+const DEFAULT_DESCRIPTION = 'Default description';
+const DEFAULT_IMAGE_URL = '/images/default-image.png';
+const DEFAULT_IMAGE_WIDTH = 1200;
+const DEFAULT_IMAGE_HEIGHT = 630;
+
+const DEFAULT_IMAGE = {
+  url: DEFAULT_IMAGE_URL,
+  alt: 'Page',
+  width: DEFAULT_IMAGE_WIDTH,
+  height: DEFAULT_IMAGE_HEIGHT,
+};
+
+function getSeoField<T>(
+  pageValue: T | undefined,
+  settingsValue: T | undefined,
+  fallback: T
+): T {
+  return pageValue ?? settingsValue ?? fallback;
+}
 
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  await params;
+  const { slug } = await params;
+  const isHome = !slug || slug === '/';
 
-  // Fetch settings
-  const { data: settings } = await sanityFetch({
-    query: settingsQuery,
-    stega: false,
-  });
+  const baseUrl =
+    process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL ||
+    'http://localhost:3000';
 
-  // Fetch page data if slug is provided (implement your actual fetchPage logic here)
-  const page: PageData | null = null;
+  const settings = await client.fetch<SettingsQueryResult>(settingsQuery);
+  const page = isHome
+    ? await client.fetch<FetchHomeResult>(fetchHome, { slug: '/' })
+    : await client.fetch<FetchPageResult>(fetchPage, { slug });
 
-  // Title and description logic
-  const pageTyped = page as FetchHomeResult | FetchPageResult | null;
-  const settingsTyped = settings as Settings | null;
-  const pageSeo = pageTyped?.seo;
-  const settingsSeo = settingsTyped?.seo;
+  const pageSeo = page?.seo;
+  const settingsSeo = settings?.seo;
 
-  const pageTitle =
-    page && typeof page === 'object' && 'title' in page
-      ? (page as FetchHomeResult | FetchPageResult)?.title
-      : undefined;
-  const title =
-    pageSeo?.metaTitle ??
-    pageTitle ??
-    settingsSeo?.metaTitle ??
-    'PH Film & Media';
+  // Title
+  const fullTitle = (
+    getSeoField(
+      pageSeo?.metaTitle ?? page?.title ?? undefined,
+      settingsSeo?.metaTitle ?? undefined,
+      DEFAULT_TITLE
+    ) ?? DEFAULT_TITLE
+  ).slice(0, 65);
 
-  const fullTitle =
-    pageSeo?.metaTitle && settingsSeo?.metaTitle
-      ? `${pageSeo.metaTitle} | ${settingsSeo.metaTitle}`
-      : pageTitle && settingsSeo?.metaTitle
-        ? `${pageTitle} | ${settingsSeo.metaTitle}`
-        : title;
-
+  // Description
   const description =
-    pageSeo?.metaDescription ??
-    settingsSeo?.metaDescription ??
-    'Default description';
+    getSeoField(
+      pageSeo?.metaDescription ?? undefined,
+      settingsSeo?.metaDescription ?? undefined,
+      DEFAULT_DESCRIPTION
+    ) ?? DEFAULT_DESCRIPTION;
 
-  // Image logic
-  const imageUrl =
-    urlForImage(pageSeo?.metaImage ?? settingsSeo?.metaImage)?.url() ??
-    'https://your-default-image.png';
-  // Optionally extend parent metadata
+  // Image
+  const image = pageSeo?.metaImage?.media || settingsSeo?.metaImage?.media;
+  const ogImage =
+    resolveOpenGraphImage(image, DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT) ||
+    DEFAULT_IMAGE;
+
   const previousImages = (await parent).openGraph?.images || [];
 
   return {
     title: fullTitle,
     description,
     openGraph: {
-      title,
+      title: fullTitle,
       description,
-      images: [imageUrl, ...previousImages],
+      images: [ogImage, ...previousImages],
     },
     twitter: {
       card: 'summary_large_image',
-      title,
+      title: fullTitle,
       description,
-      images: [imageUrl],
+      images: [ogImage.url],
     },
-    metadataBase: new URL(
-      process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL ||
-        'http://localhost:3000'
-    ),
+    metadataBase: new URL(baseUrl),
     alternates: {
-      canonical:
-        process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL ||
-        'http://localhost:3000',
+      canonical: isHome
+        ? `${baseUrl.replace(/\/$/, '')}/`
+        : `${baseUrl.replace(/\/$/, '')}/${slug.replace(/^\/+/, '')}`,
     },
     other: {
-      'og:site_name': settings?.seo?.metaTitle || 'PH Film & Media',
+      'og:site_name': settingsSeo?.metaTitle || DEFAULT_TITLE,
       'og:locale': 'en_US',
       'og:type': 'website',
       'og:image:width': '1200',
       'og:image:height': '630',
-      'og:image:alt': title,
-      'og:image:secure_url': imageUrl,
+      'og:image:alt': ogImage.alt,
+      'og:image:secure_url': ogImage.url,
       'og:image:type': 'image/jpeg',
     },
   };
