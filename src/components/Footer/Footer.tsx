@@ -1,17 +1,7 @@
 import Link from 'next/link';
 import type { FetchFooterResult } from '../../../sanity.types';
 import RichText from '../RichText/RichText';
-import Instagram from '../Icons/Instagram';
-
-const SOCIAL_ICON_MAP: { [key: string]: React.ReactNode } = {
-  instagram: <Instagram />,
-};
-
-function getSocialPlatformIcon(href?: string) {
-  if (!href) return null;
-  if (/instagram\.com/.test(href)) return SOCIAL_ICON_MAP.instagram;
-  return null;
-}
+import SocialIcons from '../Icons/SocialIcons';
 
 type IFooter = {
   data: FetchFooterResult;
@@ -33,7 +23,7 @@ const Footer = ({ data }: IFooter) => {
                   target='_blank'
                   rel='noopener noreferrer'
                 >
-                  {getSocialPlatformIcon(link.href ?? undefined)}
+                  <SocialIcons href={link.href ?? undefined} />
                 </Link>
               </li>
             ))}

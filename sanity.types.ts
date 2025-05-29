@@ -542,7 +542,7 @@ export type SettingsQueryResult = {
   } | null;
 } | null;
 // Variable: fetchHeader
-// Query: *[_type == "header"][0]{  linkReference[]{    _key,    _type,    _id,    // For internal links    _type == "internalLink" => {      linkLabel,      page->{        _id,        title,        slug      }    },    // For external links    _type == "externalLink" => {      linkLabel,      link{        href      }    }  },  socialMediaLinks[]{    href  }}
+// Query: *[_type == "header"][0]{  linkReference[]{    _key,    _type,    _id,    // For internal links    _type == "internalLink" => {      linkLabel,      page->{        _id,        title,        slug      }    },    // For external links    _type == "externalLink" => {      linkLabel,      link{        href      }    }  },  socialMediaLinks[]{    _key,    _type,    _id,    href  }}
 export type FetchHeaderResult = {
   linkReference: Array<{
     _key: string;
@@ -564,6 +564,9 @@ export type FetchHeaderResult = {
     } | null;
   }> | null;
   socialMediaLinks: Array<{
+    _key: string;
+    _type: "linkType";
+    _id: null;
     href: string | null;
   }> | null;
 } | null;
@@ -688,7 +691,7 @@ declare module "@sanity/client" {
   interface SanityQueries {
     "\n  *[_type == \"page\" && defined(slug.current)]{\n    \"slug\": slug.current\n  }\n": FetchAllPageSlugsResult;
     "\n    *[_type == \"settings\"][0]{\n      _id,\n      _type,\n      seo {\n        metaTitle,\n        metaDescription,\n        metaImage {\n          media {\n            _type,\n            alt,\n            crop,\n            hotspot,\n            asset->{\n              _id,\n              _ref,\n              _type,\n            },\n          }\n        }\n      },\n      distributionMovieDetailTitles {\n        directorsLabel,\n        writersLabel,\n        actorsLabel,\n        languagesLabel,\n        releaseDateLabel,\n        durationLabel\n      }\n    }\n    ": SettingsQueryResult;
-    "\n *[_type == \"header\"][0]{\n  linkReference[]{\n    _key,\n    _type,\n    _id,\n    // For internal links\n    _type == \"internalLink\" => {\n      linkLabel,\n      page->{\n        _id,\n        title,\n        slug\n      }\n    },\n    // For external links\n    _type == \"externalLink\" => {\n      linkLabel,\n      link{\n        href\n      }\n    }\n  },\n  socialMediaLinks[]{\n    href\n  }\n}\n": FetchHeaderResult;
+    "\n *[_type == \"header\"][0]{\n  linkReference[]{\n    _key,\n    _type,\n    _id,\n    // For internal links\n    _type == \"internalLink\" => {\n      linkLabel,\n      page->{\n        _id,\n        title,\n        slug\n      }\n    },\n    // For external links\n    _type == \"externalLink\" => {\n      linkLabel,\n      link{\n        href\n      }\n    }\n  },\n  socialMediaLinks[]{\n    _key,\n    _type,\n    _id,\n    href\n  }\n}\n": FetchHeaderResult;
     "\n  *[_type == \"footer\"][0]{\n    _id,\n    _type,\n    title,\n    text[],\n    socialMediaLinks[]{\n      _key,\n      _type,\n      _id,\n      href\n    },\n    rights\n  }\n": FetchFooterResult;
     "\n*[_type == \"page\" && slug.current == '/'][0]{\n  _id,\n  _type,\n  title,\n  slug,\n  blockList[],\n  seo {\n    metaTitle,\n    metaDescription,\n    metaImage {\n      _type,\n      media {\n        _type,\n        alt,\n        crop,\n        hotspot,\n        asset->{\n          _id,\n          _ref,\n          _type,\n        },\n      }\n    }\n  }\n}\n": FetchHomeResult;
     "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    slug,\n    blockList[],\n    seo {\n      metaTitle,\n      metaDescription,\n      metaImage {\n        _type,\n        media {\n          _type,\n          alt,\n          crop,\n          hotspot,\n          asset->{\n            _id,\n            _ref,\n            _type,\n          },\n        }\n      }\n    }\n  }\n  ": FetchPageResult;

@@ -62,6 +62,9 @@ export const fetchHeader = defineQuery(`
     }
   },
   socialMediaLinks[]{
+    _key,
+    _type,
+    _id,
     href
   }
 }
