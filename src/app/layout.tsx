@@ -21,7 +21,7 @@ export default async function RootLayout({
   return (
     <html lang='en'>
       <body
-        className={`flex flex-col ${oswald.variable} ${lato.variable} antialiased`}
+        className={`flex flex-col antialiased ${lato.variable} ${oswald.variable}`}
       >
         {children}
       </body>

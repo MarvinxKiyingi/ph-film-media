@@ -66,7 +66,7 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({
             />
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className='text-h-base font-oswald uppercase leading-[25.2px] cursor-pointer w-full text-start'
+              className='text-h-base font-oswald uppercase leading-[1] cursor-pointer w-full text-start'
               tabIndex={0}
               role='button'
               aria-label='Menu'

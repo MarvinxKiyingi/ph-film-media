@@ -1,15 +1,11 @@
 @import 'tailwindcss';
 @tailwind utilities;
 
-:root {
-}
-
-@theme inline {
-  --font-oswald: var(--font-oswald);
-  --font-lato: var(--font-lato);
-}
-
 @theme {
+  --font-oswald: 'Oswald', ui-sans-serif, system-ui, sans-serif;
+  --font-lato: 'Lato', ui-sans-serif, system-ui, sans-serif;
+  --default-font-family: var(--font-lato);
+
   /* Header scale */
   --text-h-xs: 0.75rem; /* 12px */
   --text-h-sm: 1rem; /* 16px */
@@ -34,8 +30,8 @@
 body {
   background: var(--color-black);
   color: var(--color-white);
-
-  @apply font-lato min-h-svh lg:min-h-screen bg-black text-white;
+  font-family: var(--default-font-family);
+  @apply min-h-svh lg:min-h-screen bg-black text-white;
 }
 
 h1,
@@ -44,5 +40,5 @@ h3,
 h4,
 h5,
 h6 {
-  @apply font-oswald;
+  font-family: var(--font-oswald);
 }
