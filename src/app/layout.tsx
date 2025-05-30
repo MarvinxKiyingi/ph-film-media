@@ -13,6 +13,17 @@ const lato = Lato({
   weight: ['400', '700'],
 });
 
+export const metadata = {
+  title: 'Ph Film & Media',
+  icons: {
+    icon: '/icon1.png',
+    apple: '/apple-icon.png',
+    other: [{ rel: 'mask-icon', url: '/icon0.svg', color: '#fff' }],
+  },
+  manifest: '/manifest.json',
+  themeColor: '#ffffff',
+};
+
 export default async function RootLayout({
   children,
 }: Readonly<{
