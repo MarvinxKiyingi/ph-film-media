@@ -35,3 +35,6 @@ export function dataAttr(config: DataAttributeConfig) {
     baseUrl: studioUrl,
   }).combine(config);
 }
+
+// for sanity image component url
+export const baseUrl = `https://cdn.sanity.io/images/${projectId}/${dataset}/`;

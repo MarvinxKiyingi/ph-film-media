@@ -23,6 +23,17 @@ export const settingsQuery = defineQuery(`
               _id,
               _ref,
               _type,
+              _createdAt,
+              _updatedAt,
+              _rev,
+              url,
+              metadata {
+                lqip,
+                dimensions {
+                  width,
+                  height
+                }
+              }
             },
           }
         }
@@ -41,6 +52,7 @@ export const settingsQuery = defineQuery(`
 export const fetchHeader = defineQuery(`
  *[_type == "header"][0]{
   linkReference[]{
+    id,
     _key,
     _type,
     _id,
@@ -92,7 +104,304 @@ export const fetchHome = defineQuery(`
   _type,
   title,
   slug,
-  blockList[],
+  blockList[]{
+    // Hero Block
+    _type == "hero" => {
+      _type,
+      mediaCard[]{
+        id,
+        cardImage{
+          media{
+            alt,
+            crop,
+            hotspot,
+            asset->{
+              _id,
+              _ref,
+              _type,
+              _createdAt,
+              _updatedAt,
+              _rev,
+              url,
+              metadata {
+                lqip,
+                dimensions {
+                  width,
+                  height
+                }
+              }
+            }
+          }
+        },
+        title,
+        infoItems[]{
+          id,
+          infoItemTitle
+        },
+        buttonLabel,
+        internalButtonLink->{_id, title, slug},
+        externalButtonLink{href}
+      },
+      logo{
+        media{
+          alt,
+          crop,
+          hotspot,
+          asset->{
+            _id,
+            _ref,
+            _type,
+            _createdAt,
+            _updatedAt,
+            _rev,
+            url,
+            metadata {
+              lqip,
+              dimensions {
+                width,
+                height
+              }
+            }
+          }
+        }
+      }
+    },
+    // Media Carousel Block
+    _type == "mediaCarousel" => {
+      _type,
+      carouselItems[]{
+        id,
+        mediaItem{
+          media{
+            alt,
+            crop,
+            hotspot,  
+            asset->{
+              _id,
+              _ref,
+              _type,
+              _createdAt,
+              _updatedAt,
+              _rev,
+              url,
+              metadata {
+                lqip,
+                dimensions {
+                  width,
+                  height
+                }
+              }
+            }
+          }
+        },
+        title
+      }
+    },
+    // Movie Club List Block
+    _type == "movieClubList" => {
+      _type,
+      movies[]{
+        id,
+        movie->{
+          _id,
+          title,
+          moviePoster{
+            media{
+              alt,
+              crop,
+              hotspot,
+              asset->{
+                _id,
+                _ref,
+                _type,
+                _createdAt,
+                _updatedAt,
+                _rev,
+                url,
+                metadata {
+                  lqip,
+                  dimensions {
+                    width,
+                    height
+                  }
+                }
+              }
+            }
+          },
+          movieBanner{
+            media{
+              alt,
+              crop,
+              hotspot,
+              asset->{
+                _id,
+                _ref,
+                _type,
+                _createdAt,
+                _updatedAt,
+                _rev,
+                url,
+                metadata {
+                  lqip,
+                  dimensions {
+                    width,
+                    height
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    // Movie Hero Block
+    _type == "movieHero" => {
+      _type,
+      mediaItems{
+        media{
+          alt,
+          crop,
+          hotspot,
+          asset->{
+            _id,
+            _ref,
+            _type,
+            _createdAt,
+            _updatedAt,
+            _rev,
+            url,
+            metadata {
+              lqip,
+              dimensions {
+                width,
+                height
+              }
+            }
+          }
+        }
+      }
+    },
+    // Image With Text Block
+    _type == "imageWithText" => {
+      _type,
+      mediaItem{
+        media{
+          alt,
+          crop,
+          hotspot,
+          asset->{
+            _id,
+            _ref,
+            _type,
+            _createdAt,
+            _updatedAt,
+            _rev,
+            url,
+            metadata {
+              lqip,
+              dimensions {
+                width,
+                height
+              }
+            }
+          }
+        }
+      },
+      mediaTitle,
+      textSection[]{
+        id,
+        title,
+        richText
+      }
+    },
+    // Logo Carousel Block
+    _type == "logoCarousel" => {
+      _type,
+      logoItems[]{
+        id,
+        mediaItem{
+          media{
+            alt,
+            crop,
+            hotspot,
+            asset->{
+              _id,
+              _ref,
+              _type,
+              _createdAt,
+              _updatedAt,
+              _rev,
+              url,
+              metadata {
+                lqip,
+                dimensions {
+                  width,
+                  height
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    // Distribution List Block
+    _type == "distributionList" => {
+      _type,
+      movies[]{
+        id,
+        movie->{
+          _id,
+          title,
+          moviePoster{
+            media{
+              alt,
+              crop,
+              hotspot,
+              asset->{
+                _id,
+                _ref,
+                _type,
+                _createdAt,
+                _updatedAt,
+                _rev,
+                url,
+                metadata {
+                  lqip,
+                  dimensions {
+                    width,
+                    height
+                  }
+                }
+              }
+            }
+          },
+          movieBanner{
+            media{
+              alt,
+              crop,
+              hotspot,
+              asset->{
+                _id,
+                _ref,
+                _type,
+                _createdAt,
+                _updatedAt,
+                _rev,
+                url,
+                metadata {
+                  lqip,
+                  dimensions {
+                    width,
+                    height
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
   seo {
     metaTitle,
     metaDescription,
@@ -107,19 +416,328 @@ export const fetchHome = defineQuery(`
           _id,
           _ref,
           _type,
+          _createdAt,
+          _updatedAt,
+          _rev,
+          url,
+          metadata {
+            lqip,
+            dimensions {
+              width,
+              height
+            }
+          }
         },
       }
     }
   }
 }
 `);
+
 export const fetchPage = defineQuery(`
   *[_type == "page" && slug.current == $slug][0]{
     _id,
     _type,
     title,
     slug,
-    blockList[],
+    blockList[]{
+      // Hero Block
+      _type == "hero" => {
+        _type,
+        mediaCard[]{
+          id,
+          cardImage{
+            media{
+              alt,
+              crop,
+              hotspot,
+              asset->{
+                  _id,
+                  _ref,
+                _type,
+                _createdAt,
+                _updatedAt,
+                _rev,
+                url,
+                metadata {
+                  lqip,
+                  dimensions {
+                    width,
+                    height
+                  }
+                }
+              }
+            }
+          },
+          title,
+          infoItems[]{
+            id,
+            infoItemTitle
+          },
+          buttonLabel,
+          internalButtonLink->{_id, title, slug},
+          externalButtonLink{href}
+        },
+        logo{
+          media{
+            alt,
+            crop,
+            hotspot,
+            asset->{
+              _id,
+              _ref,
+              _type,
+              _createdAt,
+              _updatedAt,
+              _rev,
+              url,
+              metadata {
+                lqip,
+                dimensions {
+                  width,
+                  height
+                }
+              }
+            }
+          }
+        }
+      },
+      // Media Carousel Block
+      _type == "mediaCarousel" => {
+        _type,
+        carouselItems[]{
+          id,
+          mediaItem{
+            media{
+              alt,
+              crop,
+              hotspot,
+                asset->{
+                  _id,
+                  _ref,
+                  _type,
+                  _createdAt,
+                  _updatedAt,
+                  _rev,
+                  url,
+                  metadata {
+                    lqip,
+                    dimensions {
+                      width,
+                      height
+                    }
+                  }
+                }
+            }
+          },
+          title
+        }
+      },
+      // Movie Club List Block
+      _type == "movieClubList" => {
+        _type,
+        movies[]{
+          id,
+          movie->{
+            _id,
+            title,
+            moviePoster{
+              media{
+                alt,
+                crop,
+                hotspot,
+                asset->{
+                  _id,
+                  _ref,
+                  _type,
+                  _createdAt,
+                  _updatedAt,
+                  _rev,
+                  url,
+                  metadata {
+                    lqip,
+                    dimensions {
+                      width,
+                      height
+                    }
+                  }
+                }
+              }
+            },
+            movieBanner{
+              media{
+                alt,
+                crop,
+                hotspot,
+                asset->{
+                    _id,
+                    _ref,
+                  _type,
+                  _createdAt,
+                  _updatedAt,
+                  _rev,
+                  url,
+                  metadata {
+                    lqip,
+                    dimensions {
+                      width,
+                      height
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      // Movie Hero Block
+      _type == "movieHero" => {
+        _type,
+        mediaItems{
+          media{
+            alt,
+            crop,
+            hotspot,  
+            asset->{
+              _id,
+              _ref,
+              _type,
+              _createdAt,
+              _updatedAt,
+              _rev,
+              url,
+              metadata {
+                lqip,
+                dimensions {
+                  width,
+                  height
+                }
+              }
+            }
+          }
+        }
+      },
+      // Image With Text Block
+      _type == "imageWithText" => {
+        _type,
+        mediaItem{
+          media{
+            alt,
+            crop,
+            hotspot,
+            asset->{
+              _id,
+              _ref,
+              _type,
+              _createdAt,
+              _updatedAt,
+              _rev,
+              url,
+              metadata {
+                lqip,
+                dimensions {
+                  width,
+                  height
+                }
+              }
+            }
+          }
+        },
+        mediaTitle,
+        textSection[]{
+          id,
+          title,
+          richText
+        }
+      },
+      // Logo Carousel Block
+      _type == "logoCarousel" => {
+        _type,
+        logoItems[]{
+          id,
+          mediaItem{
+            media{
+              alt,
+              crop,
+              hotspot,
+              asset->{
+                _id,
+                _ref,
+                _type,
+                _createdAt,
+                _updatedAt,
+                _rev,
+                url,
+                metadata {
+                  lqip,
+                  dimensions {
+                    width,
+                    height
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      // Distribution List Block
+      _type == "distributionList" => {
+        _type,
+        movies[]{
+          id,
+          movie->{
+            _id,
+            title,
+            moviePoster{
+              media{
+                alt,
+                crop,
+                hotspot,
+                asset->{
+                  _id,
+                  _ref,
+                  _type,
+                  _createdAt,
+                  _updatedAt,
+                  _rev,
+                  url,
+                  metadata {
+                    lqip,
+                    dimensions {
+                      width,
+                      height
+                    }
+                  }
+                }
+              }
+            },
+            movieBanner{
+              media{
+                alt,
+                crop,
+                hotspot,
+                asset->{
+                  _id,
+                  _ref,
+                  _type,
+                  _createdAt,
+                  _updatedAt,
+                  _rev,
+                  url,
+                  metadata {
+                    lqip,
+                    dimensions {
+                      width,
+                      height
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     seo {
       metaTitle,
       metaDescription,
@@ -134,6 +752,17 @@ export const fetchPage = defineQuery(`
             _id,
             _ref,
             _type,
+            _createdAt,
+            _updatedAt,
+            _rev,
+            url,
+            metadata {
+              lqip,
+              dimensions {
+                width,
+                height
+              }
+            }
           },
         }
       }
