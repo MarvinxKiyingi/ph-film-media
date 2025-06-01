@@ -10,7 +10,7 @@ export default function Custom404() {
           href='/'
           className='text-b-base font-bold px-8 py-4 rounded-[8px] text-black bg-white '
         >
-          Go back to the home page
+          Gå till hem
         </Link>
       </div>
     </div>

@@ -1,4 +1,5 @@
-import React from 'react';
+'use client';
+import React, { useState } from 'react';
 import { MenuButton } from '../MenuButton/MenuButton';
 import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
@@ -16,16 +17,11 @@ const menuVariants = {
 };
 
 type IMobileMenuBar = {
-  isOpen: boolean;
-  setIsOpen: (isOpen: boolean) => void;
   data: FetchHeaderResult;
 };
 
-const MobileMenuBar: React.FC<IMobileMenuBar> = ({
-  isOpen,
-  setIsOpen,
-  data,
-}) => {
+const MobileMenuBar: React.FC<IMobileMenuBar> = ({ data }) => {
+  const [isOpen, setIsOpen] = useState(false);
   if (!data) return null;
 
   const { linkReference, socialMediaLinks } = data;

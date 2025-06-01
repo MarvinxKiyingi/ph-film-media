@@ -31,13 +31,23 @@ export default async function HomePage() {
         }
       : undefined
   );
+
   if (!data) return null;
 
   return (
-    <div className='flex flex-col min-h-svh pt-52'>
+    <div
+      className={`flex flex-col min-h-svh lg:min-h-screen pt-52 ${data.blockList?.[0]._type === 'hero' ? 'lg:pt-0' : 'lg:pt-48'}`}
+    >
       {data.blockList?.map((block: BlockListItem, idx: number) => {
         if (block._type === 'hero') {
-          return <Hero key={idx} block={block} idx={idx} />;
+          return (
+            <Hero
+              key={idx}
+              block={block}
+              idx={idx}
+              blockLength={data.blockList?.length || 0}
+            />
+          );
         } else {
           return null;
         }

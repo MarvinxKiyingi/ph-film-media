@@ -11,7 +11,7 @@ const DesktopMenuBar = ({ data }: IDesktopMenuBar) => {
   const { linkReference } = data;
 
   return (
-    <ul className='hidden lg:flex flex-col px-4 items-start text-b-lg lg:col-span-1 lg:flex-row lg:w-full lg:justify-end lg:gap-0 lg:text-b-sm lg:font-bold'>
+    <ul className='hidden lg:flex flex-col px-4 items-start text-b-lg lg:col-span-1 lg:flex-row lg:w-full lg:justify-end lg:gap-0 lg:text-b-sm lg:font-bold lg:px-0'>
       {linkReference?.map((link) =>
         link._type === 'externalLink' ? (
           <li

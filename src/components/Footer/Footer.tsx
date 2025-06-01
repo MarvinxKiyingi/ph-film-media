@@ -1,48 +1,22 @@
-import Link from 'next/link';
-import type { FetchFooterResult } from '../../../sanity.types';
-import RichText from '../RichText/RichText';
-import SocialIcons from '../Icons/SocialIcons';
+'use client';
+import { usePathname } from 'next/navigation';
+import { FetchFooterResult } from '../../../sanity.types';
+import FooterContent from './FooterContent';
 
-type IFooter = {
-  data: FetchFooterResult;
-};
+const Footer = ({
+  footer,
+  hasMultipleBlocks,
+}: {
+  footer: FetchFooterResult;
+  hasMultipleBlocks: boolean;
+}) => {
+  const pathname = usePathname();
+  const isHome = pathname === '/';
+  const showFooter = !isHome || (isHome && hasMultipleBlocks);
 
-const Footer = ({ data }: IFooter) => {
-  if (!data) return null;
-  const { title, text, socialMediaLinks, rights } = data;
+  if (!showFooter) return null;
 
-  return (
-    <footer className='grid gap-y-10 px-5 py-10 lg:p-10'>
-      <div className='flex flex-col gap-10 lg:grid lg:grid-cols-2 lg:gap-2'>
-        <div className='lg:col-span-1'>
-          <ul>
-            {socialMediaLinks?.map((link) => (
-              <li key={link._key}>
-                <Link
-                  href={link.href || ''}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                >
-                  <SocialIcons href={link.href ?? undefined} />
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <div className='grid gap-4 lg:col-span-1'>
-          <h3 className='text-h-lg uppercase lg:border-b lg:border-gray lg:pb-1'>
-            {title}
-          </h3>
-          {text && <RichText content={text} className='text-b-sm gap-2' />}
-        </div>
-      </div>
-
-      <p className='text-b-xs font-bold lg:w-full lg:text-end'>
-        {rights} ⏤ {new Date().getFullYear()} ©
-      </p>
-    </footer>
-  );
+  return <FooterContent data={footer} />;
 };
 
 export default Footer;

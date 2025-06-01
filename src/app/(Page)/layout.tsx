@@ -6,21 +6,40 @@ import { SanityLive } from '@/sanity/lib/live';
 import { DisableDraftMode } from '@/components/DisableDraftMode';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
-import { fetchFooter, fetchHeader } from '@/sanity/lib/queries';
+import { token } from '@/sanity/lib/token';
+import { fetchFooter, fetchHome } from '@/sanity/lib/queries';
+import { FetchHomeResult } from '../../../sanity.types';
 import { client } from '@/sanity/lib/client';
 
 export default async function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
-  const header = await client.fetch(fetchHeader);
+}) {
+  const { isEnabled } = await draftMode();
+
+  const data: FetchHomeResult = await client.fetch(
+    fetchHome,
+    { slug: '/' },
+    isEnabled
+      ? {
+          perspective: 'previewDrafts',
+          useCdn: false,
+          stega: true,
+          token: token,
+        }
+      : undefined
+  );
+
   const footer = await client.fetch(fetchFooter);
+  const hasMultipleBlocks = (data?.blockList?.length || 0) > 1;
+
   return (
     <>
-      <Header data={header} />
+      <Header />
       <main className='flex flex-col flex-1'>{children}</main>
-      <Footer data={footer} />
+      <Footer footer={footer} hasMultipleBlocks={hasMultipleBlocks} />
+
       <SanityLive />
       {(await draftMode()).isEnabled && (
         <>

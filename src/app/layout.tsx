@@ -21,6 +21,9 @@ export const metadata = {
     other: [{ rel: 'mask-icon', url: '/icon0.svg', color: '#fff' }],
   },
   manifest: '/manifest.json',
+};
+
+export const viewport = {
   themeColor: '#ffffff',
 };
 
