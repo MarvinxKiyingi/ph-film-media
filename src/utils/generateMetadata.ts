@@ -53,13 +53,11 @@ export async function generateMetadata(
   const settingsSeo = settings?.seo;
 
   // Title
-  const fullTitle = (
-    getSeoField(
-      pageSeo?.metaTitle ?? page?.title ?? undefined,
-      settingsSeo?.metaTitle ?? undefined,
-      DEFAULT_TITLE
-    ) ?? DEFAULT_TITLE
-  ).slice(0, 65);
+  const titleFromPage = pageSeo?.metaTitle ?? page?.title;
+  const fullTitle =
+    titleFromPage && titleFromPage !== DEFAULT_TITLE
+      ? `${titleFromPage} | ${DEFAULT_TITLE}`
+      : DEFAULT_TITLE;
 
   // Description
   const description =
