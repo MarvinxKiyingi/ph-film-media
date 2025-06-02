@@ -18,9 +18,9 @@ const Button: React.FC<ButtonProps> = ({
 
   const isExternal = /^https?:\/\//.test(href);
   const filterClass = fill
-    ? 'bg-white text-black'
-    : 'bg-transparent text-white border border-white';
-  const buttonClass = `text-b-sm lg:text-b-base px-8 py-4 rounded-[8px] ${filterClass} ${className}`;
+    ? 'bg-white text-black hover:bg-transparent border border-white hover:border-white hover:text-white'
+    : 'bg-transparent text-white border border-white hover:bg-white hover:text-black';
+  const buttonClass = `text-b-sm lg:text-b-base px-8 py-4 rounded-[8px] transition-bg duration-300 ${filterClass} ${className}`;
 
   if (isExternal) {
     return (

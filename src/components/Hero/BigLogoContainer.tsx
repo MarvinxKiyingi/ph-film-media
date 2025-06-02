@@ -25,7 +25,7 @@ const BigLogoContainer = ({
   return (
     <div
       id='big-logo-container'
-      className='relative px-5 lg:grid lg:gap-2 lg:grid-cols-12 lg:col-span-1 lg:order-1 lg:px-0 lg:overflow-scroll'
+      className='relative px-5 lg:grid lg:gap-2 lg:grid-cols-12 lg:col-span-1 lg:order-1 lg:px-0 lg:overflow-auto'
     >
       <div
         aria-label='Ph Film & Media logo'

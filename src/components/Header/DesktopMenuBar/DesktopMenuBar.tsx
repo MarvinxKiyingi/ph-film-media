@@ -1,5 +1,8 @@
+'use client'; // Required if you're using this in a Client Component
+
 import { FetchHeaderResult } from '../../../../sanity.types';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import React from 'react';
 
 type IDesktopMenuBar = {
@@ -7,41 +10,41 @@ type IDesktopMenuBar = {
 };
 
 const DesktopMenuBar = ({ data }: IDesktopMenuBar) => {
+  const pathname = usePathname();
   if (!data) return null;
+
   const { linkReference } = data;
 
   return (
-    <ul className='hidden lg:flex flex-col px-4 items-start text-b-lg lg:col-span-1 lg:flex-row lg:w-full lg:justify-end lg:gap-0 lg:text-b-sm lg:font-bold lg:px-0'>
-      {linkReference?.map((link) =>
-        link._type === 'externalLink' ? (
-          <li
-            key={link._key}
-            className='lg:hover:underline lg:hover:underline-offset-[6px] lg:pl-8'
-          >
+    <ul className='hidden lg:flex group flex-col px-4 items-start text-b-lg lg:col-span-1 lg:flex-row lg:w-full lg:justify-end lg:gap-0 lg:text-b-sm lg:font-bold lg:px-0'>
+      {linkReference?.map((link) => {
+        const isInternal = link._type === 'internalLink';
+        const slug = isInternal ? `/${link.page?.slug?.current || ''}` : '';
+        const isActive = pathname === slug;
+
+        const baseClasses =
+          'transition-colors duration-300 lg:pl-8 hover:text-white';
+        const colorClasses = isActive
+          ? 'text-white'
+          : 'text-white group-hover:text-gray-500';
+
+        return (
+          <li key={link._key} className=''>
             <Link
-              href={link.link?.href || ''}
-              className=''
-              target='_blank'
-              rel='noopener noreferrer'
+              href={isInternal ? slug : link.link?.href || ''}
+              target={link._type === 'externalLink' ? '_blank' : undefined}
+              rel={
+                link._type === 'externalLink'
+                  ? 'noopener noreferrer'
+                  : undefined
+              }
+              className={`${baseClasses} ${colorClasses}`}
             >
-              {link.linkLabel}
+              {isInternal ? link.page?.title : link.linkLabel}
             </Link>
           </li>
-        ) : link._type === 'internalLink' ? (
-          <li
-            key={link._key}
-            className='lg:hover:underline lg:hover:underline-offset-[6px] lg:pl-8'
-          >
-            <Link
-              key={link._key}
-              href={`/${link.page?.slug?.current || ''}`}
-              className=''
-            >
-              {link.page?.title}
-            </Link>
-          </li>
-        ) : null
-      )}
+        );
+      })}
     </ul>
   );
 };
