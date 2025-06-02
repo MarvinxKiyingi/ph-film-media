@@ -1,6 +1,6 @@
-export { services } from './services';
-export { movies } from './movies';
+export { distributions } from './distributions';
 export { languages } from './languages';
 export { actors } from './actors';
 export { directors } from './directors';
 export { writers } from './writers';
+export { movieClub } from './movieClub';

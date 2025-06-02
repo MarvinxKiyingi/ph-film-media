@@ -1,4 +1,5 @@
 import { ListIcon } from '@sanity/icons';
+
 import { defineField, defineType } from 'sanity';
 
 export const logoCarousel = defineType({

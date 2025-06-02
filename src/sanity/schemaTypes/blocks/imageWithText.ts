@@ -1,5 +1,5 @@
-import { ImageIcon, TiersIcon } from '@sanity/icons';
-import { defineField, defineType } from 'sanity';
+import {ImageIcon, TextIcon} from '@sanity/icons'
+import {defineField, defineType} from 'sanity'
 
 export const imageWithText = defineType({
   name: 'imageWithText',
@@ -38,33 +38,15 @@ export const imageWithText = defineType({
               type: 'richText',
             }),
           ],
-        },
-        {
-          type: 'object',
-          name: 'servicesList',
-          title: 'Services List',
-          fields: [
-            defineField({
-              name: 'title',
-              title: 'Title',
-              type: 'string',
-            }),
-            defineField({
-              name: 'services',
-              title: 'Services',
-              type: 'array',
-              of: [{ type: 'reference', to: [{ type: 'services' }] }],
-            }),
-          ],
           preview: {
             select: {
               title: 'title',
             },
-            prepare({ title }) {
+            prepare({title}) {
               return {
-                title: title || 'Services List',
-                media: TiersIcon,
-              };
+                title: title || 'Text Item',
+                media: TextIcon,
+              }
             },
           },
         },
@@ -75,12 +57,11 @@ export const imageWithText = defineType({
     select: {
       media: 'mediaItem.media',
     },
-    prepare({ media }) {
+    prepare({media}) {
       return {
         title: 'Image With Text',
-
-        media: media || ImageIcon,
-      };
+        media: media || TextIcon,
+      }
     },
   },
-});
+})

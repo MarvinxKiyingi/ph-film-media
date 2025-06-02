@@ -1,5 +1,5 @@
-import { LinkIcon, LaunchIcon } from '@sanity/icons';
-import { defineField, defineType } from 'sanity';
+import {LinkIcon, LaunchIcon} from '@sanity/icons'
+import {defineField, defineType} from 'sanity'
 
 export const header = defineType({
   name: 'header',
@@ -35,7 +35,7 @@ export const header = defineType({
               name: 'page',
               title: 'Page',
               type: 'reference',
-              to: [{ type: 'page' }],
+              to: [{type: 'page'}],
             },
           ],
           preview: {
@@ -43,13 +43,11 @@ export const header = defineType({
               title: 'linkLabel',
               pageTitle: 'page.title',
             },
-            prepare({ title, pageTitle }) {
+            prepare({title, pageTitle}) {
               return {
                 title: title ? title : pageTitle || 'No label',
-                subtitle: pageTitle
-                  ? `Link to: ${pageTitle}`
-                  : 'No page selected',
-              };
+                subtitle: pageTitle ? `Link to: ${pageTitle}` : 'No page selected',
+              }
             },
           },
         },
@@ -75,12 +73,12 @@ export const header = defineType({
               title: 'linkLabel',
               url: 'link.href',
             },
-            prepare({ title, url }) {
+            prepare({title, url}) {
               return {
                 title: title || 'No label',
                 subtitle: url ? `Link to: ${url}` : 'No URL',
                 media: LaunchIcon,
-              };
+              }
             },
           },
         },
@@ -89,11 +87,11 @@ export const header = defineType({
     defineField({
       name: 'socialMediaLinks',
       title: 'Social Media Links',
-      description: 'The links to the social media pages.',
+      description: 'This is used to display icons in the mobile navigation.',
       group: 'socialMedia',
       type: 'array',
-      of: [{ type: 'linkType' }],
-      validation: (Rule) => Rule.max(5),
+      of: [{type: 'linkType'}],
+      validation: (Rule) => Rule.max(3),
     }),
   ],
   preview: {
@@ -101,7 +99,7 @@ export const header = defineType({
       return {
         title: 'Navigation Items',
         media: LinkIcon,
-      };
+      }
     },
   },
-});
+})

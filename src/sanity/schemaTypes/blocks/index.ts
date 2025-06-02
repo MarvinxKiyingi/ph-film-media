@@ -1,6 +1,7 @@
-export { hero } from './hero';
-export { movieHero } from './movieHero';
-export { movieList } from './movieList';
-export { mediaCarousel } from './mediaCarousel';
-export { imageWithText } from './imageWithText';
-export { logoCarousel } from './logoCarousel';
+export {hero} from './hero'
+export {movieHero} from './movieHero'
+export {distributionList} from './distributionList'
+export {movieClubList} from './movieClubList'
+export {mediaCarousel} from './mediaCarousel'
+export {imageWithText} from './imageWithText'
+export {logoCarousel} from './logoCarousel'

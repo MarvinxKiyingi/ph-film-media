@@ -1,4 +1,4 @@
-import { ImagesIcon, ImageIcon } from '@sanity/icons';
+import { ImagesIcon, ImageIcon, TextIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
 
 export const hero = defineType({
@@ -44,6 +44,17 @@ export const hero = defineType({
                       type: 'string',
                     },
                   ],
+                  preview: {
+                    select: {
+                      title: 'infoItemTitle',
+                    },
+                    prepare({ title }) {
+                      return {
+                        title: title || 'No title',
+                        media: TextIcon,
+                      };
+                    },
+                  },
                 },
               ],
             },

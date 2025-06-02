@@ -13,61 +13,6 @@
  */
 
 // Source: schema.json
-export type SanityImagePaletteSwatch = {
-  _type: "sanity.imagePaletteSwatch";
-  background?: string;
-  foreground?: string;
-  population?: number;
-  title?: string;
-};
-
-export type SanityImagePalette = {
-  _type: "sanity.imagePalette";
-  darkMuted?: SanityImagePaletteSwatch;
-  lightVibrant?: SanityImagePaletteSwatch;
-  darkVibrant?: SanityImagePaletteSwatch;
-  vibrant?: SanityImagePaletteSwatch;
-  dominant?: SanityImagePaletteSwatch;
-  lightMuted?: SanityImagePaletteSwatch;
-  muted?: SanityImagePaletteSwatch;
-};
-
-export type SanityImageDimensions = {
-  _type: "sanity.imageDimensions";
-  height?: number;
-  width?: number;
-  aspectRatio?: number;
-};
-
-export type SanityFileAsset = {
-  _id: string;
-  _type: "sanity.fileAsset";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  originalFilename?: string;
-  label?: string;
-  title?: string;
-  description?: string;
-  altText?: string;
-  sha1hash?: string;
-  extension?: string;
-  mimeType?: string;
-  size?: number;
-  assetId?: string;
-  uploadId?: string;
-  path?: string;
-  url?: string;
-  source?: SanityAssetSourceData;
-};
-
-export type Geopoint = {
-  _type: "geopoint";
-  lat?: number;
-  lng?: number;
-  alt?: number;
-};
-
 export type Settings = {
   _id: string;
   _type: "settings";
@@ -75,10 +20,18 @@ export type Settings = {
   _updatedAt: string;
   _rev: string;
   seo?: {
-    title?: string;
-    description?: string;
-    socialImage?: MediaType;
+    metaTitle?: string;
+    metaDescription?: string;
+    metaImage?: MediaType;
     _type: "seo";
+  };
+  distributionMovieDetailTitles?: {
+    directorsLabel?: string;
+    writersLabel?: string;
+    actorsLabel?: string;
+    languagesLabel?: string;
+    releaseDateLabel?: string;
+    durationLabel?: string;
   };
 };
 
@@ -137,20 +90,6 @@ export type Footer = {
   socialMediaLinks?: Array<{
     _key: string;
   } & LinkType>;
-  services?: Array<{
-    serviceItems?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "services";
-    };
-    _type: "serviceReference";
-    _key: string;
-  } | {
-    label?: string;
-    _type: "customServiceLabel";
-    _key: string;
-  }>;
   rights?: string;
 };
 
@@ -160,9 +99,9 @@ export type Seo = {
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
-  title?: string;
-  description?: string;
-  socialImage?: MediaType;
+  metaTitle?: string;
+  metaDescription?: string;
+  metaImage?: MediaType;
 };
 
 export type RichText = Array<{
@@ -202,15 +141,6 @@ export type MediaGallery = {
   }>;
 };
 
-export type Services = {
-  _id: string;
-  _type: "services";
-  _createdAt: string;
-  _updatedAt: string;
-  _rev: string;
-  service?: string;
-};
-
 export type Languages = {
   _id: string;
   _type: "languages";
@@ -220,28 +150,28 @@ export type Languages = {
   language?: string;
 };
 
-export type MovieList = {
-  _type: "movieList";
+export type MovieHero = {
+  _type: "movieHero";
+  mediaItems?: MediaType;
+};
+
+export type MovieClubList = {
+  _type: "movieClubList";
   movies?: Array<{
     movie?: {
       _ref: string;
       _type: "reference";
       _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "movies";
+      [internalGroqTypeReferenceTo]?: "movieClub";
     };
     _type: "movie";
     _key: string;
   }>;
 };
 
-export type MovieHero = {
-  _type: "movieHero";
-  mediaItems?: MediaType;
-};
-
 export type MediaCarousel = {
   _type: "mediaCarousel";
-  carouselItems?: Array<{
+  mediaList?: Array<{
     mediaItem?: MediaType;
     title?: string;
     _type: "carouselItem";
@@ -266,17 +196,6 @@ export type ImageWithText = {
     title?: string;
     richText?: RichText;
     _type: "textItem";
-    _key: string;
-  } | {
-    title?: string;
-    services?: Array<{
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      _key: string;
-      [internalGroqTypeReferenceTo]?: "services";
-    }>;
-    _type: "servicesList";
     _key: string;
   }>;
 };
@@ -305,6 +224,20 @@ export type Hero = {
   logo?: MediaType;
 };
 
+export type DistributionList = {
+  _type: "distributionList";
+  movies?: Array<{
+    movie?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "distributions";
+    };
+    _type: "movie";
+    _key: string;
+  }>;
+};
+
 export type Page = {
   _id: string;
   _type: "page";
@@ -315,6 +248,8 @@ export type Page = {
   slug?: Slug;
   blockList?: Array<{
     _key: string;
+  } & DistributionList | {
+    _key: string;
   } & Hero | {
     _key: string;
   } & ImageWithText | {
@@ -323,20 +258,30 @@ export type Page = {
     _key: string;
   } & MediaCarousel | {
     _key: string;
-  } & MovieHero | {
+  } & MovieClubList | {
     _key: string;
-  } & MovieList>;
+  } & MovieHero>;
   seo?: {
-    title?: string;
-    description?: string;
-    socialImage?: MediaType;
+    metaTitle?: string;
+    metaDescription?: string;
+    metaImage?: MediaType;
     _type: "seo";
   };
 };
 
-export type Movies = {
+export type MovieClub = {
   _id: string;
-  _type: "movies";
+  _type: "movieClub";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  title?: string;
+  movieBanner?: MediaType;
+};
+
+export type Distributions = {
+  _id: string;
+  _type: "distributions";
   _createdAt: string;
   _updatedAt: string;
   _rev: string;
@@ -360,10 +305,6 @@ export type Movies = {
     };
     _type: "directorReference";
     _key: string;
-  } | {
-    text?: RichText;
-    _type: "customDirectorText";
-    _key: string;
   }>;
   writers?: Array<{
     writerItem?: {
@@ -373,10 +314,6 @@ export type Movies = {
       [internalGroqTypeReferenceTo]?: "writers";
     };
     _type: "writerReference";
-    _key: string;
-  } | {
-    text?: RichText;
-    _type: "customWriterText";
     _key: string;
   }>;
   actors?: Array<{
@@ -388,12 +325,7 @@ export type Movies = {
     };
     _type: "actorReference";
     _key: string;
-  } | {
-    text?: RichText;
-    _type: "customActorText";
-    _key: string;
   }>;
-  rating?: number;
   ticketLabel?: string;
   ticketLink?: LinkType;
   buttonLabel?: string;
@@ -401,6 +333,28 @@ export type Movies = {
   trailer?: LinkType;
   movieBanner?: MediaType;
   moviePoster?: MediaType;
+};
+
+export type MediaType = {
+  _type: "mediaType";
+  media?: {
+    asset?: {
+      _ref: string;
+      _type: "reference";
+      _weak?: boolean;
+      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
+    };
+    media?: unknown;
+    hotspot?: SanityImageHotspot;
+    crop?: SanityImageCrop;
+    alt?: string;
+    _type: "image";
+  };
+};
+
+export type LinkType = {
+  _type: "linkType";
+  href?: string;
 };
 
 export type Actors = {
@@ -430,9 +384,38 @@ export type Directors = {
   director?: string;
 };
 
-export type LinkType = {
-  _type: "linkType";
-  href?: string;
+export type SanityImagePaletteSwatch = {
+  _type: "sanity.imagePaletteSwatch";
+  background?: string;
+  foreground?: string;
+  population?: number;
+  title?: string;
+};
+
+export type SanityImagePalette = {
+  _type: "sanity.imagePalette";
+  darkMuted?: SanityImagePaletteSwatch;
+  lightVibrant?: SanityImagePaletteSwatch;
+  darkVibrant?: SanityImagePaletteSwatch;
+  vibrant?: SanityImagePaletteSwatch;
+  dominant?: SanityImagePaletteSwatch;
+  lightMuted?: SanityImagePaletteSwatch;
+  muted?: SanityImagePaletteSwatch;
+};
+
+export type SanityImageDimensions = {
+  _type: "sanity.imageDimensions";
+  height?: number;
+  width?: number;
+  aspectRatio?: number;
+};
+
+export type SanityImageHotspot = {
+  _type: "sanity.imageHotspot";
+  x?: number;
+  y?: number;
+  height?: number;
+  width?: number;
 };
 
 export type SanityImageCrop = {
@@ -443,12 +426,26 @@ export type SanityImageCrop = {
   right?: number;
 };
 
-export type SanityImageHotspot = {
-  _type: "sanity.imageHotspot";
-  x?: number;
-  y?: number;
-  height?: number;
-  width?: number;
+export type SanityFileAsset = {
+  _id: string;
+  _type: "sanity.fileAsset";
+  _createdAt: string;
+  _updatedAt: string;
+  _rev: string;
+  originalFilename?: string;
+  label?: string;
+  title?: string;
+  description?: string;
+  altText?: string;
+  sha1hash?: string;
+  extension?: string;
+  mimeType?: string;
+  size?: number;
+  assetId?: string;
+  uploadId?: string;
+  path?: string;
+  url?: string;
+  source?: SanityAssetSourceData;
 };
 
 export type SanityImageAsset = {
@@ -474,13 +471,6 @@ export type SanityImageAsset = {
   source?: SanityAssetSourceData;
 };
 
-export type SanityAssetSourceData = {
-  _type: "sanity.assetSourceData";
-  name?: string;
-  id?: string;
-  url?: string;
-};
-
 export type SanityImageMetadata = {
   _type: "sanity.imageMetadata";
   location?: Geopoint;
@@ -492,21 +482,11 @@ export type SanityImageMetadata = {
   isOpaque?: boolean;
 };
 
-export type MediaType = {
-  _type: "mediaType";
-  media?: {
-    asset?: {
-      _ref: string;
-      _type: "reference";
-      _weak?: boolean;
-      [internalGroqTypeReferenceTo]?: "sanity.imageAsset";
-    };
-    media?: unknown;
-    hotspot?: SanityImageHotspot;
-    crop?: SanityImageCrop;
-    alt?: string;
-    _type: "image";
-  };
+export type Geopoint = {
+  _type: "geopoint";
+  lat?: number;
+  lng?: number;
+  alt?: number;
 };
 
 export type Slug = {
@@ -515,65 +495,680 @@ export type Slug = {
   source?: string;
 };
 
-export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityFileAsset | Geopoint | Settings | Header | Footer | Seo | RichText | MediaGallery | Services | Languages | MovieList | MovieHero | MediaCarousel | LogoCarousel | ImageWithText | Hero | Page | Movies | Actors | Writers | Directors | LinkType | SanityImageCrop | SanityImageHotspot | SanityImageAsset | SanityAssetSourceData | SanityImageMetadata | MediaType | Slug;
+export type SanityAssetSourceData = {
+  _type: "sanity.assetSourceData";
+  name?: string;
+  id?: string;
+  url?: string;
+};
+
+export type AllSanitySchemaTypes = Settings | Header | Footer | Seo | RichText | MediaGallery | Languages | MovieHero | MovieClubList | MediaCarousel | LogoCarousel | ImageWithText | Hero | DistributionList | Page | MovieClub | Distributions | MediaType | LinkType | Actors | Writers | Directors | SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | Slug | SanityAssetSourceData;
 export declare const internalGroqTypeReferenceTo: unique symbol;
 // Source: ./src/sanity/lib/queries.ts
+// Variable: fetchAllPageSlugs
+// Query: *[_type == "page" && defined(slug.current)]{    "slug": slug.current  }
+export type FetchAllPageSlugsResult = Array<{
+  slug: string | null;
+}>;
 // Variable: settingsQuery
-// Query: *[_type == "settings"][0]{    _id,    title,    description,    image {      _type,      asset    }  }
+// Query: *[_type == "settings"][0]{      _id,      _type,      seo {        metaTitle,        metaDescription,        metaImage {          media {            _type,            alt,            crop,            hotspot,            asset->{              _id,              _ref,              _type,              _createdAt,              _updatedAt,              _rev,              url,              metadata {                lqip,                dimensions {                  width,                  height                }              }            },          }        }      },      distributionMovieDetailTitles {        directorsLabel,        writersLabel,        actorsLabel,        languagesLabel,        releaseDateLabel,        durationLabel      }    }
 export type SettingsQueryResult = {
   _id: string;
-  title: null;
-  description: null;
-  image: null;
+  _type: "settings";
+  seo: {
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaImage: {
+      media: {
+        _type: "image";
+        alt: string | null;
+        crop: SanityImageCrop | null;
+        hotspot: SanityImageHotspot | null;
+        asset: {
+          _id: string;
+          _ref: null;
+          _type: "sanity.imageAsset";
+          _createdAt: string;
+          _updatedAt: string;
+          _rev: string;
+          url: string | null;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number | null;
+              height: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  } | null;
+  distributionMovieDetailTitles: {
+    directorsLabel: string | null;
+    writersLabel: string | null;
+    actorsLabel: string | null;
+    languagesLabel: string | null;
+    releaseDateLabel: string | null;
+    durationLabel: string | null;
+  } | null;
+} | null;
+// Variable: fetchHeader
+// Query: *[_type == "header"][0]{  linkReference[]{    id,    _key,    _type,    _id,    // For internal links    _type == "internalLink" => {      linkLabel,      page->{        _id,        title,        slug      }    },    // For external links    _type == "externalLink" => {      linkLabel,      link{        href      }    }  },  socialMediaLinks[]{    _key,    _type,    _id,    href  }}
+export type FetchHeaderResult = {
+  linkReference: Array<{
+    id: null;
+    _key: string;
+    _type: "externalLink";
+    _id: null;
+    linkLabel: string | null;
+    link: {
+      href: string | null;
+    } | null;
+  } | {
+    id: null;
+    _key: string;
+    _type: "internalLink";
+    _id: null;
+    linkLabel: string | null;
+    page: {
+      _id: string;
+      title: string | null;
+      slug: Slug | null;
+    } | null;
+  }> | null;
+  socialMediaLinks: Array<{
+    _key: string;
+    _type: "linkType";
+    _id: null;
+    href: string | null;
+  }> | null;
+} | null;
+// Variable: fetchFooter
+// Query: *[_type == "footer"][0]{    _id,    _type,    title,    text[],    socialMediaLinks[]{      _key,      _type,      _id,      href    },    rights  }
+export type FetchFooterResult = {
+  _id: string;
+  _type: "footer";
+  title: string | null;
+  text: Array<{
+    _key: string;
+  } & MediaType | {
+    children?: Array<{
+      marks?: Array<string>;
+      text?: string;
+      _type: "span";
+      _key: string;
+    }>;
+    style?: "blockquote" | "h2" | "h3" | "normal";
+    listItem?: "bullet";
+    markDefs?: Array<{
+      _key: string;
+    } & LinkType>;
+    level?: number;
+    _type: "block";
+    _key: string;
+  }> | null;
+  socialMediaLinks: Array<{
+    _key: string;
+    _type: "linkType";
+    _id: null;
+    href: string | null;
+  }> | null;
+  rights: string | null;
 } | null;
 // Variable: fetchHome
-// Query: *[_type == "page" && slug.current == '/'][0]{  _id,  title,  slug,  blockList[],  seo {    title,    description,    image {      asset->{        _id,        url      }    }  }}
+// Query: *[_type == "page" && slug.current == '/'][0]{  _id,  _type,  title,  slug,  blockList[]{    // Hero Block    _type == "hero" => {      _type,      mediaCard[]{        id,        cardImage{          media{            alt,            crop,            hotspot,            asset->{              _id,              _ref,              _type,              _createdAt,              _updatedAt,              _rev,              url,              metadata {                lqip,                dimensions {                  width,                  height                }              }            }          }        },        title,        infoItems[]{          id,          infoItemTitle        },        buttonLabel,        internalButtonLink->{_id, title, slug},        externalButtonLink{href}      },      logo{        media{          alt,          crop,          hotspot,          asset->{            _id,            _ref,            _type,            _createdAt,            _updatedAt,            _rev,            url,            metadata {              lqip,              dimensions {                width,                height              }            }          }        }      }    },    // Media Carousel Block    _type == "mediaCarousel" => {      _type,      carouselItems[]{        id,        mediaItem{          media{            alt,            crop,            hotspot,              asset->{              _id,              _ref,              _type,              _createdAt,              _updatedAt,              _rev,              url,              metadata {                lqip,                dimensions {                  width,                  height                }              }            }          }        },        title      }    },    // Movie Club List Block    _type == "movieClubList" => {      _type,      movies[]{        id,        movie->{          _id,          title,          moviePoster{            media{              alt,              crop,              hotspot,              asset->{                _id,                _ref,                _type,                _createdAt,                _updatedAt,                _rev,                url,                metadata {                  lqip,                  dimensions {                    width,                    height                  }                }              }            }          },          movieBanner{            media{              alt,              crop,              hotspot,              asset->{                _id,                _ref,                _type,                _createdAt,                _updatedAt,                _rev,                url,                metadata {                  lqip,                  dimensions {                    width,                    height                  }                }              }            }          }        }      }    },    // Movie Hero Block    _type == "movieHero" => {      _type,      mediaItems{        media{          alt,          crop,          hotspot,          asset->{            _id,            _ref,            _type,            _createdAt,            _updatedAt,            _rev,            url,            metadata {              lqip,              dimensions {                width,                height              }            }          }        }      }    },    // Image With Text Block    _type == "imageWithText" => {      _type,      mediaItem{        media{          alt,          crop,          hotspot,          asset->{            _id,            _ref,            _type,            _createdAt,            _updatedAt,            _rev,            url,            metadata {              lqip,              dimensions {                width,                height              }            }          }        }      },      mediaTitle,      textSection[]{        id,        title,        richText      }    },    // Logo Carousel Block    _type == "logoCarousel" => {      _type,      logoItems[]{        id,        mediaItem{          media{            alt,            crop,            hotspot,            asset->{              _id,              _ref,              _type,              _createdAt,              _updatedAt,              _rev,              url,              metadata {                lqip,                dimensions {                  width,                  height                }              }            }          }        }      }    },    // Distribution List Block    _type == "distributionList" => {      _type,      movies[]{        id,        movie->{          _id,          title,          moviePoster{            media{              alt,              crop,              hotspot,              asset->{                _id,                _ref,                _type,                _createdAt,                _updatedAt,                _rev,                url,                metadata {                  lqip,                  dimensions {                    width,                    height                  }                }              }            }          },          movieBanner{            media{              alt,              crop,              hotspot,              asset->{                _id,                _ref,                _type,                _createdAt,                _updatedAt,                _rev,                url,                metadata {                  lqip,                  dimensions {                    width,                    height                  }                }              }            }          }        }      }    }  },  seo {    metaTitle,    metaDescription,    metaImage {      _type,      media {        _type,        alt,        crop,        hotspot,        asset->{          _id,          _ref,          _type,          _createdAt,          _updatedAt,          _rev,          url,          metadata {            lqip,            dimensions {              width,              height            }          }        },      }    }  }}
 export type FetchHomeResult = {
   _id: string;
+  _type: "page";
   title: string | null;
   slug: Slug | null;
   blockList: Array<{
-    _key: string;
-  } & Hero | {
-    _key: string;
-  } & ImageWithText | {
-    _key: string;
-  } & LogoCarousel | {
-    _key: string;
-  } & MediaCarousel | {
-    _key: string;
-  } & MovieHero | {
-    _key: string;
-  } & MovieList> | null;
+    _type: "distributionList";
+    movies: Array<{
+      id: null;
+      movie: {
+        _id: string;
+        title: string | null;
+        moviePoster: {
+          media: {
+            alt: string | null;
+            crop: SanityImageCrop | null;
+            hotspot: SanityImageHotspot | null;
+            asset: {
+              _id: string;
+              _ref: null;
+              _type: "sanity.imageAsset";
+              _createdAt: string;
+              _updatedAt: string;
+              _rev: string;
+              url: string | null;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number | null;
+                  height: number | null;
+                } | null;
+              } | null;
+            } | null;
+          } | null;
+        } | null;
+        movieBanner: {
+          media: {
+            alt: string | null;
+            crop: SanityImageCrop | null;
+            hotspot: SanityImageHotspot | null;
+            asset: {
+              _id: string;
+              _ref: null;
+              _type: "sanity.imageAsset";
+              _createdAt: string;
+              _updatedAt: string;
+              _rev: string;
+              url: string | null;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number | null;
+                  height: number | null;
+                } | null;
+              } | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | {
+    _type: "hero";
+    mediaCard: Array<{
+      id: null;
+      cardImage: {
+        media: {
+          alt: string | null;
+          crop: SanityImageCrop | null;
+          hotspot: SanityImageHotspot | null;
+          asset: {
+            _id: string;
+            _ref: null;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            url: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+      title: string | null;
+      infoItems: Array<{
+        id: null;
+        infoItemTitle: string | null;
+      }> | null;
+      buttonLabel: string | null;
+      internalButtonLink: {
+        _id: string;
+        title: string | null;
+        slug: Slug | null;
+      } | null;
+      externalButtonLink: {
+        href: string | null;
+      } | null;
+    }> | null;
+    logo: {
+      media: {
+        alt: string | null;
+        crop: SanityImageCrop | null;
+        hotspot: SanityImageHotspot | null;
+        asset: {
+          _id: string;
+          _ref: null;
+          _type: "sanity.imageAsset";
+          _createdAt: string;
+          _updatedAt: string;
+          _rev: string;
+          url: string | null;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number | null;
+              height: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  } | {
+    _type: "imageWithText";
+    mediaItem: {
+      media: {
+        alt: string | null;
+        crop: SanityImageCrop | null;
+        hotspot: SanityImageHotspot | null;
+        asset: {
+          _id: string;
+          _ref: null;
+          _type: "sanity.imageAsset";
+          _createdAt: string;
+          _updatedAt: string;
+          _rev: string;
+          url: string | null;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number | null;
+              height: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+    mediaTitle: string | null;
+    textSection: Array<{
+      id: null;
+      title: string | null;
+      richText: RichText | null;
+    }> | null;
+  } | {
+    _type: "logoCarousel";
+    logoItems: Array<{
+      id: null;
+      mediaItem: {
+        media: {
+          alt: string | null;
+          crop: SanityImageCrop | null;
+          hotspot: SanityImageHotspot | null;
+          asset: {
+            _id: string;
+            _ref: null;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            url: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | {
+    _type: "mediaCarousel";
+    carouselItems: null;
+  } | {
+    _type: "movieClubList";
+    movies: Array<{
+      id: null;
+      movie: {
+        _id: string;
+        title: string | null;
+        moviePoster: null;
+        movieBanner: {
+          media: {
+            alt: string | null;
+            crop: SanityImageCrop | null;
+            hotspot: SanityImageHotspot | null;
+            asset: {
+              _id: string;
+              _ref: null;
+              _type: "sanity.imageAsset";
+              _createdAt: string;
+              _updatedAt: string;
+              _rev: string;
+              url: string | null;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number | null;
+                  height: number | null;
+                } | null;
+              } | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | {
+    _type: "movieHero";
+    mediaItems: {
+      media: {
+        alt: string | null;
+        crop: SanityImageCrop | null;
+        hotspot: SanityImageHotspot | null;
+        asset: {
+          _id: string;
+          _ref: null;
+          _type: "sanity.imageAsset";
+          _createdAt: string;
+          _updatedAt: string;
+          _rev: string;
+          url: string | null;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number | null;
+              height: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  }> | null;
   seo: {
-    title: string | null;
-    description: string | null;
-    image: null;
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaImage: {
+      _type: "mediaType";
+      media: {
+        _type: "image";
+        alt: string | null;
+        crop: SanityImageCrop | null;
+        hotspot: SanityImageHotspot | null;
+        asset: {
+          _id: string;
+          _ref: null;
+          _type: "sanity.imageAsset";
+          _createdAt: string;
+          _updatedAt: string;
+          _rev: string;
+          url: string | null;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number | null;
+              height: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
   } | null;
 } | null;
 // Variable: fetchPage
-// Query: *[_type == "page" && slug.current == $slug][0]{    _id,    title,    slug,    blockList[],    seo {      title,      description,      image {        asset->{          _id,          url        }      }    }  }
+// Query: *[_type == "page" && slug.current == $slug][0]{    _id,    _type,    title,    slug,    blockList[]{      // Hero Block      _type == "hero" => {        _type,        mediaCard[]{          id,          cardImage{            media{              alt,              crop,              hotspot,              asset->{                  _id,                  _ref,                _type,                _createdAt,                _updatedAt,                _rev,                url,                metadata {                  lqip,                  dimensions {                    width,                    height                  }                }              }            }          },          title,          infoItems[]{            id,            infoItemTitle          },          buttonLabel,          internalButtonLink->{_id, title, slug},          externalButtonLink{href}        },        logo{          media{            alt,            crop,            hotspot,            asset->{              _id,              _ref,              _type,              _createdAt,              _updatedAt,              _rev,              url,              metadata {                lqip,                dimensions {                  width,                  height                }              }            }          }        }      },      // Media Carousel Block      _type == "mediaCarousel" => {        _type,        carouselItems[]{          id,          mediaItem{            media{              alt,              crop,              hotspot,                asset->{                  _id,                  _ref,                  _type,                  _createdAt,                  _updatedAt,                  _rev,                  url,                  metadata {                    lqip,                    dimensions {                      width,                      height                    }                  }                }            }          },          title        }      },      // Movie Club List Block      _type == "movieClubList" => {        _type,        movies[]{          id,          movie->{            _id,            title,            moviePoster{              media{                alt,                crop,                hotspot,                asset->{                  _id,                  _ref,                  _type,                  _createdAt,                  _updatedAt,                  _rev,                  url,                  metadata {                    lqip,                    dimensions {                      width,                      height                    }                  }                }              }            },            movieBanner{              media{                alt,                crop,                hotspot,                asset->{                    _id,                    _ref,                  _type,                  _createdAt,                  _updatedAt,                  _rev,                  url,                  metadata {                    lqip,                    dimensions {                      width,                      height                    }                  }                }              }            }          }        }      },      // Movie Hero Block      _type == "movieHero" => {        _type,        mediaItems{          media{            alt,            crop,            hotspot,              asset->{              _id,              _ref,              _type,              _createdAt,              _updatedAt,              _rev,              url,              metadata {                lqip,                dimensions {                  width,                  height                }              }            }          }        }      },      // Image With Text Block      _type == "imageWithText" => {        _type,        mediaItem{          media{            alt,            crop,            hotspot,            asset->{              _id,              _ref,              _type,              _createdAt,              _updatedAt,              _rev,              url,              metadata {                lqip,                dimensions {                  width,                  height                }              }            }          }        },        mediaTitle,        textSection[]{          id,          title,          richText        }      },      // Logo Carousel Block      _type == "logoCarousel" => {        _type,        logoItems[]{          id,          mediaItem{            media{              alt,              crop,              hotspot,              asset->{                _id,                _ref,                _type,                _createdAt,                _updatedAt,                _rev,                url,                metadata {                  lqip,                  dimensions {                    width,                    height                  }                }              }            }          }        }      },      // Distribution List Block      _type == "distributionList" => {        _type,        movies[]{          id,          movie->{            _id,            title,            moviePoster{              media{                alt,                crop,                hotspot,                asset->{                  _id,                  _ref,                  _type,                  _createdAt,                  _updatedAt,                  _rev,                  url,                  metadata {                    lqip,                    dimensions {                      width,                      height                    }                  }                }              }            },            movieBanner{              media{                alt,                crop,                hotspot,                asset->{                  _id,                  _ref,                  _type,                  _createdAt,                  _updatedAt,                  _rev,                  url,                  metadata {                    lqip,                    dimensions {                      width,                      height                    }                  }                }              }            }          }        }      }    },    seo {      metaTitle,      metaDescription,      metaImage {        _type,        media {          _type,          alt,          crop,          hotspot,          asset->{            _id,            _ref,            _type,            _createdAt,            _updatedAt,            _rev,            url,            metadata {              lqip,              dimensions {                width,                height              }            }          },        }      }    }  }
 export type FetchPageResult = {
   _id: string;
+  _type: "page";
   title: string | null;
   slug: Slug | null;
   blockList: Array<{
-    _key: string;
-  } & Hero | {
-    _key: string;
-  } & ImageWithText | {
-    _key: string;
-  } & LogoCarousel | {
-    _key: string;
-  } & MediaCarousel | {
-    _key: string;
-  } & MovieHero | {
-    _key: string;
-  } & MovieList> | null;
+    _type: "distributionList";
+    movies: Array<{
+      id: null;
+      movie: {
+        _id: string;
+        title: string | null;
+        moviePoster: {
+          media: {
+            alt: string | null;
+            crop: SanityImageCrop | null;
+            hotspot: SanityImageHotspot | null;
+            asset: {
+              _id: string;
+              _ref: null;
+              _type: "sanity.imageAsset";
+              _createdAt: string;
+              _updatedAt: string;
+              _rev: string;
+              url: string | null;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number | null;
+                  height: number | null;
+                } | null;
+              } | null;
+            } | null;
+          } | null;
+        } | null;
+        movieBanner: {
+          media: {
+            alt: string | null;
+            crop: SanityImageCrop | null;
+            hotspot: SanityImageHotspot | null;
+            asset: {
+              _id: string;
+              _ref: null;
+              _type: "sanity.imageAsset";
+              _createdAt: string;
+              _updatedAt: string;
+              _rev: string;
+              url: string | null;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number | null;
+                  height: number | null;
+                } | null;
+              } | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | {
+    _type: "hero";
+    mediaCard: Array<{
+      id: null;
+      cardImage: {
+        media: {
+          alt: string | null;
+          crop: SanityImageCrop | null;
+          hotspot: SanityImageHotspot | null;
+          asset: {
+            _id: string;
+            _ref: null;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            url: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+      title: string | null;
+      infoItems: Array<{
+        id: null;
+        infoItemTitle: string | null;
+      }> | null;
+      buttonLabel: string | null;
+      internalButtonLink: {
+        _id: string;
+        title: string | null;
+        slug: Slug | null;
+      } | null;
+      externalButtonLink: {
+        href: string | null;
+      } | null;
+    }> | null;
+    logo: {
+      media: {
+        alt: string | null;
+        crop: SanityImageCrop | null;
+        hotspot: SanityImageHotspot | null;
+        asset: {
+          _id: string;
+          _ref: null;
+          _type: "sanity.imageAsset";
+          _createdAt: string;
+          _updatedAt: string;
+          _rev: string;
+          url: string | null;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number | null;
+              height: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  } | {
+    _type: "imageWithText";
+    mediaItem: {
+      media: {
+        alt: string | null;
+        crop: SanityImageCrop | null;
+        hotspot: SanityImageHotspot | null;
+        asset: {
+          _id: string;
+          _ref: null;
+          _type: "sanity.imageAsset";
+          _createdAt: string;
+          _updatedAt: string;
+          _rev: string;
+          url: string | null;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number | null;
+              height: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+    mediaTitle: string | null;
+    textSection: Array<{
+      id: null;
+      title: string | null;
+      richText: RichText | null;
+    }> | null;
+  } | {
+    _type: "logoCarousel";
+    logoItems: Array<{
+      id: null;
+      mediaItem: {
+        media: {
+          alt: string | null;
+          crop: SanityImageCrop | null;
+          hotspot: SanityImageHotspot | null;
+          asset: {
+            _id: string;
+            _ref: null;
+            _type: "sanity.imageAsset";
+            _createdAt: string;
+            _updatedAt: string;
+            _rev: string;
+            url: string | null;
+            metadata: {
+              lqip: string | null;
+              dimensions: {
+                width: number | null;
+                height: number | null;
+              } | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | {
+    _type: "mediaCarousel";
+    carouselItems: null;
+  } | {
+    _type: "movieClubList";
+    movies: Array<{
+      id: null;
+      movie: {
+        _id: string;
+        title: string | null;
+        moviePoster: null;
+        movieBanner: {
+          media: {
+            alt: string | null;
+            crop: SanityImageCrop | null;
+            hotspot: SanityImageHotspot | null;
+            asset: {
+              _id: string;
+              _ref: null;
+              _type: "sanity.imageAsset";
+              _createdAt: string;
+              _updatedAt: string;
+              _rev: string;
+              url: string | null;
+              metadata: {
+                lqip: string | null;
+                dimensions: {
+                  width: number | null;
+                  height: number | null;
+                } | null;
+              } | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    }> | null;
+  } | {
+    _type: "movieHero";
+    mediaItems: {
+      media: {
+        alt: string | null;
+        crop: SanityImageCrop | null;
+        hotspot: SanityImageHotspot | null;
+        asset: {
+          _id: string;
+          _ref: null;
+          _type: "sanity.imageAsset";
+          _createdAt: string;
+          _updatedAt: string;
+          _rev: string;
+          url: string | null;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number | null;
+              height: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
+  }> | null;
   seo: {
-    title: string | null;
-    description: string | null;
-    image: null;
+    metaTitle: string | null;
+    metaDescription: string | null;
+    metaImage: {
+      _type: "mediaType";
+      media: {
+        _type: "image";
+        alt: string | null;
+        crop: SanityImageCrop | null;
+        hotspot: SanityImageHotspot | null;
+        asset: {
+          _id: string;
+          _ref: null;
+          _type: "sanity.imageAsset";
+          _createdAt: string;
+          _updatedAt: string;
+          _rev: string;
+          url: string | null;
+          metadata: {
+            lqip: string | null;
+            dimensions: {
+              width: number | null;
+              height: number | null;
+            } | null;
+          } | null;
+        } | null;
+      } | null;
+    } | null;
   } | null;
 } | null;
 
@@ -581,8 +1176,11 @@ export type FetchPageResult = {
 import "@sanity/client";
 declare module "@sanity/client" {
   interface SanityQueries {
-    "\n  *[_type == \"settings\"][0]{\n    _id,\n    title,\n    description,\n    image {\n      _type,\n      asset\n    }\n  }\n  ": SettingsQueryResult;
-    "\n*[_type == \"page\" && slug.current == '/'][0]{\n  _id,\n  title,\n  slug,\n  blockList[],\n  seo {\n    title,\n    description,\n    image {\n      asset->{\n        _id,\n        url\n      }\n    }\n  }\n}\n": FetchHomeResult;
-    "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _id,\n    title,\n    slug,\n    blockList[],\n    seo {\n      title,\n      description,\n      image {\n        asset->{\n          _id,\n          url\n        }\n      }\n    }\n  }\n  ": FetchPageResult;
+    "\n  *[_type == \"page\" && defined(slug.current)]{\n    \"slug\": slug.current\n  }\n": FetchAllPageSlugsResult;
+    "\n    *[_type == \"settings\"][0]{\n      _id,\n      _type,\n      seo {\n        metaTitle,\n        metaDescription,\n        metaImage {\n          media {\n            _type,\n            alt,\n            crop,\n            hotspot,\n            asset->{\n              _id,\n              _ref,\n              _type,\n              _createdAt,\n              _updatedAt,\n              _rev,\n              url,\n              metadata {\n                lqip,\n                dimensions {\n                  width,\n                  height\n                }\n              }\n            },\n          }\n        }\n      },\n      distributionMovieDetailTitles {\n        directorsLabel,\n        writersLabel,\n        actorsLabel,\n        languagesLabel,\n        releaseDateLabel,\n        durationLabel\n      }\n    }\n    ": SettingsQueryResult;
+    "\n *[_type == \"header\"][0]{\n  linkReference[]{\n    id,\n    _key,\n    _type,\n    _id,\n    // For internal links\n    _type == \"internalLink\" => {\n      linkLabel,\n      page->{\n        _id,\n        title,\n        slug\n      }\n    },\n    // For external links\n    _type == \"externalLink\" => {\n      linkLabel,\n      link{\n        href\n      }\n    }\n  },\n  socialMediaLinks[]{\n    _key,\n    _type,\n    _id,\n    href\n  }\n}\n": FetchHeaderResult;
+    "\n  *[_type == \"footer\"][0]{\n    _id,\n    _type,\n    title,\n    text[],\n    socialMediaLinks[]{\n      _key,\n      _type,\n      _id,\n      href\n    },\n    rights\n  }\n": FetchFooterResult;
+    "\n*[_type == \"page\" && slug.current == '/'][0]{\n  _id,\n  _type,\n  title,\n  slug,\n  blockList[]{\n    // Hero Block\n    _type == \"hero\" => {\n      _type,\n      mediaCard[]{\n        id,\n        cardImage{\n          media{\n            alt,\n            crop,\n            hotspot,\n            asset->{\n              _id,\n              _ref,\n              _type,\n              _createdAt,\n              _updatedAt,\n              _rev,\n              url,\n              metadata {\n                lqip,\n                dimensions {\n                  width,\n                  height\n                }\n              }\n            }\n          }\n        },\n        title,\n        infoItems[]{\n          id,\n          infoItemTitle\n        },\n        buttonLabel,\n        internalButtonLink->{_id, title, slug},\n        externalButtonLink{href}\n      },\n      logo{\n        media{\n          alt,\n          crop,\n          hotspot,\n          asset->{\n            _id,\n            _ref,\n            _type,\n            _createdAt,\n            _updatedAt,\n            _rev,\n            url,\n            metadata {\n              lqip,\n              dimensions {\n                width,\n                height\n              }\n            }\n          }\n        }\n      }\n    },\n    // Media Carousel Block\n    _type == \"mediaCarousel\" => {\n      _type,\n      carouselItems[]{\n        id,\n        mediaItem{\n          media{\n            alt,\n            crop,\n            hotspot,  \n            asset->{\n              _id,\n              _ref,\n              _type,\n              _createdAt,\n              _updatedAt,\n              _rev,\n              url,\n              metadata {\n                lqip,\n                dimensions {\n                  width,\n                  height\n                }\n              }\n            }\n          }\n        },\n        title\n      }\n    },\n    // Movie Club List Block\n    _type == \"movieClubList\" => {\n      _type,\n      movies[]{\n        id,\n        movie->{\n          _id,\n          title,\n          moviePoster{\n            media{\n              alt,\n              crop,\n              hotspot,\n              asset->{\n                _id,\n                _ref,\n                _type,\n                _createdAt,\n                _updatedAt,\n                _rev,\n                url,\n                metadata {\n                  lqip,\n                  dimensions {\n                    width,\n                    height\n                  }\n                }\n              }\n            }\n          },\n          movieBanner{\n            media{\n              alt,\n              crop,\n              hotspot,\n              asset->{\n                _id,\n                _ref,\n                _type,\n                _createdAt,\n                _updatedAt,\n                _rev,\n                url,\n                metadata {\n                  lqip,\n                  dimensions {\n                    width,\n                    height\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n    // Movie Hero Block\n    _type == \"movieHero\" => {\n      _type,\n      mediaItems{\n        media{\n          alt,\n          crop,\n          hotspot,\n          asset->{\n            _id,\n            _ref,\n            _type,\n            _createdAt,\n            _updatedAt,\n            _rev,\n            url,\n            metadata {\n              lqip,\n              dimensions {\n                width,\n                height\n              }\n            }\n          }\n        }\n      }\n    },\n    // Image With Text Block\n    _type == \"imageWithText\" => {\n      _type,\n      mediaItem{\n        media{\n          alt,\n          crop,\n          hotspot,\n          asset->{\n            _id,\n            _ref,\n            _type,\n            _createdAt,\n            _updatedAt,\n            _rev,\n            url,\n            metadata {\n              lqip,\n              dimensions {\n                width,\n                height\n              }\n            }\n          }\n        }\n      },\n      mediaTitle,\n      textSection[]{\n        id,\n        title,\n        richText\n      }\n    },\n    // Logo Carousel Block\n    _type == \"logoCarousel\" => {\n      _type,\n      logoItems[]{\n        id,\n        mediaItem{\n          media{\n            alt,\n            crop,\n            hotspot,\n            asset->{\n              _id,\n              _ref,\n              _type,\n              _createdAt,\n              _updatedAt,\n              _rev,\n              url,\n              metadata {\n                lqip,\n                dimensions {\n                  width,\n                  height\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n    // Distribution List Block\n    _type == \"distributionList\" => {\n      _type,\n      movies[]{\n        id,\n        movie->{\n          _id,\n          title,\n          moviePoster{\n            media{\n              alt,\n              crop,\n              hotspot,\n              asset->{\n                _id,\n                _ref,\n                _type,\n                _createdAt,\n                _updatedAt,\n                _rev,\n                url,\n                metadata {\n                  lqip,\n                  dimensions {\n                    width,\n                    height\n                  }\n                }\n              }\n            }\n          },\n          movieBanner{\n            media{\n              alt,\n              crop,\n              hotspot,\n              asset->{\n                _id,\n                _ref,\n                _type,\n                _createdAt,\n                _updatedAt,\n                _rev,\n                url,\n                metadata {\n                  lqip,\n                  dimensions {\n                    width,\n                    height\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    }\n  },\n  seo {\n    metaTitle,\n    metaDescription,\n    metaImage {\n      _type,\n      media {\n        _type,\n        alt,\n        crop,\n        hotspot,\n        asset->{\n          _id,\n          _ref,\n          _type,\n          _createdAt,\n          _updatedAt,\n          _rev,\n          url,\n          metadata {\n            lqip,\n            dimensions {\n              width,\n              height\n            }\n          }\n        },\n      }\n    }\n  }\n}\n": FetchHomeResult;
+    "\n  *[_type == \"page\" && slug.current == $slug][0]{\n    _id,\n    _type,\n    title,\n    slug,\n    blockList[]{\n      // Hero Block\n      _type == \"hero\" => {\n        _type,\n        mediaCard[]{\n          id,\n          cardImage{\n            media{\n              alt,\n              crop,\n              hotspot,\n              asset->{\n                  _id,\n                  _ref,\n                _type,\n                _createdAt,\n                _updatedAt,\n                _rev,\n                url,\n                metadata {\n                  lqip,\n                  dimensions {\n                    width,\n                    height\n                  }\n                }\n              }\n            }\n          },\n          title,\n          infoItems[]{\n            id,\n            infoItemTitle\n          },\n          buttonLabel,\n          internalButtonLink->{_id, title, slug},\n          externalButtonLink{href}\n        },\n        logo{\n          media{\n            alt,\n            crop,\n            hotspot,\n            asset->{\n              _id,\n              _ref,\n              _type,\n              _createdAt,\n              _updatedAt,\n              _rev,\n              url,\n              metadata {\n                lqip,\n                dimensions {\n                  width,\n                  height\n                }\n              }\n            }\n          }\n        }\n      },\n      // Media Carousel Block\n      _type == \"mediaCarousel\" => {\n        _type,\n        carouselItems[]{\n          id,\n          mediaItem{\n            media{\n              alt,\n              crop,\n              hotspot,\n                asset->{\n                  _id,\n                  _ref,\n                  _type,\n                  _createdAt,\n                  _updatedAt,\n                  _rev,\n                  url,\n                  metadata {\n                    lqip,\n                    dimensions {\n                      width,\n                      height\n                    }\n                  }\n                }\n            }\n          },\n          title\n        }\n      },\n      // Movie Club List Block\n      _type == \"movieClubList\" => {\n        _type,\n        movies[]{\n          id,\n          movie->{\n            _id,\n            title,\n            moviePoster{\n              media{\n                alt,\n                crop,\n                hotspot,\n                asset->{\n                  _id,\n                  _ref,\n                  _type,\n                  _createdAt,\n                  _updatedAt,\n                  _rev,\n                  url,\n                  metadata {\n                    lqip,\n                    dimensions {\n                      width,\n                      height\n                    }\n                  }\n                }\n              }\n            },\n            movieBanner{\n              media{\n                alt,\n                crop,\n                hotspot,\n                asset->{\n                    _id,\n                    _ref,\n                  _type,\n                  _createdAt,\n                  _updatedAt,\n                  _rev,\n                  url,\n                  metadata {\n                    lqip,\n                    dimensions {\n                      width,\n                      height\n                    }\n                  }\n                }\n              }\n            }\n          }\n        }\n      },\n      // Movie Hero Block\n      _type == \"movieHero\" => {\n        _type,\n        mediaItems{\n          media{\n            alt,\n            crop,\n            hotspot,  \n            asset->{\n              _id,\n              _ref,\n              _type,\n              _createdAt,\n              _updatedAt,\n              _rev,\n              url,\n              metadata {\n                lqip,\n                dimensions {\n                  width,\n                  height\n                }\n              }\n            }\n          }\n        }\n      },\n      // Image With Text Block\n      _type == \"imageWithText\" => {\n        _type,\n        mediaItem{\n          media{\n            alt,\n            crop,\n            hotspot,\n            asset->{\n              _id,\n              _ref,\n              _type,\n              _createdAt,\n              _updatedAt,\n              _rev,\n              url,\n              metadata {\n                lqip,\n                dimensions {\n                  width,\n                  height\n                }\n              }\n            }\n          }\n        },\n        mediaTitle,\n        textSection[]{\n          id,\n          title,\n          richText\n        }\n      },\n      // Logo Carousel Block\n      _type == \"logoCarousel\" => {\n        _type,\n        logoItems[]{\n          id,\n          mediaItem{\n            media{\n              alt,\n              crop,\n              hotspot,\n              asset->{\n                _id,\n                _ref,\n                _type,\n                _createdAt,\n                _updatedAt,\n                _rev,\n                url,\n                metadata {\n                  lqip,\n                  dimensions {\n                    width,\n                    height\n                  }\n                }\n              }\n            }\n          }\n        }\n      },\n      // Distribution List Block\n      _type == \"distributionList\" => {\n        _type,\n        movies[]{\n          id,\n          movie->{\n            _id,\n            title,\n            moviePoster{\n              media{\n                alt,\n                crop,\n                hotspot,\n                asset->{\n                  _id,\n                  _ref,\n                  _type,\n                  _createdAt,\n                  _updatedAt,\n                  _rev,\n                  url,\n                  metadata {\n                    lqip,\n                    dimensions {\n                      width,\n                      height\n                    }\n                  }\n                }\n              }\n            },\n            movieBanner{\n              media{\n                alt,\n                crop,\n                hotspot,\n                asset->{\n                  _id,\n                  _ref,\n                  _type,\n                  _createdAt,\n                  _updatedAt,\n                  _rev,\n                  url,\n                  metadata {\n                    lqip,\n                    dimensions {\n                      width,\n                      height\n                    }\n                  }\n                }\n              }\n            }\n          }\n        }\n      }\n    },\n    seo {\n      metaTitle,\n      metaDescription,\n      metaImage {\n        _type,\n        media {\n          _type,\n          alt,\n          crop,\n          hotspot,\n          asset->{\n            _id,\n            _ref,\n            _type,\n            _createdAt,\n            _updatedAt,\n            _rev,\n            url,\n            metadata {\n              lqip,\n              dimensions {\n                width,\n                height\n              }\n            }\n          },\n        }\n      }\n    }\n  }\n  ": FetchPageResult;
   }
 }

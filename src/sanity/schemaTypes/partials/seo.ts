@@ -6,18 +6,18 @@ export const seo = defineType({
   type: 'document',
   fields: [
     defineField({
-      name: 'title',
+      name: 'metaTitle',
       title: 'Meta Title',
       type: 'string',
     }),
     defineField({
-      name: 'description',
+      name: 'metaDescription',
       title: 'Meta Description',
       type: 'text',
     }),
     defineField({
-      name: 'socialImage',
-      title: 'Social Share Image',
+      name: 'metaImage',
+      title: 'Meta Image',
       type: 'mediaType',
     }),
   ],

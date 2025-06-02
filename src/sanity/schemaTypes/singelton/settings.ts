@@ -6,11 +6,61 @@ export const settings = defineType({
   title: 'Settings',
   type: 'document',
   icon: CogIcon,
+  groups: [
+    {
+      name: 'seo',
+      title: 'SEO',
+    },
+    {
+      name: 'distributionSettings',
+      title: 'Distribution Settings',
+    },
+  ],
   fields: [
     defineField({
       name: 'seo',
       title: 'SEO',
       type: 'seo',
+      group: 'seo',
+    }),
+    defineField({
+      name: 'distributionMovieDetailTitles',
+      title: 'Distribution Movie Detail Titles',
+      description: 'Used to display the distribution movie detail titles.',
+      type: 'object',
+      fields: [
+        defineField({
+          name: 'directorsLabel',
+          title: 'Directors Label (Regissör titel)',
+          type: 'string',
+        }),
+        defineField({
+          name: 'writersLabel',
+          title: 'Writers Label (Skribent titel)',
+          type: 'string',
+        }),
+        defineField({
+          name: 'actorsLabel',
+          title: 'Actors Label (Medverkande titel)',
+          type: 'string',
+        }),
+        defineField({
+          name: 'languagesLabel',
+          title: 'Languages Label (Språk titel)',
+          type: 'string',
+        }),
+        defineField({
+          name: 'releaseDateLabel',
+          title: 'Release Date Label (Premiär titel)',
+          type: 'string',
+        }),
+        defineField({
+          name: 'durationLabel',
+          title: 'Duration Label (Längd titel)',
+          type: 'string',
+        }),
+      ],
+      group: 'distributionSettings',
     }),
   ],
   preview: {
