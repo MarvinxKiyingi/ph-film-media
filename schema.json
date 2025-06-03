@@ -270,6 +270,13 @@
         },
         "optional": true
       },
+      "homeMenuItemLabel": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
       "socialMediaLinks": {
         "type": "objectAttribute",
         "value": {
