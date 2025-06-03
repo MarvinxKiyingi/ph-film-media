@@ -57,7 +57,7 @@ const CarouselAutoplay: React.FC<PropType> = (props) => {
   return (
     <div className='relative embla lg:h-screen lg:flex lg:flex-col'>
       <div className='overflow-hidden relative lg:flex-1' ref={emblaRef}>
-        <div className='embla__container lg:h-screen '>{children}</div>
+        <div className='embla__container lg:h-screen'>{children}</div>
       </div>
 
       <div className={`embla__controls ${controlsClassName} `}>

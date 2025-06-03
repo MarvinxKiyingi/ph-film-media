@@ -26,12 +26,23 @@ const HeroCarousel = ({ block }: { block: BlockListItem }) => {
         isFade={isDesktop}
       >
         {block.mediaCard?.map((card, idx) => {
+          const href =
+            card.externalButtonLink?.href ||
+            card.internalButtonLink?.slug?.current;
+          const Wrapper = href ? 'a' : 'div';
+          const wrapperProps = href
+            ? {
+                href,
+                className:
+                  'embla__slide max-lg:flex max-lg:flex-col max-lg:gap-5 lg:!flex-none lg:!basis-full lg:grid lg:cursor-pointer lg:active:cursor-grabbing',
+              }
+            : {
+                className:
+                  'embla__slide max-lg:flex max-lg:flex-col max-lg:gap-5 lg:!flex-none lg:!basis-full lg:grid lg:cursor-grab lg:active:cursor-grabbing',
+              };
           return (
-            <div
-              className='embla__slide max-lg:flex max-lg:flex-col max-lg:gap-5 lg:!flex-none lg:!basis-full lg:grid lg:cursor-grab lg:active:cursor-grabbing'
-              key={`card-${card.id}-${idx}`}
-            >
-              <div className='flex flex-col gap-2 lg:!absolute lg:top-0 lg:left-0 lg:right-0 lg:bottom-0 select-none'>
+            <Wrapper key={`card-${card.id}-${idx}`} {...wrapperProps}>
+              <div className='relative flex flex-col gap-2 lg:!absolute lg:top-0 lg:left-0 lg:right-0 lg:bottom-0 select-none'>
                 <SanityImage
                   id={
                     card.cardImage?.media?.asset?._id ||
@@ -60,7 +71,13 @@ const HeroCarousel = ({ block }: { block: BlockListItem }) => {
                   }}
                   // preview={block.logo.media.asset.metadata.lqip || ''}
                   mode='cover'
-                  className='aspect-4/5 w-full h-full object-cover'
+                  className='rounded-lg aspect-4/5 w-full h-full object-cover lg:rounded-none'
+                />
+
+                <Button
+                  label={card.buttonLabel}
+                  className='absolute bottom-2 right-2 lg:hidden'
+                  fill
                 />
               </div>
 
@@ -78,7 +95,7 @@ const HeroCarousel = ({ block }: { block: BlockListItem }) => {
                       {card.infoItems?.map((item, itemIdx) => (
                         <p
                           key={`info-item-${card.id ?? idx}-${item.id ?? itemIdx}`}
-                          className='text-b-xs lg:text-b-base'
+                          className='text-b-sm lg:text-b-base'
                         >
                           {item.infoItemTitle}
                         </p>
@@ -86,24 +103,17 @@ const HeroCarousel = ({ block }: { block: BlockListItem }) => {
                     </div>
                   </div>
 
-                  <div className='flex h-fit'>
-                    <Button
-                      label={card.buttonLabel}
-                      href={
-                        card.externalButtonLink?.href ||
-                        card.internalButtonLink?.slug?.current
-                      }
-                      fill
-                    />
+                  <div className='hidden lg:flex h-fit'>
+                    <Button label={card.buttonLabel} fill />
                   </div>
                 </div>
               </div>
               {/* Bottom fade  */}
-              <div className='hidden lg:block absolute bottom-0 w-full h-2/4 bg-gradient-to-t from-black via-black/60 to-transparent pointer-events-none z-0' />
+              <div className='hidden lg:block absolute bottom-0 w-full h-2/4 bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none z-0' />
 
               {/* Right fade */}
-              <div className='hidden lg:block absolute top-0 right-0 w-2/4 h-full bg-gradient-to-l from-black via-black/50 to-transparent pointer-events-none z-0' />
-            </div>
+              <div className='hidden lg:block absolute top-0 right-0 w-2/4 h-full bg-gradient-to-l from-background via-background/50 to-transparent pointer-events-none z-0' />
+            </Wrapper>
           );
         })}
       </CarouselAutoplay>

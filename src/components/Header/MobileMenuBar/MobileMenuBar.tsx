@@ -24,7 +24,7 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ data }) => {
   const [isOpen, setIsOpen] = useState(false);
   if (!data) return null;
 
-  const { linkReference, socialMediaLinks } = data;
+  const { linkReference, socialMediaLinks, homeMenuItemLabel } = data;
 
   return (
     <div className='flex flex-col items-center fixed top-5 w-full lg:hidden'>
@@ -110,7 +110,7 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ data }) => {
                   className='flex'
                   onClick={() => setIsOpen(false)}
                 >
-                  Home
+                  {homeMenuItemLabel ? homeMenuItemLabel : 'Home'}
                 </Link>
               </li>
 

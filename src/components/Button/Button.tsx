@@ -14,13 +14,17 @@ const Button: React.FC<ButtonProps> = ({
   className = '',
   fill = false,
 }) => {
-  if (!label || !href) return null;
+  if (!label) return null;
 
-  const isExternal = /^https?:\/\//.test(href);
+  const isExternal = href && /^https?:\/\//.test(href);
   const filterClass = fill
     ? 'bg-white text-black hover:bg-transparent border border-white hover:border-white hover:text-white'
     : 'bg-transparent text-white border border-white hover:bg-white hover:text-black';
-  const buttonClass = `text-b-sm lg:text-b-base px-8 py-4 rounded-[8px] transition-bg duration-300 ${filterClass} ${className}`;
+  const buttonClass = `text-sm px-6 py-3 lg:text-b-base lg:px-8 lg:py-4 rounded-[8px] transition-bg duration-300 ${filterClass} ${className}`;
+
+  if (!href) {
+    return <span className={buttonClass}>{label}</span>;
+  }
 
   if (isExternal) {
     return (
