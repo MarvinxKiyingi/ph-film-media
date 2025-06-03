@@ -73,6 +73,7 @@ export const fetchHeader = defineQuery(`
       }
     }
   },
+  homeMenuItemLabel,
   socialMediaLinks[]{
     _key,
     _type,
