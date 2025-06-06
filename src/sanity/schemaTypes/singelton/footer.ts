@@ -1,5 +1,5 @@
-import {DoubleChevronDownIcon} from '@sanity/icons'
-import {defineField, defineType} from 'sanity'
+import { DoubleChevronDownIcon } from '@sanity/icons';
+import { defineField, defineType } from 'sanity';
 
 export const footer = defineType({
   name: 'footer',
@@ -36,7 +36,7 @@ export const footer = defineType({
       description: 'The links to the social media pages.',
       group: 'socialMedia',
       type: 'array',
-      of: [{type: 'linkType'}],
+      of: [{ type: 'linkType' }],
       validation: (Rule) => Rule.max(3),
     }),
     defineField({
@@ -50,23 +50,22 @@ export const footer = defineType({
 
   preview: {
     select: {
-      title: 'title',
       updatedAt: '_updatedAt',
     },
-    prepare({title, updatedAt}) {
+    prepare({ updatedAt }) {
       const formattedDate = updatedAt
         ? new Date(updatedAt).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
           })
-        : 'No edits yet'
+        : 'No edits yet';
 
       return {
-        title: title || 'Footer',
+        title: 'Footer',
         subtitle: `Last edited: ${formattedDate}`,
         media: DoubleChevronDownIcon,
-      }
+      };
     },
   },
-})
+});
