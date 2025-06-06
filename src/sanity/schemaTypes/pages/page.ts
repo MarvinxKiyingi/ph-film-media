@@ -30,6 +30,8 @@ export const page = defineType({
     defineField({
       name: 'slug',
       type: 'slug',
+      description:
+        'This is used to create a URL for the page. If the page is the home page, the slug is /',
       options: {
         source: 'title',
       },
