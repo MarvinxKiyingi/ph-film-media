@@ -19,6 +19,7 @@
   /* Body scale */
   --text-b-xs: 0.562rem; /* 9px */
   --text-b-sm: 0.75rem; /* 12px */
+  --text-b-sm-lg: 0.875rem; /* 14px */
   --text-b-base: 1rem; /* 16px */
   --text-b-lg: 1.312rem; /* 21px */
   --text-b-xl: 1.75rem; /* 28px */

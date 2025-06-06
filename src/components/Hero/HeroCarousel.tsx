@@ -103,7 +103,7 @@ const HeroCarousel = ({ block }: { block: BlockListItem }) => {
                     </div>
                   </div>
 
-                  <div className='hidden lg:flex h-fit'>
+                  <div className='hidden lg:flex lg:items-end'>
                     <Button label={card.buttonLabel} fill />
                   </div>
                 </div>
