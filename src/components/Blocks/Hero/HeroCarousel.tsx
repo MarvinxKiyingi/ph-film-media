@@ -1,11 +1,11 @@
 'use client';
 
 import React from 'react';
-import CarouselAutoplay from '../Media/Carousel/CarouselAutoplay';
+import CarouselAutoplay from '@/components/Media/Carousel/CarouselAutoplay';
 import { SanityImage } from 'sanity-image';
 import { baseUrl } from '@/sanity/lib/utils';
 import { BlockListItem } from '@/types/IBlockListItem';
-import Button from '../Button/Button';
+import Button from '@/components/Button/Button';
 import { useMediaQuery } from 'react-responsive';
 
 const HeroCarousel = ({ block }: { block: BlockListItem }) => {

@@ -6,8 +6,8 @@ import { baseUrl } from '@/sanity/lib/utils';
 import { SanityImage } from 'sanity-image';
 import ScrollDownIndicator from './ScrollDownIndicator';
 import { useInView } from 'react-intersection-observer';
-import { FetchFooterResult } from '../../../sanity.types';
-import FooterContent from '../Footer/FooterContent';
+import { FetchFooterResult } from '../../../../sanity.types';
+import FooterContent from '../../Footer/FooterContent';
 
 const BigLogoContainer = ({
   block,

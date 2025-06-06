@@ -4,14 +4,21 @@ import { fetchAllPageSlugs, fetchPage } from '@/sanity/lib/queries';
 import { notFound } from 'next/navigation';
 import { token } from '@/sanity/lib/token';
 import { generateMetadata } from '@/utils/generateMetadata';
-
-// Define the new Props type for Next.js 15
-// params and searchParams are Promises
-// searchParams is included for completeness, but not used here
-
-type PageParams = Promise<{ slug: string }>;
+import MediaCarousel from '@/components/Blocks/MediaCarousel';
+import ImageWithText from '@/components/Blocks/ImageWithText';
+import LogoCarousel from '@/components/Blocks/LogoCarousel';
+import MovieClubList from '@/components/Blocks/MovieClubList';
+import DistributionList from '@/components/Blocks/DistributionList';
+import MovieHero from '@/components/Blocks/MovieHero';
+import { FetchPageResult } from '../../../../sanity.types';
 
 export { generateMetadata };
+
+type IPageBlockListItem = NonNullable<
+  NonNullable<FetchPageResult>['blockList']
+>[number];
+
+type PageParams = Promise<{ slug: string }>;
 
 export async function generateStaticParams() {
   const slugs = await client.fetch(fetchAllPageSlugs);
@@ -36,5 +43,29 @@ export default async function Page({ params }: { params: PageParams }) {
   if (!data) {
     notFound();
   }
-  return <h1>{data?.title || 'Page'}</h1>;
+
+  return (
+    <>
+      <h1>{data.title}</h1>
+
+      {data.blockList?.map((block: IPageBlockListItem, idx) => {
+        switch (block._type) {
+          case 'mediaCarousel':
+            return <MediaCarousel key={idx} {...block} />;
+          case 'movieClubList':
+            return <MovieClubList key={idx} {...block} />;
+          case 'movieHero':
+            return <MovieHero key={idx} {...block} />;
+          case 'imageWithText':
+            return <ImageWithText key={idx} {...block} />;
+          case 'logoCarousel':
+            return <LogoCarousel key={idx} {...block} />;
+          case 'distributionList':
+            return <DistributionList key={idx} {...block} />;
+          default:
+            return null;
+        }
+      })}
+    </>
+  );
 }
