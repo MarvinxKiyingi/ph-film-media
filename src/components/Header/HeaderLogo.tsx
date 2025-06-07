@@ -1,7 +1,6 @@
 'use client';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import React from 'react';
 
 const HeaderLogo = () => {
   const pathname = usePathname();
@@ -11,16 +10,22 @@ const HeaderLogo = () => {
     <>
       {isHome ? (
         <h1 className='hidden uppercase lg:flex lg:col-span-1 lg:text-b-lg'>
-          <Link href='/' className='w-fit hidden'>
-            PH Film & Media
+          <Link
+            href='/'
+            className='w-fit'
+            aria-current='page'
+            aria-label='homepage | PH Film & Media'
+          >
+            <span className='sr-only'>PH Film & Media</span>
           </Link>
         </h1>
       ) : (
         <Link
           href='/'
           className='hidden uppercase font-oswald font-bold lg:flex lg:col-span-1 lg:text-b-lg w-fit'
+          aria-label='PH Film & Media homepage'
         >
-          PH Film & Media
+          <span>PH Film & Media</span>
         </Link>
       )}
     </>
