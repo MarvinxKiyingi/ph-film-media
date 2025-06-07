@@ -23,13 +23,13 @@ const DesktopMenuBar = ({ data }: IDesktopMenuBar) => {
         const isActive = pathname === slug;
 
         const baseClasses =
-          'transition-colors duration-300 lg:pl-8 hover:text-white';
+          'transition-colors duration-300 lg:pl-8 hover:text-white leading-[normal]';
         const colorClasses = isActive
           ? 'text-white'
           : 'text-white group-hover:text-gray-500';
 
         return (
-          <li key={link._key} className=''>
+          <li key={link._key} className='flex'>
             <Link
               href={isInternal ? slug : link.link?.href || ''}
               target={link._type === 'externalLink' ? '_blank' : undefined}
