@@ -1,5 +1,5 @@
 import { Lato, Oswald } from 'next/font/google';
-import './globals.css';
+import '@/app/globals.css';
 
 const oswald = Oswald({
   variable: '--font-oswald',

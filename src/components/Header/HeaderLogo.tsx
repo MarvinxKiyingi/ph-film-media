@@ -12,11 +12,11 @@ const HeaderLogo = () => {
         <h1 className='hidden uppercase lg:flex lg:col-span-1 lg:text-b-lg'>
           <Link
             href='/'
-            className='w-fit'
+            className='w-fit opacity-0'
             aria-current='page'
             aria-label='homepage | PH Film & Media'
           >
-            <span className='sr-only'>PH Film & Media</span>
+            <span className='sr-only !relative'>PH Film & Media</span>
           </Link>
         </h1>
       ) : (

@@ -60,7 +60,7 @@ const CarouselAutoplay: React.FC<PropType> = (props) => {
         <div className='embla__container lg:h-screen'>{children}</div>
       </div>
 
-      <div className={`embla__controls ${controlsClassName} `}>
+      <div className={`flex justify-between ${controlsClassName} `}>
         {/* {appendTextToControls && appendTextToControls} */}
 
         <div className='flex gap-6 items-center'>

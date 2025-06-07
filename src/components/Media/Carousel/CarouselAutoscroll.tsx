@@ -82,8 +82,8 @@ const CarouselAutoscroll: React.FC<PropType> = (props) => {
         <div className='embla__container'>{children}</div>
       </div>
 
-      <div className={`embla__controls ${controlsClassName}`}>
-        <div className='embla__buttons'>
+      <div className={`flex justify-between ${controlsClassName}`}>
+        <div className=''>
           <PrevButton
             onClick={() => onButtonAutoplayClick(onPrevButtonClick)}
             disabled={prevBtnDisabled}
