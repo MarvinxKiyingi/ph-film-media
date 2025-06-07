@@ -61,7 +61,7 @@ export const fetchHeader = defineQuery(`
       linkLabel,
       page->{
         _id,
-        title,
+        pageTitle,
         slug
       }
     },
@@ -103,9 +103,14 @@ export const fetchHome = defineQuery(`
 *[_type == "page" && slug.current == '/'][0]{
   _id,
   _type,
-  title,
+  pageTitle,
   slug,
   blockList[]{
+    // Page Title Block
+    _type == "pageTitle" => {
+      _type,
+      title
+    },
     // Hero Block
     _type == "hero" => {
       _type,
@@ -439,9 +444,14 @@ export const fetchPage = defineQuery(`
   *[_type == "page" && slug.current == $slug][0]{
     _id,
     _type,
-    title,
+    pageTitle,
     slug,
     blockList[]{
+      // Page Title Block
+      _type == "pageTitle" => {
+        _type,
+        title
+      },
       // Hero Block
       _type == "hero" => {
         _type,

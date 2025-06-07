@@ -16,7 +16,7 @@ const DesktopMenuBar = ({ data }: IDesktopMenuBar) => {
   const { linkReference } = data;
 
   return (
-    <ul className='hidden lg:flex group flex-col px-4 items-start text-b-lg lg:col-span-1 lg:flex-row lg:w-full lg:justify-end lg:gap-0 lg:text-b-sm lg:font-bold lg:px-0'>
+    <ul className='hidden lg:flex group flex-col px-4 items-start text-b-21 lg:col-span-1 lg:flex-row lg:w-full lg:justify-end lg:gap-0 lg:text-b-12 lg:font-bold lg:px-0'>
       {linkReference?.map((link) => {
         const isInternal = link._type === 'internalLink';
         const slug = isInternal ? `/${link.page?.slug?.current || ''}` : '';
@@ -40,7 +40,7 @@ const DesktopMenuBar = ({ data }: IDesktopMenuBar) => {
               }
               className={`${baseClasses} ${colorClasses}`}
             >
-              {isInternal ? link.page?.title : link.linkLabel}
+              {isInternal ? link.page?.pageTitle : link.linkLabel}
             </Link>
           </li>
         );

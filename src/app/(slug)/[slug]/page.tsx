@@ -11,6 +11,7 @@ import MovieClubList from '@/components/Blocks/MovieClubList';
 import DistributionList from '@/components/Blocks/DistributionList';
 import MovieHero from '@/components/Blocks/MovieHero';
 import { FetchPageResult } from '../../../../sanity.types';
+import PageTitle from '@/components/Blocks/PageTitle';
 
 export { generateMetadata };
 
@@ -44,12 +45,22 @@ export default async function Page({ params }: { params: PageParams }) {
     notFound();
   }
 
+  const isPageTitleBlock = data.blockList?.find(
+    (block) => block._type === 'pageTitle'
+  );
+
+  console.log(isPageTitleBlock?.title);
+
   return (
     <>
-      <h1>{data.title}</h1>
+      {!isPageTitleBlock ? (
+        <PageTitle _type='pageTitle' title={data.pageTitle} />
+      ) : null}
 
       {data.blockList?.map((block: IPageBlockListItem, idx) => {
         switch (block._type) {
+          case 'pageTitle':
+            return <PageTitle key={idx} {...block} />;
           case 'mediaCarousel':
             return <MediaCarousel key={idx} {...block} />;
           case 'movieClubList':

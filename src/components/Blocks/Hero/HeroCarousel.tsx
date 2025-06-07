@@ -84,7 +84,7 @@ const HeroCarousel = ({ block }: { block: BlockListItem }) => {
               <div className='relative flex flex-col gap-2 z-10 lg:justify-end lg:px-10 lg:mb-16 lg:pb-4'>
                 <div className='flex flex-col gap-4 lg:flex-row lg:justify-between'>
                   <div className='flex flex-col gap-2 flex-1'>
-                    <h3 className='text-h-base uppercase lg:text-h-lg'>
+                    <h3 className='text-h-21 uppercase lg:text-h-28'>
                       {card.title}
                     </h3>
 
@@ -95,7 +95,7 @@ const HeroCarousel = ({ block }: { block: BlockListItem }) => {
                       {card.infoItems?.map((item, itemIdx) => (
                         <p
                           key={`info-item-${card.id ?? idx}-${item.id ?? itemIdx}`}
-                          className='text-b-sm lg:text-b-base'
+                          className='text-b-12 lg:text-b-16e'
                         >
                           {item.infoItemTitle}
                         </p>

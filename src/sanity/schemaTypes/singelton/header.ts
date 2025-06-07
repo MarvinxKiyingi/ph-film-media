@@ -46,7 +46,7 @@ export const header = defineType({
           preview: {
             select: {
               title: 'linkLabel',
-              pageTitle: 'page.title',
+              pageTitle: 'page.pageTitle',
             },
             prepare({ title, pageTitle }) {
               return {

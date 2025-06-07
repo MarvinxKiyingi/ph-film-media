@@ -11,6 +11,7 @@ import MovieHero from '@/components/Blocks/MovieHero';
 import ImageWithText from '@/components/Blocks/ImageWithText';
 import LogoCarousel from '@/components/Blocks/LogoCarousel';
 import DistributionList from '@/components/Blocks/DistributionList';
+import PageTitle from '@/components/Blocks/PageTitle';
 
 export { generateMetadata };
 
@@ -55,6 +56,8 @@ export default async function HomePage() {
                 blockLength={data.blockList?.length || 0}
               />
             );
+          case 'pageTitle':
+            return <PageTitle key={idx} {...block} />;
           case 'mediaCarousel':
             return <MediaCarousel key={idx} {...block} />;
           case 'movieClubList':

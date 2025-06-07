@@ -9,7 +9,7 @@ const HeaderLogo = () => {
   return (
     <>
       {isHome ? (
-        <h1 className='hidden uppercase lg:flex lg:col-span-1 lg:text-b-lg'>
+        <h1 className='hidden uppercase lg:flex lg:col-span-1 lg:text-b-21'>
           <Link
             href='/'
             className='w-fit opacity-0'
@@ -22,7 +22,7 @@ const HeaderLogo = () => {
       ) : (
         <Link
           href='/'
-          className='hidden uppercase font-oswald font-bold lg:flex lg:col-span-1 lg:text-b-lg w-fit'
+          className='hidden uppercase font-oswald font-bold lg:flex lg:col-span-1 lg:text-b-21 w-fit'
           aria-label='PH Film & Media homepage'
         >
           <span>PH Film & Media</span>

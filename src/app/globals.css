@@ -7,22 +7,22 @@
   --default-font-family: var(--font-lato);
 
   /* Header scale */
-  --text-h-xs: 0.75rem; /* 12px */
-  --text-h-sm: 1rem; /* 16px */
-  --text-h-base: 1.312rem; /* 21px */
-  --text-h-lg: 1.75rem; /* 28px */
-  --text-h-xl: 2.312rem; /* 37px */
-  --text-h-2xl: 3.125rem; /* 50px */
-  --text-h-3xl: 4.187rem; /* 67px */
-  --text-h-4xl: 5.625rem; /* 90px */
+  --text-h-12: 0.75rem; /* 12px */
+  --text-h-21: 1rem; /* 16px */
+  --text-h-21: 1.312rem; /* 21px */
+  --text-h-28: 1.75rem; /* 28px */
+  --text-h-37: 2.312rem; /* 37px */
+  --text-h-50: 3.125rem; /* 50px */
+  --text-h-67: 4.187rem; /* 67px */
+  --text-h-90: 5.625rem; /* 90px */
 
   /* Body scale */
-  --text-b-xs: 0.562rem; /* 9px */
-  --text-b-sm: 0.75rem; /* 12px */
-  --text-b-sm-lg: 0.875rem; /* 14px */
-  --text-b-base: 1rem; /* 16px */
-  --text-b-lg: 1.312rem; /* 21px */
-  --text-b-xl: 1.75rem; /* 28px */
+  --text-b-9: 0.562rem; /* 9px */
+  --text-b-12: 0.75rem; /* 12px */
+  --text-b-14: 0.875rem; /* 14px */
+  --text-b-16e: 1rem; /* 16px */
+  --text-b-21: 1.312rem; /* 21px */
+  --text-b-28: 1.75rem; /* 28px */
 
   /* Colors */
   --color-black: rgba(10, 10, 10, 1);
@@ -36,6 +36,19 @@
 
   /* Header */
   --header-height-desktop: 63.48px;
+
+  /* Page padding */
+  --spacing-p-mobile: 1.25rem;
+  --spacing-p-desktop: 2.5rem;
+}
+
+@layer utilities {
+  .page-x-spacing {
+    @apply px-p-mobile lg:px-p-desktop;
+  }
+}
+
+@layer components {
 }
 
 body {
@@ -54,6 +67,7 @@ h6 {
   font-family: var(--font-oswald);
 }
 
+/* Nav-bar blur down */
 .nav_blur {
   position: absolute;
   z-index: 40;
@@ -131,119 +145,21 @@ h6 {
   }
 }
 
-/* Carousel */
-
+/* Embla Carousel */
 .embla {
   --slide-spacing: 0.75rem;
   --slide-size: 85%;
-}
-.embla__container {
-  display: flex;
-  touch-action: pan-y pinch-zoom;
-  margin-left: calc(var(--slide-spacing) * -1);
-}
-.embla__slide {
-  transform: translate3d(0, 0, 0);
-  flex: 0 0 var(--slide-size);
-  min-width: 0;
-  padding-left: var(--slide-spacing);
-  transition: opacity 0.5s ease-out;
-}
 
-.embla__button {
-  -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: transparent;
-  touch-action: manipulation;
-  display: inline-flex;
-  text-decoration: none;
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-  margin: 0;
-  box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
-  z-index: 1;
-  color: var(--text-body);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.embla__button:disabled {
-  color: var(--detail-high-contrast);
-}
-.embla__button__svg {
-  width: 35%;
-  height: 35%;
-}
-.embla__play {
-  -webkit-tap-highlight-color: rgba(var(--text-high-contrast-rgb-value), 0.5);
-  -webkit-appearance: none;
-  appearance: none;
-  background-color: transparent;
-  touch-action: manipulation;
-  display: inline-flex;
-  text-decoration: none;
-  cursor: pointer;
-  border: 0;
-  padding: 0;
-  margin: 0;
-  box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
-  border-radius: 1.8rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  justify-self: flex-end;
-  color: var(--text-body);
-  font-weight: 700;
-  font-size: 1.4rem;
-  padding: 0 2.4rem;
-  min-width: 8.4rem;
-}
-.embla__progress {
-  border-radius: 1.8rem;
-  box-shadow: inset 0 0 0 0.2rem var(--detail-medium-contrast);
-  background-color: var(--background-site);
-  position: relative;
-  height: 0.6rem;
-  justify-self: flex-end;
-  align-self: center;
-  width: 13rem;
-  max-width: 90%;
-  overflow: hidden;
-}
-.embla__progress__bar {
-  background-color: var(--text-body);
-  position: absolute;
-  width: 100%;
-  top: 0;
-  bottom: 0;
-  left: -100%;
-}
-.embla__controls {
-  grid-template-columns: auto 1fr auto;
-}
-.embla__progress {
-  justify-self: center;
-  transition: opacity 0.3s ease-in-out;
-  width: 8rem;
-}
-.embla__progress--hidden {
-  opacity: 0;
-}
-.embla__progress__bar {
-  animation-name: autoplay-progress;
-  animation-timing-function: linear;
-  animation-iteration-count: 1;
-}
-.embla__progress--hidden .embla__progress__bar {
-  animation-play-state: paused;
-}
-@keyframes autoplay-progress {
-  0% {
-    transform: translate3d(0, 0, 0);
+  .embla__container {
+    display: flex;
+    touch-action: pan-y pinch-zoom;
+    margin-left: calc(var(--slide-spacing) * -1);
   }
-  100% {
-    transform: translate3d(100%, 0, 0);
+  .embla__slide {
+    transform: translate3d(0, 0, 0);
+    flex: 0 0 var(--slide-size);
+    min-width: 0;
+    padding-left: var(--slide-spacing);
+    transition: opacity 0.5s ease-out;
   }
 }
