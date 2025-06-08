@@ -8,7 +8,7 @@ export default function Custom404() {
 
         <Link
           href='/'
-          className='text-b-base font-bold px-8 py-4 rounded-[8px] text-black bg-white '
+          className='text-b-16 font-bold px-8 py-4 rounded-[8px] text-black bg-white '
         >
           Gå till hem
         </Link>

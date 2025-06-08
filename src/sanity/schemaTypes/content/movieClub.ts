@@ -1,5 +1,5 @@
-import {PlayIcon} from '@sanity/icons'
-import {defineField, defineType} from 'sanity'
+import { PlayIcon } from '@sanity/icons';
+import { defineField, defineType } from 'sanity';
 
 export const movieClub = defineType({
   name: 'movieClub',
@@ -25,20 +25,20 @@ export const movieClub = defineType({
       updatedAt: '_updatedAt',
       movieBanner: 'movieBanner.media',
     },
-    prepare({title, updatedAt, movieBanner}) {
+    prepare({ title, updatedAt, movieBanner }) {
       const formattedDate = updatedAt
         ? new Date(updatedAt).toLocaleDateString('en-US', {
             year: 'numeric',
             month: 'short',
             day: 'numeric',
           })
-        : 'No edits yet'
+        : 'No edits yet';
 
       return {
         title: title || 'Movie',
         subtitle: `Last edited: ${formattedDate}`,
         media: movieBanner ? movieBanner : PlayIcon,
-      }
+      };
     },
   },
-})
+});

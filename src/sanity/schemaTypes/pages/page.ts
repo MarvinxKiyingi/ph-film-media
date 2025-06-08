@@ -22,8 +22,8 @@ export const page = defineType({
   ],
   fields: [
     defineField({
-      name: 'title',
-      title: 'Title',
+      name: 'pageTitle',
+      title: 'Page Title',
       type: 'string',
       validation: (Rule) => Rule.required(),
     }),
@@ -33,7 +33,7 @@ export const page = defineType({
       description:
         'This is used to create a URL for the page. If the page is the home page, the slug is /',
       options: {
-        source: 'title',
+        source: 'pageTitle',
       },
       validation: (Rule) => Rule.required(),
     }),
@@ -53,7 +53,7 @@ export const page = defineType({
   ],
   preview: {
     select: {
-      title: 'title',
+      title: 'pageTitle',
       media: 'blockList.0.mediaCard.content.image.mediaType.image',
       updatedAt: '_updatedAt',
     },

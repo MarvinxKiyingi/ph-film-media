@@ -62,7 +62,7 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ data }) => {
             />
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className='text-h-base font-oswald uppercase leading-[1] cursor-pointer w-full text-start'
+              className='text-h-21 font-oswald uppercase leading-[1] cursor-pointer w-full text-start'
               tabIndex={0}
               role='button'
               aria-label='Menu'
@@ -102,7 +102,7 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ data }) => {
               exit='closed'
               transition={{ duration: 0.15, ease: 'easeIn' }}
               style={{ originY: 0, willChange: 'height, opacity' }}
-              className='flex flex-col items-start text-b-lg w-full max-w-[352px] bg-white text-black p-6 overflow-hidden gap-3 rounded-bl-[3px] rounded-br-[3px]'
+              className='flex flex-col items-start text-b-21 w-full max-w-[352px] bg-white text-black p-6 overflow-hidden gap-3 rounded-bl-[3px] rounded-br-[3px]'
             >
               <li className='pt-3 border-t border-gray w-full'>
                 <Link
@@ -140,7 +140,7 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ data }) => {
                       className='flex'
                       onClick={() => setIsOpen(false)}
                     >
-                      {link.page?.title}
+                      {link.page?.pageTitle}
                     </Link>
                   </li>
                 ) : null

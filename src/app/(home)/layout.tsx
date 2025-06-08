@@ -1,4 +1,4 @@
-import '../globals.css';
+import '@/app/globals.css';
 
 import { VisualEditing } from 'next-sanity';
 import { draftMode } from 'next/headers';
@@ -11,7 +11,7 @@ import { fetchFooter, fetchHome } from '@/sanity/lib/queries';
 import { FetchHomeResult } from '../../../sanity.types';
 import { client } from '@/sanity/lib/client';
 
-export default async function RootLayout({
+export default async function HomeLayout({
   children,
 }: {
   children: React.ReactNode;

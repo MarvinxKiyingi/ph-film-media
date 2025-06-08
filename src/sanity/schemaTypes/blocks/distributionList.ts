@@ -1,5 +1,5 @@
-import {ListIcon} from '@sanity/icons'
-import {defineField, defineType} from 'sanity'
+import { ListIcon } from '@sanity/icons';
+import { defineField, defineType } from 'sanity';
 
 export const distributionList = defineType({
   name: 'distributionList',
@@ -21,7 +21,7 @@ export const distributionList = defineType({
               name: 'movie',
               title: 'Movie',
               type: 'reference',
-              to: [{type: 'distributions'}],
+              to: [{ type: 'distributions' }],
             },
           ],
           preview: {
@@ -30,11 +30,15 @@ export const distributionList = defineType({
               moviePoster: 'movie.moviePoster.media',
               movieBanner: 'movie.movieBanner.media',
             },
-            prepare({title, moviePoster, movieBanner}) {
+            prepare({ title, moviePoster, movieBanner }) {
               return {
                 title: title || 'No movie selected',
-                media: moviePoster ? moviePoster : movieBanner ? movieBanner : ListIcon,
-              }
+                media: moviePoster
+                  ? moviePoster
+                  : movieBanner
+                    ? movieBanner
+                    : ListIcon,
+              };
             },
           },
         },
@@ -46,11 +50,11 @@ export const distributionList = defineType({
       moviePoster: 'movies.0.movie.moviePoster.media',
       movieBanner: 'movies.0.movie.movieBanner.media',
     },
-    prepare({moviePoster, movieBanner}) {
+    prepare({ moviePoster, movieBanner }) {
       return {
         title: 'Movie List',
         media: moviePoster ? moviePoster : movieBanner ? movieBanner : ListIcon,
-      }
+      };
     },
   },
-})
+});

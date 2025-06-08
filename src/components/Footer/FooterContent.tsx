@@ -28,20 +28,20 @@ const FooterContent = ({ data }: { data: FetchFooterResult }) => {
             ))}
           </ul>
 
-          <p className='text-b-xs font-bold hidden lg:flex'>
+          <p className='text-b-9 font-bold hidden lg:flex'>
             {rights} ⏤ {currentYear} ©
           </p>
         </div>
 
         <div className='grid gap-4 lg:col-span-1'>
-          <h3 className='text-h-lg uppercase lg:border-b lg:border-gray lg:pb-1'>
+          <h3 className='text-h-28 uppercase lg:border-b lg:border-gray lg:pb-1'>
             {title}
           </h3>
-          {text && <RichText content={text} className='text-b-sm gap-2' />}
+          {text && <RichText content={text} className='text-b-12 gap-2' />}
         </div>
       </div>
 
-      <p className='flex text-b-xs font-bold lg:hidden'>
+      <p className='flex text-b-9 font-bold lg:hidden'>
         {rights} ⏤ {currentYear} ©
       </p>
     </footer>

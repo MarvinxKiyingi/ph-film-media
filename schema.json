@@ -912,6 +912,29 @@
     }
   },
   {
+    "name": "pageTitle",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "pageTitle"
+          }
+        },
+        "title": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
     "name": "movieHero",
     "type": "type",
     "value": {
@@ -1024,7 +1047,7 @@
             "value": "mediaCarousel"
           }
         },
-        "mediaList": {
+        "carouselItems": {
           "type": "objectAttribute",
           "value": {
             "type": "array",
@@ -1464,7 +1487,7 @@
           "type": "string"
         }
       },
-      "title": {
+      "pageTitle": {
         "type": "objectAttribute",
         "value": {
           "type": "string"
@@ -1589,6 +1612,21 @@
                 "rest": {
                   "type": "inline",
                   "name": "movieHero"
+                }
+              },
+              {
+                "type": "object",
+                "attributes": {
+                  "_key": {
+                    "type": "objectAttribute",
+                    "value": {
+                      "type": "string"
+                    }
+                  }
+                },
+                "rest": {
+                  "type": "inline",
+                  "name": "pageTitle"
                 }
               }
             ]
