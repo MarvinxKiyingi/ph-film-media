@@ -54,27 +54,28 @@ export default async function Page({ params }: { params: PageParams }) {
       {!isPageTitleBlock ? (
         <PageTitle _type='pageTitle' title={data.pageTitle} />
       ) : null}
-
-      {data.blockList?.map((block: IPageBlockListItem, idx) => {
-        switch (block._type) {
-          case 'pageTitle':
-            return <PageTitle key={idx} {...block} />;
-          case 'mediaCarousel':
-            return <MediaCarousel key={idx} {...block} />;
-          case 'movieClubList':
-            return <MovieClubList key={idx} {...block} />;
-          case 'movieHero':
-            return <MovieHero key={idx} {...block} />;
-          case 'imageWithText':
-            return <ImageWithText key={idx} {...block} />;
-          case 'logoCarousel':
-            return <LogoCarousel key={idx} {...block} />;
-          case 'distributionList':
-            return <DistributionList key={idx} {...block} />;
-          default:
-            return null;
-        }
-      })}
+      <div className='grid grid-cols-1'>
+        {data.blockList?.map((block: IPageBlockListItem, idx) => {
+          switch (block._type) {
+            case 'pageTitle':
+              return <PageTitle key={idx} {...block} />;
+            case 'mediaCarousel':
+              return <MediaCarousel key={idx} {...block} />;
+            case 'movieClubList':
+              return <MovieClubList key={idx} {...block} />;
+            case 'movieHero':
+              return <MovieHero key={idx} {...block} />;
+            case 'imageWithText':
+              return <ImageWithText key={idx} {...block} />;
+            case 'logoCarousel':
+              return <LogoCarousel key={idx} {...block} />;
+            case 'distributionList':
+              return <DistributionList key={idx} {...block} />;
+            default:
+              return null;
+          }
+        })}
+      </div>
     </>
   );
 }

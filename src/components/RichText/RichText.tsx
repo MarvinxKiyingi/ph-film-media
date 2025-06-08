@@ -11,9 +11,17 @@ const RichTextComponent = ({
 }) => {
   if (!content) return null;
 
+  const components = {
+    block: {
+      h3: (props: React.PropsWithChildren<object>) => (
+        <span className='text-b-21 font-bold '>{props.children}</span>
+      ),
+    },
+  };
+
   return (
-    <div className={`flex flex-col gap-1.5 ${className}`}>
-      <PortableText value={content} />
+    <div className={`flex flex-col gap-1.5 ${className || ''}`}>
+      <PortableText value={content} components={components} />
     </div>
   );
 };

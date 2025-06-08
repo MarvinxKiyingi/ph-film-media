@@ -43,7 +43,7 @@ export default async function HomePage() {
 
   return (
     <div
-      className={`flex flex-col min-h-svh lg:min-h-screen pt-52 ${data.blockList?.[0]._type === 'hero' ? 'lg:pt-0' : 'lg:pt-48'}`}
+      className={`grid grid-cols-1 gap-8 min-h-svh lg:min-h-screen pt-52 ${data.blockList?.[0]._type === 'hero' ? 'lg:pt-0' : 'lg:pt-48'}`}
     >
       {data.blockList?.map((block: IHomePageBlockListItem, idx) => {
         switch (block._type) {
