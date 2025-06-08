@@ -11,7 +11,7 @@ type IImageWithTextBlocks = Extract<
 const ImageWithText = ({ _type }: IImageWithTextBlocks) => {
   console.log('_type:', _type);
 
-  return <div>ImageWithText</div>;
+  return <section>ImageWithText</section>;
 };
 
 export default ImageWithText;

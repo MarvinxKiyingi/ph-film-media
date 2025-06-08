@@ -10,7 +10,7 @@ type ILogoCarouselBlocks = Extract<
 
 const LogoCarousel = ({ _type }: ILogoCarouselBlocks) => {
   console.log('_type:', _type);
-  return <div>LogoCarousel</div>;
+  return <section>LogoCarousel</section>;
 };
 
 export default LogoCarousel;

@@ -14,15 +14,19 @@ const MediaCarousel = (block: IMediaCarouselBlock) => {
   const { carouselItems } = block;
 
   return (
-    <Marquee pauseOnHover autoFill>
-      <ul
-        className='grid grid-flow-col gap-4 pr-4'
-        role='list'
-        aria-label='Scrolling list of featured media cards'
-      >
-        {carouselItems?.map((item, idx) => <MediaCard key={idx} item={item} />)}
-      </ul>
-    </Marquee>
+    <section>
+      <Marquee pauseOnHover autoFill>
+        <ul
+          className='grid grid-flow-col gap-4 pr-4'
+          role='list'
+          aria-label='Scrolling list of featured media cards'
+        >
+          {carouselItems?.map((item, idx) => (
+            <MediaCard key={idx} item={item} />
+          ))}
+        </ul>
+      </Marquee>
+    </section>
   );
 };
 

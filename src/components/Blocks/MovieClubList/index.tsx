@@ -10,7 +10,7 @@ type IMovieClubListBlocks = Extract<
 
 const MovieClubList = ({ movies }: IMovieClubListBlocks) => {
   console.log('movies:', movies);
-  return <div>MovieClubList</div>;
+  return <section>MovieClubList</section>;
 };
 
 export default MovieClubList;

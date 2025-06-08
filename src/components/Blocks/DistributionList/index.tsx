@@ -10,7 +10,7 @@ type IDistributionListBlocks = Extract<
 
 const DistributionList = ({ _type }: IDistributionListBlocks) => {
   console.log('_type', _type);
-  return <div>DistributionList</div>;
+  return <section>DistributionList</section>;
 };
 
 export default DistributionList;

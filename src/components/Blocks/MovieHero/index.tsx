@@ -10,7 +10,7 @@ type IMovieHeroBlocks = Extract<
 
 const MovieHero = ({ _type }: IMovieHeroBlocks) => {
   console.log('_type:', _type);
-  return <div>MovieHero</div>;
+  return <section>MovieHero</section>;
 };
 
 export default MovieHero;
