@@ -140,7 +140,7 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ data }) => {
                       className='flex'
                       onClick={() => setIsOpen(false)}
                     >
-                      {link.page?.title}
+                      {link.page?.pageTitle}
                     </Link>
                   </li>
                 ) : null

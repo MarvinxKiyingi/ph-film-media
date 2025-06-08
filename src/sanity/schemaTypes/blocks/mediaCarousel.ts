@@ -8,7 +8,7 @@ export const mediaCarousel = defineType({
   icon: ListIcon,
   fields: [
     defineField({
-      name: 'mediaList',
+      name: 'carouselItems',
       title: 'Carousel Items',
       type: 'array',
       of: [

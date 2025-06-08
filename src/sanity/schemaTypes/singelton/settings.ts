@@ -26,7 +26,8 @@ export const settings = defineType({
     defineField({
       name: 'distributionMovieDetailTitles',
       title: 'Distribution Movie Detail Titles',
-      description: 'Used to display the distribution movie detail titles.',
+      description:
+        'This is used to display the distribution movie detail titles.',
       type: 'object',
       fields: [
         defineField({

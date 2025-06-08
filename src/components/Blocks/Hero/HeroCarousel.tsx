@@ -44,11 +44,7 @@ const HeroCarousel = ({ block }: { block: BlockListItem }) => {
             <Wrapper key={`card-${card.id}-${idx}`} {...wrapperProps}>
               <div className='relative flex flex-col gap-2 lg:!absolute lg:top-0 lg:left-0 lg:right-0 lg:bottom-0 select-none'>
                 <SanityImage
-                  id={
-                    card.cardImage?.media?.asset?._id ||
-                    card.cardImage?.media?.asset?._ref ||
-                    ''
-                  }
+                  id={card.cardImage?.media?.asset?._id || ''}
                   baseUrl={baseUrl}
                   alt={card.cardImage?.media?.alt || ''}
                   width={

@@ -15,7 +15,7 @@ import PageTitle from '@/components/Blocks/PageTitle';
 
 export { generateMetadata };
 
-type IPageBlockListItem = NonNullable<
+export type IPageBlockListItem = NonNullable<
   NonNullable<FetchPageResult>['blockList']
 >[number];
 
@@ -48,8 +48,6 @@ export default async function Page({ params }: { params: PageParams }) {
   const isPageTitleBlock = data.blockList?.find(
     (block) => block._type === 'pageTitle'
   );
-
-  console.log(isPageTitleBlock?.title);
 
   return (
     <>
