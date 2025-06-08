@@ -20,7 +20,7 @@ const Button: React.FC<ButtonProps> = ({
   const filterClass = fill
     ? 'bg-white text-black hover:bg-transparent border border-white hover:border-white hover:text-white'
     : 'bg-transparent text-white border border-white hover:bg-white hover:text-black';
-  const buttonClass = `text-b-14 px-6 py-3 leading-[normal] h-fit rounded-[8px] transition-bg duration-300 lg:px-8  lg:text-b-16e ${filterClass} ${className}`;
+  const buttonClass = `text-b-14 px-6 py-3 leading-[normal] h-fit rounded-[8px] transition-bg duration-300 lg:px-8  lg:text-b-16 ${filterClass} ${className}`;
 
   if (!href) {
     return <span className={buttonClass}>{label}</span>;

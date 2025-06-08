@@ -20,7 +20,7 @@
   --text-b-9: 0.562rem; /* 9px */
   --text-b-12: 0.75rem; /* 12px */
   --text-b-14: 0.875rem; /* 14px */
-  --text-b-16e: 1rem; /* 16px */
+  --text-b-16: 1rem; /* 16px */
   --text-b-21: 1.312rem; /* 21px */
   --text-b-28: 1.75rem; /* 28px */
 
@@ -33,6 +33,7 @@
   --aspect-5/2: 5 / 2;
   --aspect-16/9: 16 / 9;
   --aspect-4/5: 4 / 5;
+  --aspect-4/3: 4 / 3;
 
   /* Header */
   --header-height-desktop: 63.48px;

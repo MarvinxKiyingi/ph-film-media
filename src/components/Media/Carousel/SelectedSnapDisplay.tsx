@@ -48,7 +48,7 @@ export const SelectedSnapDisplay: React.FC<PropType> = (props) => {
   }, [selectedSnap]);
 
   return (
-    <div className='embla__selected-snap-display text-b-16e'>
+    <div className='embla__selected-snap-display text-b-16'>
       {delayedSnap + 1} — {snapCount}
     </div>
   );

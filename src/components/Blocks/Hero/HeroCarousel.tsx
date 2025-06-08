@@ -91,7 +91,7 @@ const HeroCarousel = ({ block }: { block: BlockListItem }) => {
                       {card.infoItems?.map((item, itemIdx) => (
                         <p
                           key={`info-item-${card.id ?? idx}-${item.id ?? itemIdx}`}
-                          className='text-b-12 lg:text-b-16e'
+                          className='text-b-12 lg:text-b-16'
                         >
                           {item.infoItemTitle}
                         </p>
