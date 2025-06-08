@@ -2,12 +2,11 @@
 
 import React from 'react';
 import { BlockListItem } from '@/types/IBlockListItem';
-import { baseUrl } from '@/sanity/lib/utils';
-import { SanityImage } from 'sanity-image';
 import ScrollDownIndicator from './ScrollDownIndicator';
 import { useInView } from 'react-intersection-observer';
 import { FetchFooterResult } from '../../../../sanity.types';
 import FooterContent from '../../Footer/FooterContent';
+import SanityImage from '@/components/Media/SanityImage';
 
 const BigLogoContainer = ({
   block,
@@ -34,27 +33,7 @@ const BigLogoContainer = ({
         {block.logo?.media &&
           block.logo.media.asset &&
           block.logo.media.asset.metadata && (
-            <SanityImage
-              id={block.logo.media.asset._id}
-              baseUrl={baseUrl}
-              alt={block.logo.media.alt ?? 'Ph Film & Media Big Logo'}
-              width={block.logo.media.asset.metadata.dimensions?.width || 100}
-              height={block.logo.media.asset.metadata.dimensions?.height || 100}
-              hotspot={{
-                x: block.logo.media.hotspot?.x || 0,
-                y: block.logo.media.hotspot?.y || 0,
-              }}
-              crop={{
-                top: block.logo.media.crop?.top || 0,
-                left: block.logo.media.crop?.left || 0,
-                bottom: block.logo.media.crop?.bottom || 0,
-                right: block.logo.media.crop?.right || 0,
-              }}
-              // preview={block.logo.media.asset.metadata.lqip || ''}
-              mode='cover'
-              className='aspect-5/2 w-full'
-              queryParams={{ q: 90 }}
-            />
+            <SanityImage {...block.logo} className='aspect-5/2' />
           )}
       </div>
 

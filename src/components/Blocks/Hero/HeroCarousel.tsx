@@ -2,11 +2,10 @@
 
 import React from 'react';
 import CarouselAutoplay from '@/components/Media/Carousel/CarouselAutoplay';
-import { SanityImage } from 'sanity-image';
-import { baseUrl } from '@/sanity/lib/utils';
 import { BlockListItem } from '@/types/IBlockListItem';
 import Button from '@/components/Button/Button';
 import { useMediaQuery } from 'react-responsive';
+import SanityImage from '@/components/Media/SanityImage';
 
 const HeroCarousel = ({ block }: { block: BlockListItem }) => {
   const isDesktop = useMediaQuery({ query: '(min-width: 1024px)' });
@@ -43,32 +42,12 @@ const HeroCarousel = ({ block }: { block: BlockListItem }) => {
           return (
             <Wrapper key={`card-${card.id}-${idx}`} {...wrapperProps}>
               <div className='relative flex flex-col gap-2 lg:!absolute lg:top-0 lg:left-0 lg:right-0 lg:bottom-0 select-none'>
-                <SanityImage
-                  id={card.cardImage?.media?.asset?._id || ''}
-                  baseUrl={baseUrl}
-                  alt={card.cardImage?.media?.alt || ''}
-                  width={
-                    card.cardImage?.media?.asset?.metadata?.dimensions?.width ||
-                    100
-                  }
-                  height={
-                    card.cardImage?.media?.asset?.metadata?.dimensions
-                      ?.height || 100
-                  }
-                  hotspot={{
-                    x: card.cardImage?.media?.hotspot?.x || 0,
-                    y: card.cardImage?.media?.hotspot?.y || 0,
-                  }}
-                  crop={{
-                    top: card.cardImage?.media?.crop?.top || 0,
-                    left: card.cardImage?.media?.crop?.left || 0,
-                    bottom: card.cardImage?.media?.crop?.bottom || 0,
-                    right: card.cardImage?.media?.crop?.right || 0,
-                  }}
-                  // preview={block.logo.media.asset.metadata.lqip || ''}
-                  mode='cover'
-                  className='rounded-lg aspect-4/5 w-full h-full object-cover lg:rounded-none'
-                />
+                {card.cardImage && (
+                  <SanityImage
+                    {...card.cardImage}
+                    className='rounded-lg aspect-4/5 h-full lg:rounded-none'
+                  />
+                )}
 
                 <Button
                   label={card.buttonLabel}
