@@ -15,17 +15,15 @@ const ImageWithText = (block: IImageWithTextBlocks) => {
   const { textSection, mediaItem, mediaTitle } = block;
 
   return (
-    <section className='grid gap-8 page-x-spacing py-3 lg:gap-1.5 lg:grid-cols-24 lg:py-10'>
-      <div className='flex flex-col gap-8 lg:col-start-13 lg:col-span-10 lg:h-fit'>
+    <section className='grid gap-10 page-x-spacing py-3 md:gap-1.5 md:grid-cols-24 md:py-10'>
+      <div className='flex flex-col gap-8 md:col-start-13 md:col-span-10 md:h-fit'>
         {Array.isArray(textSection) &&
           textSection.map((section, idx) => (
-            <div
-              key={section.id ?? idx}
-              className='flex flex-col gap-4 text-b-12 font-bold'
-            >
+            <div key={section.id ?? idx} className='flex flex-col gap-4'>
               <h3 className='text-b-12 font-bold !font-lato text-gray h-fit'>
                 {section.title}
               </h3>
+
               <RichText
                 key={section.id ?? idx}
                 content={section.richText ?? []}
@@ -35,7 +33,7 @@ const ImageWithText = (block: IImageWithTextBlocks) => {
       </div>
 
       {mediaItem?.media && (
-        <div className='grid gap-5 lg:row-start-1 lg:col-start-1 lg:col-span-6'>
+        <div className='grid gap-5 h-fit md:row-start-1 md:col-start-1 md:col-span-8 lg:col-span-6'>
           <SanityImage {...mediaItem} className='aspect-4/5 rounded-lg' />
           <h2 className='text-b-12 font-bold !font-lato text-gray'>
             {mediaTitle}

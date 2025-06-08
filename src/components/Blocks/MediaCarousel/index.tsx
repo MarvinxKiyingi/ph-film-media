@@ -14,7 +14,7 @@ const MediaCarousel = (block: IMediaCarouselBlock) => {
   const { carouselItems } = block;
 
   return (
-    <section className='pb-3 lg:pb-10'>
+    <section className='pb-3 md:pb-10'>
       <Marquee pauseOnHover autoFill>
         <ul
           className='grid grid-flow-col gap-4 pr-4'
