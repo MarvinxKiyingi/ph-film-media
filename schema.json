@@ -1047,7 +1047,7 @@
             "value": "mediaCarousel"
           }
         },
-        "mediaList": {
+        "carouselItems": {
           "type": "objectAttribute",
           "value": {
             "type": "array",

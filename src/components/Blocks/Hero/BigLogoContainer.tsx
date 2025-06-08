@@ -28,18 +28,16 @@ const BigLogoContainer = ({
       className='relative px-5 lg:grid lg:gap-2 lg:grid-cols-12 lg:col-span-1 lg:order-1 lg:px-0 lg:overflow-auto'
     >
       <div
-        aria-label='Ph Film & Media logo'
+        aria-label='Ph Film & Media Big Logo'
         className='lg:col-start-5 lg:col-span-4 lg:h-screen lg:flex lg:items-center'
       >
         {block.logo?.media &&
           block.logo.media.asset &&
           block.logo.media.asset.metadata && (
             <SanityImage
-              id={
-                block.logo.media.asset._id || block.logo.media.asset._ref || ''
-              }
+              id={block.logo.media.asset._id}
               baseUrl={baseUrl}
-              alt={block.logo.media.alt || ''}
+              alt={block.logo.media.alt ?? 'Ph Film & Media Big Logo'}
               width={block.logo.media.asset.metadata.dimensions?.width || 100}
               height={block.logo.media.asset.metadata.dimensions?.height || 100}
               hotspot={{

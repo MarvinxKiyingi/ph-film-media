@@ -8,15 +8,15 @@ type IPageTitleBlock = Extract<
   { _type: 'pageTitle' }
 >;
 type IPageDataTitle = Extract<
-  NonNullable<NonNullable<FetchPageResult | FetchHomeResult>['title']>[number],
+  NonNullable<NonNullable<FetchPageResult | FetchHomeResult>['pageTitle']>,
   { _type: 'pageTitle' }
 >;
 
 const PageTitle = ({ title }: IPageTitleBlock | IPageDataTitle) => {
   return (
-    <div className='grid page-x-spacing'>
-      <h1 className='text-h-67 break-words lg:text-h-90 uppercase'>{title}</h1>
-    </div>
+    <h1 className='grid page-x-spacing text-h-50 break-words lg:text-h-67 uppercase'>
+      {title}
+    </h1>
   );
 };
 
