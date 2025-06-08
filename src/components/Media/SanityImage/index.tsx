@@ -1,55 +1,23 @@
 import React from 'react';
 import { SanityImage as SanityImageRenderer } from 'sanity-image';
 import { baseUrl } from '@/sanity/lib/utils';
-import {
-  SanityAssetSourceData,
-  SanityImageCrop,
-  SanityImageHotspot,
-  SanityImageMetadata,
-} from '../../../../sanity.types';
+import { determineAspectRatio } from './determineAspectRatio';
+import { SanityImageProps } from './SanityImageObject';
 
-type SanityImageObject = {
-  _type: 'mediaType';
-  media: {
-    _type: 'image';
-    alt: string | null;
-    crop: SanityImageCrop | null;
-    hotspot: SanityImageHotspot | null;
-    asset: {
-      _id: string;
-      _type: 'sanity.imageAsset';
-      _createdAt: string;
-      _updatedAt: string;
-      _rev: string;
-      originalFilename?: string;
-      label?: string;
-      title?: string;
-      description?: string;
-      altText?: string;
-      sha1hash?: string;
-      extension?: string;
-      mimeType?: string;
-      size?: number;
-      assetId?: string;
-      uploadId?: string;
-      path?: string;
-      url?: string;
-      metadata?: SanityImageMetadata;
-      source?: SanityAssetSourceData;
-    } | null;
-  } | null;
-};
-
-type SanityImageProps = SanityImageObject & {
-  className?: string;
-};
-
-const SanityImage = ({ media, className = '' }: SanityImageProps) => {
+const SanityImage = ({
+  media,
+  className = '',
+  useImageAspect = false,
+}: SanityImageProps) => {
   const { asset, alt, hotspot, crop } = media || {};
 
   if (!asset) return null;
 
   const dimensions = asset?.metadata?.dimensions;
+
+  const aspectRatioInfo = useImageAspect
+    ? determineAspectRatio(dimensions?.width || 0, dimensions?.height || 0)
+    : null;
 
   return (
     <SanityImageRenderer
@@ -70,7 +38,7 @@ const SanityImage = ({ media, className = '' }: SanityImageProps) => {
       }}
       queryParams={{ q: 90 }}
       mode='cover'
-      className={`w-full object-cover ${className}`}
+      className={`w-full object-cover ${aspectRatioInfo?.tailwindClass || ''} ${className}`}
     />
   );
 };
