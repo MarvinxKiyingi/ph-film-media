@@ -1,4 +1,4 @@
-import { ListIcon } from '@sanity/icons';
+import { ListIcon, InlineElementIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
 
 export const distributionList = defineType({
@@ -37,7 +37,7 @@ export const distributionList = defineType({
                   ? moviePoster
                   : movieBanner
                     ? movieBanner
-                    : ListIcon,
+                    : InlineElementIcon,
               };
             },
           },
