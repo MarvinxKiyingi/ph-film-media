@@ -21,8 +21,8 @@ const MediaCarousel = (block: IMediaCarouselBlock) => {
           role='list'
           aria-label='Scrolling list of featured media cards'
         >
-          {carouselItems?.map((item, idx) => (
-            <MediaCard key={idx} item={item} />
+          {carouselItems?.map((carouselItem, idx) => (
+            <MediaCard key={idx} carouselItem={carouselItem} />
           ))}
         </ul>
       </Marquee>
