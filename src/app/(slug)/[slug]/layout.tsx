@@ -21,7 +21,7 @@ export default async function PageLayout({
       <Header />
       <main
         id='page-main-content'
-        className='flex flex-col flex-1 pt-[20vh] lg:mt-[var(--header-height-desktop)] lg:pt-[12vh]'
+        className='flex flex-col flex-1 pt-[20vh] lg:mt-[var(--header-height-desktop)] lg:pt-[15vh]'
       >
         {children}
       </main>
