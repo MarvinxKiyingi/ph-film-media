@@ -18,7 +18,7 @@ const MediaCard = ({ carouselItem }: { carouselItem: IMediaCard }) => {
         <SanityImage {...mediaItem} className='rounded-lg aspect-4/3' />
       )}
 
-      {title && <h3 className='text-b-16 font-bold !font-lato'>{title}</h3>}
+      {title && <h4 className='text-b-16 font-bold !font-lato'>{title}</h4>}
     </li>
   );
 };

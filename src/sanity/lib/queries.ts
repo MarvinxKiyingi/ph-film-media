@@ -352,16 +352,6 @@ export const fetchPage = defineQuery(`
           movie->{
             _id,
             title,
-            moviePoster{
-              _type,
-              media{
-                _type,
-                alt,
-                crop,
-                hotspot,
-                asset->{ ... }
-              }
-            },
             movieBanner{
               _type,
               media{
@@ -429,33 +419,52 @@ export const fetchPage = defineQuery(`
       // Distribution List Block
       _type == "distributionList" => {
         _type,
-        movies[]{
-          id,
-          movie->{
-            _id,
-            title,
-            moviePoster{
-              _type,
-              media{
-                _type,
-                alt,
-                crop,
-                hotspot,
-                asset->{ ... }
-              }
-            },
-            movieBanner{
-              _type,
-              media{
-                _type,
-                alt,
-                crop,
-                hotspot,
-                asset->{ ... }
-              }
-            }
+        movies[]->{
+        _id,
+        title,
+        releaseDate,
+        description,
+        duration,
+        languages[]->{
+          _id,
+          language
+        },
+        directors[]->{
+          _id,
+          director
+        },
+        writers[]->{
+          _id,
+          writer
+        },
+        actors[]->{
+          _id,
+          actor
+        },
+        ticket,
+        button,
+        trailer,
+        moviePoster{
+          _type,
+          media{
+            _type,
+            alt,
+            crop,
+            hotspot,
+            asset->{ ... }
+          }
+        },
+        movieBanner{
+          _type,
+          media{
+            _type,
+            alt,
+            crop,
+            hotspot,
+            asset->{ ... }
           }
         }
+      }
       }
     },
     seo {
