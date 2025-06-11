@@ -19,10 +19,9 @@ const DistributionList = async (block: IDistributionListBlocks) => {
   if (block._type !== 'distributionList') return null;
   const settings = await client.fetch<SettingsQueryResult>(settingsQuery);
   const { movies } = block;
-  console.log(movies);
 
   return (
-    <section>
+    <section className='page-x-spacing grid gap-5'>
       {movies?.map((movieItem, index) =>
         movieItem && '_id' in movieItem && 'title' in movieItem ? (
           <DistributionMovieCard

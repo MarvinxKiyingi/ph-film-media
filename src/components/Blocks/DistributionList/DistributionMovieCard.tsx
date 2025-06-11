@@ -1,11 +1,11 @@
 import SanityImage from '@/components/Media/SanityImage';
 
 import { IDistributionListBlocks } from '.';
-import RichText from '@/components/RichText/RichText';
 import { SettingsQueryResult } from '../../../../sanity.types';
-import Link from 'next/link';
 import Button from '@/components/Button/Button';
-
+import { formatDate } from '@/utils/formatDate';
+import TrailerOverlay from '@/components/TrailerOverlay/TrailerOverlay';
+import ExpandableRichText from './ExpandableRichText';
 type IDistributionMovieType = NonNullable<
   IDistributionListBlocks['movies']
 >[number];
@@ -29,6 +29,7 @@ const DistributionMovieCard = ({ movie, settings }: IDistributionMovieCard) => {
     moviePoster,
     button,
     ticket,
+    trailer,
   } = movie;
 
   const {
@@ -41,87 +42,106 @@ const DistributionMovieCard = ({ movie, settings }: IDistributionMovieCard) => {
   } = settings?.distributionMovieDetailTitles ?? {};
 
   return (
-    <div>
-      {moviePoster?.media && (
-        <SanityImage
-          {...moviePoster}
-          className='h-full rounded-lg aspect-4/5'
-        />
-      )}
-
-      <div className='flex flex-col gap-1'>
-        <h3 className='text-h-28 '>{title}</h3>
-      </div>
-
-      <div className='flex flex-col gap-1'>
-        <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
-          {directorsLabel}
-        </h4>
-        {directors &&
-          directors.map((director) => (
-            <p key={director._id}>{director.director}</p>
-          ))}
-      </div>
-
-      <div className='flex flex-col gap-1'>
-        <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
-          {writersLabel}
-        </h4>
-        {writers &&
-          writers.map((writer) => <p key={writer._id}>{writer.writer}</p>)}
-      </div>
-
-      <div className='flex flex-col gap-1'>
-        <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
-          {actorsLabel}
-        </h4>
-        {actors && actors.map((actor) => <p key={actor._id}>{actor.actor}</p>)}
-      </div>
-
-      <div className='flex flex-col gap-1'>
-        <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
-          {languagesLabel}
-        </h4>
-        {languages &&
-          languages.map((language) => (
-            <p key={language._id}>{language.language}</p>
-          ))}
-      </div>
-
-      <div className='flex flex-col gap-1'>
-        <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
-          {releaseDateLabel}
-        </h4>
-        <p>{releaseDate}</p>
-      </div>
-
-      <div className='flex flex-col gap-1'>
-        <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
-          {durationLabel}
-        </h4>
-        <p>{duration}</p>
-      </div>
-
-      <div className='flex'>
-        {description && <RichText content={description} />}
-      </div>
-
-      <div className='flex gap-6'>
-        {button && (
-          <div>
-            <Link href={button?.buttonLink?.href ?? ''}>
-              {button?.buttonLabel}
-            </Link>
-          </div>
+    <div className='grid grid-cols-1 lg:grid-cols-24 lg:gap-x-2'>
+      <div className='mb-8 lg:row-start-1 lg:col-start-20 lg:col-span-full'>
+        {moviePoster?.media && (
+          <SanityImage
+            {...moviePoster}
+            className='h-full rounded-lg aspect-2/3 lg:h-auto'
+          />
         )}
-        {button && (
+      </div>
+
+      <div className='grid mb-10 lg:row-start-1 lg:col-start-1 lg:col-span-5'>
+        <h3 className='text-h-28 uppercase lg:pr-[20%]'>{title}</h3>
+      </div>
+
+      <div className='grid gap-6 mb-6 lg:col-start-6 lg:col-span-4 lg:h-fit'>
+        <div className='flex flex-col gap-1'>
+          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
+            {directorsLabel}
+          </h4>
+          {directors &&
+            directors.map((director) => (
+              <p key={director._id}>{director.director}</p>
+            ))}
+        </div>
+
+        <div className='flex flex-col gap-1'>
+          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
+            {writersLabel}
+          </h4>
+          {writers &&
+            writers.map((writer) => <p key={writer._id}>{writer.writer}</p>)}
+        </div>
+
+        <div className='flex flex-col gap-1'>
+          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
+            {actorsLabel}
+          </h4>
+          {actors &&
+            actors.map((actor) => <p key={actor._id}>{actor.actor}</p>)}
+        </div>
+      </div>
+
+      <div className='grid gap-6 mb-6 lg:col-start-10 lg:col-span-3 lg:h-fit'>
+        <div className='flex flex-col gap-1'>
+          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
+            {languagesLabel}
+          </h4>
+          {languages &&
+            languages.map((language) => (
+              <p key={language._id}>{language.language}</p>
+            ))}
+        </div>
+
+        <div className='flex flex-col gap-1'>
+          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
+            {releaseDateLabel}
+          </h4>
+          <p>{formatDate(releaseDate)}</p>
+        </div>
+
+        <div className='flex flex-col gap-1'>
+          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
+            {durationLabel}
+          </h4>
+          <p>{duration}</p>
+        </div>
+      </div>
+
+      <div className='grid gap-6 lg:col-start-13 lg:col-span-6'>
+        <div className='grid gap-2'>
+          <div className=''>
+            {description && <ExpandableRichText content={description} />}
+          </div>
+
           <div>
+            {trailer?.trailerLink?.href && (
+              <TrailerOverlay trailerLink={trailer.trailerLink.href} />
+            )}
+          </div>
+        </div>
+
+        <div className='flex gap-6 h-fit'>
+          {ticket && (
             <Button
-              href={ticket?.ticketLink?.href ?? ''}
+              variant='ticket'
+              href={ticket?.ticketLink?.href}
               label={ticket?.ticketLinkLabel}
             />
-          </div>
-        )}
+          )}
+          {button && (
+            <div className='flex'>
+              <Button
+                href={button?.buttonLink?.href ?? ''}
+                label={
+                  button?.buttonLabel ? button.buttonLabel : 'Pressmaterial'
+                }
+              />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

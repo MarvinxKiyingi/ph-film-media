@@ -34,6 +34,7 @@
   --aspect-16/9: 16 / 9;
   --aspect-4/5: 4 / 5;
   --aspect-4/3: 4 / 3;
+  --aspect-2/3: 2 / 3;
 
   /* Header */
   --header-height-desktop: 63.48px;
@@ -41,6 +42,9 @@
   /* Page padding */
   --spacing-p-mobile: 1.25rem;
   --spacing-p-desktop: 2.5rem;
+
+  --z-index-backdrop: 90;
+  --z-index-overlay: 100;
 }
 
 @layer utilities {
