@@ -52,7 +52,7 @@ const HeroCarousel = ({ block }: { block: BlockListItem }) => {
                 <Button
                   label={card.buttonLabel}
                   className='absolute bottom-2 right-2 lg:hidden'
-                  fill
+                  variant='primary'
                 />
               </div>
 
@@ -79,7 +79,7 @@ const HeroCarousel = ({ block }: { block: BlockListItem }) => {
                   </div>
 
                   <div className='hidden lg:flex lg:items-end'>
-                    <Button label={card.buttonLabel} fill />
+                    <Button label={card.buttonLabel} variant='primary' />
                   </div>
                 </div>
               </div>

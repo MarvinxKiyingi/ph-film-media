@@ -6,7 +6,6 @@ interface ButtonProps {
   href?: string | null;
   label?: string | null;
   className?: string;
-  fill?: boolean;
   variant?: 'primary' | 'secondary' | 'ticket';
 }
 
@@ -14,9 +13,10 @@ const Button: React.FC<ButtonProps> = ({
   href,
   label,
   className = '',
-
   variant = 'secondary',
 }) => {
+  if (!label) return null;
+
   const isExternal = href && /^https?:\/\//.test(href);
   const filterClass =
     variant === 'primary'
@@ -24,7 +24,7 @@ const Button: React.FC<ButtonProps> = ({
       : variant === 'secondary'
         ? 'bg-transparent text-white border border-white hover:bg-white hover:text-black'
         : 'bg-transparent text-white border border-white hover:bg-white hover:text-black';
-  const buttonClass = `text-b-14 px-6 py-3 leading-[normal] h-fit rounded-[8px] transition-bg duration-300 whitespace-nowrap lg:px-8 lg:text-b-16${filterClass} ${className}`;
+  const buttonClass = `text-b-14 px-6 py-3 leading-[normal] h-fit rounded-[8px] transition-bg duration-300 whitespace-nowrap lg:px-8 lg:text-b-16 ${filterClass} ${className}`;
 
   if (!href) {
     return <span className={buttonClass}>{label}</span>;
@@ -34,15 +34,13 @@ const Button: React.FC<ButtonProps> = ({
     return (
       <Link href={href} target='_blank' rel='noopener noreferrer'>
         <TicketButton
-          label={label ?? 'Biljett'}
+          label={label}
           bgColor={'var(--color-white)'}
           textColor={'var(--color-black)'}
         />
       </Link>
     );
   }
-
-  if (!label) return null;
 
   if (isExternal) {
     return (
