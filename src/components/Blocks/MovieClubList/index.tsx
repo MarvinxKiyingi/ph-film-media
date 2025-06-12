@@ -16,7 +16,7 @@ const MovieClubList = (block: IMovieClubListBlocks) => {
   if (movies?.length === 0) return null;
 
   return (
-    <section className='page-x-spacing grid gap-10 grid-cols-1 md:grid-cols-2 lg:gap-2 lg:grid-cols-4'>
+    <section className='page-x-spacing grid gap-10 grid-cols-1 md:grid-cols-2 lg:gap-2 lg:grid-cols-3 xl:grid-cols-4'>
       {movies?.map((movieItem) => (
         <MovieClubCard key={movieItem.movie?._id} {...movieItem} />
       ))}

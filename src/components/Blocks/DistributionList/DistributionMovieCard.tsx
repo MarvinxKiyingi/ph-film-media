@@ -42,23 +42,23 @@ const DistributionMovieCard = ({ movie, settings }: IDistributionMovieCard) => {
   } = settings?.distributionMovieDetailTitles ?? {};
 
   return (
-    <div className="grid grid-cols-1 border-t border-gray pt-4 max-lg:first:pt-0 max-lg:first:border-t-0 lg:grid-cols-24 lg:gap-x-2">
-      <div className="mb-8 lg:row-start-1 lg:col-start-20 lg:col-span-full">
+    <div className='grid grid-cols-1 border-t border-gray pt-4 max-lg:first:pt-0 max-lg:first:border-t-0 lg:grid-cols-24 lg:gap-x-2'>
+      <div className='mb-8 lg:row-start-1 lg:col-start-20 lg:col-span-full'>
         {moviePoster?.media && (
           <SanityImage
             {...moviePoster}
-            className="h-full rounded-lg aspect-2/3 lg:h-auto"
+            className='h-full rounded-lg aspect-2/3 lg:h-auto'
           />
         )}
       </div>
 
-      <div className="grid mb-10 lg:row-start-1 lg:col-start-1 lg:col-span-5">
-        <h3 className="text-h-28 uppercase lg:pr-[20%]">{title}</h3>
+      <div className='grid mb-10 lg:row-start-1 lg:col-start-1 lg:col-span-5'>
+        <h3 className='text-h-28 uppercase lg:pr-[20%]'>{title}</h3>
       </div>
 
-      <div className="grid gap-6 mb-6 lg:col-start-6 lg:col-span-4 lg:h-fit">
-        <div className="flex flex-col gap-1">
-          <h4 className="text-h-12 !font-lato font-bold text-gray uppercase">
+      <div className='grid gap-6 mb-6 lg:col-start-6 lg:col-span-4 lg:h-fit'>
+        <div className='flex flex-col gap-1'>
+          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
             {directorsLabel}
           </h4>
           {directors &&
@@ -67,16 +67,16 @@ const DistributionMovieCard = ({ movie, settings }: IDistributionMovieCard) => {
             ))}
         </div>
 
-        <div className="flex flex-col gap-1">
-          <h4 className="text-h-12 !font-lato font-bold text-gray uppercase">
+        <div className='flex flex-col gap-1'>
+          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
             {writersLabel}
           </h4>
           {writers &&
             writers.map((writer) => <p key={writer._id}>{writer.writer}</p>)}
         </div>
 
-        <div className="flex flex-col gap-1">
-          <h4 className="text-h-12 !font-lato font-bold text-gray uppercase">
+        <div className='flex flex-col gap-1'>
+          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
             {actorsLabel}
           </h4>
           {actors &&
@@ -84,9 +84,9 @@ const DistributionMovieCard = ({ movie, settings }: IDistributionMovieCard) => {
         </div>
       </div>
 
-      <div className="grid gap-6 mb-6 lg:col-start-10 lg:col-span-3 lg:h-fit">
-        <div className="flex flex-col gap-1">
-          <h4 className="text-h-12 !font-lato font-bold text-gray uppercase">
+      <div className='grid gap-6 mb-6 lg:col-start-10 lg:col-span-3 lg:h-fit'>
+        <div className='flex flex-col gap-1'>
+          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
             {languagesLabel}
           </h4>
           {languages &&
@@ -95,25 +95,30 @@ const DistributionMovieCard = ({ movie, settings }: IDistributionMovieCard) => {
             ))}
         </div>
 
-        <div className="flex flex-col gap-1">
-          <h4 className="text-h-12 !font-lato font-bold text-gray uppercase">
+        <div className='flex flex-col gap-1'>
+          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
             {releaseDateLabel}
           </h4>
           <p>{formatDate(releaseDate)}</p>
         </div>
 
-        <div className="flex flex-col gap-1">
-          <h4 className="text-h-12 !font-lato font-bold text-gray uppercase">
+        <div className='flex flex-col gap-1'>
+          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
             {durationLabel}
           </h4>
           <p>{duration}</p>
         </div>
       </div>
 
-      <div className="grid gap-6 h-fit lg:col-start-13 lg:col-span-6">
-        <div className="grid gap-2 h-fit">
-          <div className="grid">
-            {description && <RichText content={description} className='lg:!line-clamp-[9] 2xl:!line-clamp-[12]'/>}
+      <div className='grid gap-6 h-fit lg:col-start-13 lg:col-span-6'>
+        <div className='grid gap-2 h-fit'>
+          <div className='grid'>
+            {description && (
+              <RichText
+                content={description}
+                className='lg:!line-clamp-[9] 2xl:!line-clamp-[12]'
+              />
+            )}
           </div>
 
           <div>
@@ -123,20 +128,20 @@ const DistributionMovieCard = ({ movie, settings }: IDistributionMovieCard) => {
           </div>
         </div>
 
-        <div className="flex gap-6 h-fit">
+        <div className='flex gap-6 h-fit'>
           {ticket && (
             <Button
-              variant="ticket"
+              variant='ticket'
               href={ticket?.ticketLink?.href}
-              label={ticket?.ticketLinkLabel}
+              label={ticket?.ticketLinkLabel ?? 'Biljett'}
             />
           )}
           {button && (
-            <div className="flex">
+            <div className='flex'>
               <Button
-                href={button?.buttonLink?.href ?? ""}
+                href={button?.buttonLink?.href ?? ''}
                 label={
-                  button?.buttonLabel ? button.buttonLabel : "Pressmaterial"
+                  button?.buttonLabel ? button.buttonLabel : 'Pressmaterial'
                 }
               />
             </div>
