@@ -17,7 +17,7 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   if (!label) return null;
 
-  const isExternal = href && /^https?:\/\//.test(href);
+  const isExternal = href && /^(https?:\/\/)?(www\.)/.test(href);
   const filterClass =
     variant === 'primary'
       ? 'bg-white text-black hover:bg-transparent border border-white hover:border-white hover:text-white'
