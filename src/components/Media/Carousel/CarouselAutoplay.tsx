@@ -9,6 +9,7 @@ import {
 import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay, { AutoplayOptionsType } from 'embla-carousel-autoplay';
 import Fade from 'embla-carousel-fade';
+import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
 import { SelectedSnapDisplay } from './SelectedSnapDisplay';
 import { useSelectedSnapDisplay } from './SelectedSnapDisplay';
 
@@ -38,6 +39,7 @@ const CarouselAutoplay: React.FC<PropType> = (props) => {
   const plugins = [
     Autoplay(autoScrollOptions),
     isFade ? Fade() : undefined,
+    WheelGesturesPlugin({ forceWheelAxis: 'x' }),
   ].filter(Boolean);
 
   const [emblaRef, emblaApi] = useEmblaCarousel(
