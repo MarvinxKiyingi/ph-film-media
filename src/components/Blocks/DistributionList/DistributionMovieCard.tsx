@@ -116,7 +116,7 @@ const DistributionMovieCard = ({ movie, settings }: IDistributionMovieCard) => {
             {description && (
               <RichText
                 content={description}
-                className='lg:!line-clamp-[9] 2xl:!line-clamp-[12]'
+                className='lg:!line-clamp-[8] 2xl:!line-clamp-[12]'
               />
             )}
           </div>
