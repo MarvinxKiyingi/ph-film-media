@@ -1,5 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
+import { TrailerType } from '../../../sanity.types';
 
 // Helper to extract video ID and platform from full URL
 const extractVideoInfo = (
@@ -21,9 +22,11 @@ const extractVideoInfo = (
   return { platform: null, id: null };
 };
 
-const TrailerOverlay = ({ trailerLink }: { trailerLink: string }) => {
+const TrailerOverlay = ({ trailer }: { trailer: TrailerType }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { platform, id: videoId } = extractVideoInfo(trailerLink);
+  const { platform, id: videoId } = extractVideoInfo(
+    trailer.trailerLink?.href ?? ''
+  );
 
   useEffect(() => {
     if (isOpen) {
@@ -57,7 +60,7 @@ const TrailerOverlay = ({ trailerLink }: { trailerLink: string }) => {
         className='text-b-16 text-white underline underline-offset-4 cursor-pointer'
         style={{ textDecorationThickness: '1.2px' }}
       >
-        Trailer
+        {trailer.trailerLinkLabel ?? 'Trailer'}
       </button>
 
       {isOpen && (

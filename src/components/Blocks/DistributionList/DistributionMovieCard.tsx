@@ -159,9 +159,7 @@ const DistributionMovieCard = ({
             </div>
           )}
 
-          {trailer?.trailerLink?.href && (
-            <TrailerOverlay trailerLink={trailer.trailerLink.href} />
-          )}
+          {trailer?.trailerLink?.href && <TrailerOverlay trailer={trailer} />}
         </div>
 
         <div className='flex gap-6 h-fit'>
