@@ -230,37 +230,6 @@ export const fetchHome = defineQuery(`
             }
           }
         }
-      },
-      // Distribution List Block
-      _type == "distributionList" => {
-        _type,
-        movies[]{
-          id,
-          movie->{
-            _id,
-            title,
-            moviePoster{
-              _type,
-              media{
-                _type,
-                alt,
-                crop,
-                hotspot,
-                asset->{ ... }
-              }
-            },
-            movieBanner{
-              _type,
-              media{
-                _type,
-                alt,
-                crop,
-                hotspot,
-                asset->{ ... }
-              }
-            }
-          }
-        }
       }
     },
     seo {
@@ -422,6 +391,10 @@ export const fetchPage = defineQuery(`
         movies[]->{
         _id,
         title,
+        slug{
+          _type,
+          current
+        },
         releaseDate,
         description,
         duration,
@@ -483,3 +456,51 @@ export const fetchPage = defineQuery(`
     }
   }
   `);
+export const fetchDistributionMovie = defineQuery(`
+*[_type == "distributions" && slug.current == $slug][0]{
+    title,
+    slug,
+    releaseDate,
+    description,
+    duration,
+    languages[]->{
+      _id,
+      language
+    },
+    directors[]->{
+      _id,
+      director
+    },
+    writers[]->{
+      _id,
+      writer
+    },
+    actors[]->{
+      _id,
+      actor
+    },
+    ticket,
+    button,
+    trailer,
+    moviePoster{
+      _type,
+      media{
+        _type,
+        alt,
+        crop,
+        hotspot,
+        asset->{ ... }
+      }
+    },
+    movieBanner{
+      _type,
+      media{
+        _type,
+        alt,
+        crop,
+        hotspot,
+        asset->{ ... }
+      }
+    }
+  }
+`);

@@ -3,6 +3,7 @@ import {
   FetchHomeResult,
   FetchPageResult,
   SettingsQueryResult,
+  Slug,
 } from '../../../../sanity.types';
 import DistributionMovieCard from './DistributionMovieCard';
 import { client } from '@/sanity/lib/client';
@@ -15,7 +16,13 @@ export type IDistributionListBlocks = Extract<
   { _type: 'distributionList' }
 >;
 
-const DistributionList = async (block: IDistributionListBlocks) => {
+const DistributionList = async ({
+  block,
+  slug,
+}: {
+  block: IDistributionListBlocks;
+  slug: Slug | null;
+}) => {
   if (block._type !== 'distributionList') return null;
   const settings = await client.fetch<SettingsQueryResult>(settingsQuery);
   const { movies } = block;
@@ -28,6 +35,7 @@ const DistributionList = async (block: IDistributionListBlocks) => {
             key={`${movieItem._id}-${index}`}
             movie={movieItem}
             settings={settings}
+            slug={slug}
           />
         ) : null
       )}

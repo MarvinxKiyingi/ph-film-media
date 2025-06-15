@@ -16,7 +16,7 @@ const LogoCarousel = ({ logoItems }: ILogoCarouselBlocks) => {
       <Marquee
         autoFill
         className='w-full'
-        speed={20}
+        speed={80}
         gradient={true}
         gradientColor={'var(--color-background)'}
         gradientWidth={100}

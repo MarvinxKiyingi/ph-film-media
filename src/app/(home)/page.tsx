@@ -10,7 +10,6 @@ import MovieClubList from '@/components/Blocks/MovieClubList';
 import MovieHero from '@/components/Blocks/MovieHero';
 import ImageWithText from '@/components/Blocks/ImageWithText';
 import LogoCarousel from '@/components/Blocks/LogoCarousel';
-import DistributionList from '@/components/Blocks/DistributionList';
 import PageTitle from '@/components/Blocks/PageTitle';
 
 export { generateMetadata };
@@ -39,13 +38,19 @@ export default async function HomePage() {
       : undefined
   );
 
-  if (!data) return null;
+  if (!data || !data.blockList) return null;
+
+  const firstBlock = data.blockList[0];
+  const isHero =
+    firstBlock && '_type' in firstBlock && firstBlock._type === 'hero';
 
   return (
     <div
-      className={`grid grid-cols-1 gap-8 min-h-svh lg:min-h-screen pt-52 ${data.blockList?.[0]._type === 'hero' ? 'lg:pt-0' : 'lg:pt-48'}`}
+      className={`grid grid-cols-1 gap-8 min-h-svh lg:min-h-screen pt-52 ${isHero ? 'lg:pt-0' : 'lg:pt-48'}`}
     >
-      {data.blockList?.map((block: IHomePageBlockListItem, idx) => {
+      {data.blockList.map((block: IHomePageBlockListItem, idx) => {
+        if (!block || !('_type' in block)) return null;
+
         switch (block._type) {
           case 'hero':
             return (
@@ -68,8 +73,6 @@ export default async function HomePage() {
             return <ImageWithText key={idx} {...block} />;
           case 'logoCarousel':
             return <LogoCarousel key={idx} {...block} />;
-          case 'distributionList':
-            return <DistributionList key={idx} {...block} />;
           default:
             return null;
         }

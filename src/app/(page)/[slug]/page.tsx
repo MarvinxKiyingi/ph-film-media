@@ -70,7 +70,9 @@ export default async function Page({ params }: { params: PageParams }) {
             case 'logoCarousel':
               return <LogoCarousel key={idx} {...block} />;
             case 'distributionList':
-              return <DistributionList key={idx} {...block} />;
+              return (
+                <DistributionList key={idx} block={block} slug={data.slug} />
+              );
             default:
               return null;
           }

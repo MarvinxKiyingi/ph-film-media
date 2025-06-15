@@ -1,11 +1,15 @@
-import SanityImage from '@/components/Media/SanityImage';
+'use client';
 
-import { IDistributionListBlocks } from '.';
-import { SettingsQueryResult } from '../../../../sanity.types';
+import SanityImage from '@/components/Media/SanityImage';
+import { notFound, useRouter } from 'next/navigation';
+import { SettingsQueryResult, Slug } from '../../../../sanity.types';
 import Button from '@/components/Button/Button';
 import { formatDate } from '@/utils/formatDate';
 import TrailerOverlay from '@/components/TrailerOverlay/TrailerOverlay';
 import RichText from '@/components/RichText/RichText';
+import { generateDistributionMovieSlug } from '@/utils/generateDistributionMovieSlug';
+import { IDistributionListBlocks } from '.';
+
 type IDistributionMovieType = NonNullable<
   IDistributionListBlocks['movies']
 >[number];
@@ -13,9 +17,15 @@ type IDistributionMovieType = NonNullable<
 type IDistributionMovieCard = {
   movie: IDistributionMovieType;
   settings: SettingsQueryResult;
+  slug: Slug | null;
 };
 
-const DistributionMovieCard = ({ movie, settings }: IDistributionMovieCard) => {
+const DistributionMovieCard = ({
+  movie,
+  settings,
+  slug,
+}: IDistributionMovieCard) => {
+  const router = useRouter();
   if (!movie || !('_id' in movie)) return null;
   const {
     title,
@@ -41,22 +51,16 @@ const DistributionMovieCard = ({ movie, settings }: IDistributionMovieCard) => {
     durationLabel,
   } = settings?.distributionMovieDetailTitles ?? {};
 
-  return (
-    <div className='grid grid-cols-1 border-t border-gray pt-4 max-lg:first:pt-0 max-lg:first:border-t-0 lg:grid-cols-24 lg:gap-x-2'>
-      <div className='mb-8 lg:row-start-1 lg:col-start-20 lg:col-span-full'>
-        {moviePoster?.media && (
-          <SanityImage
-            {...moviePoster}
-            className='h-full rounded-lg aspect-2/3 lg:h-auto'
-          />
-        )}
-      </div>
+  if (!movie) {
+    console.log('Movie not found for slug:', movie);
+    notFound();
+  }
 
-      <div className='grid mb-10 lg:row-start-1 lg:col-start-1 lg:col-span-5'>
-        <h3 className='text-h-28 uppercase lg:pr-[20%]'>{title}</h3>
-      </div>
-
-      <div className='grid gap-6 mb-6 lg:col-start-6 lg:col-span-4 lg:h-fit'>
+  const firstDetailsContent = (className?: string) => {
+    return (
+      <div
+        className={`grid gap-6 mb-6 lg:col-start-6 lg:col-span-4 lg:h-fit ${className}`}
+      >
         <div className='flex flex-col gap-1'>
           <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
             {directorsLabel}
@@ -83,8 +87,13 @@ const DistributionMovieCard = ({ movie, settings }: IDistributionMovieCard) => {
             actors.map((actor) => <p key={actor._id}>{actor.actor}</p>)}
         </div>
       </div>
-
-      <div className='grid gap-6 mb-6 lg:col-start-10 lg:col-span-3 lg:h-fit'>
+    );
+  };
+  const secondDetailsContent = (className?: string) => {
+    return (
+      <div
+        className={`grid gap-6 mb-6 lg:col-start-10 lg:col-span-3 lg:h-fit ${className}`}
+      >
         <div className='flex flex-col gap-1'>
           <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
             {languagesLabel}
@@ -109,6 +118,49 @@ const DistributionMovieCard = ({ movie, settings }: IDistributionMovieCard) => {
           <p>{duration}</p>
         </div>
       </div>
+    );
+  };
+
+  const movieUrl = generateDistributionMovieSlug(
+    slug?.current ?? '',
+    movie.slug?.current ?? ''
+  );
+
+  return (
+    <div
+      onClick={() => router.push(movieUrl)}
+      onKeyDown={(e) => {
+        if ((e.target as HTMLElement).closest('button, a')) return;
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          router.push(movieUrl);
+        }
+      }}
+      role='button'
+      tabIndex={0}
+      aria-label={`View details for ${title}`}
+      className='grid grid-cols-1 border-t border-gray pt-4 max-lg:first:pt-0 max-lg:first:border-t-0 lg:grid-cols-24 lg:gap-x-2 cursor-pointer focus:outline-2 focus:outline-blue-500'
+    >
+      <div className='mb-8 lg:row-start-1 lg:col-start-20 lg:col-span-full'>
+        {moviePoster?.media && (
+          <SanityImage
+            {...moviePoster}
+            className='h-full rounded-lg aspect-2/3 lg:h-auto'
+          />
+        )}
+      </div>
+
+      <div className='grid mb-10 lg:row-start-1 lg:col-start-1 lg:col-span-5'>
+        <h3 className='text-h-28 uppercase lg:pr-[20%]'>{title}</h3>
+      </div>
+
+      {firstDetailsContent('hidden lg:grid')}
+      {secondDetailsContent('hidden lg:grid')}
+
+      <div className='grid grid-cols-2 pb-4 lg:hidden'>
+        {firstDetailsContent()}
+        {secondDetailsContent()}
+      </div>
 
       <div className='grid gap-6 h-fit lg:col-start-13 lg:col-span-6'>
         <div className='grid gap-2 h-fit'>
@@ -130,11 +182,13 @@ const DistributionMovieCard = ({ movie, settings }: IDistributionMovieCard) => {
 
         <div className='flex gap-6 h-fit'>
           {ticket && (
-            <Button
-              variant='ticket'
-              href={ticket?.ticketLink?.href}
-              label={ticket?.ticketLinkLabel ?? 'Biljett'}
-            />
+            <div className='flex'>
+              <Button
+                href={ticket?.ticketLink?.href ?? ''}
+                label={ticket?.ticketLinkLabel ?? 'Biljetter'}
+                className='ticket-button'
+              />
+            </div>
           )}
           {button && (
             <div className='flex'>

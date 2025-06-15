@@ -30,6 +30,14 @@ export const distributions = defineType({
       validation: (Rule) => Rule.required().error('Title is required.'),
     }),
     defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      group: 'text',
+      options: { source: 'title' },
+      validation: (Rule) => Rule.required().error('Slug is required.'),
+    }),
+    defineField({
       name: 'releaseDate',
       title: 'Release Date (Premiär)',
       description: 'The release date of the movie.',
