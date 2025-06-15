@@ -19,7 +19,7 @@ const BigLogoContainer = ({
 }) => {
   const { ref, inView } = useInView({ threshold: 0.1 });
   const hasMultipleBlocks = (blockLength || 0) > 1;
-  if (block._type !== 'hero') return null;
+  if (!block || !('logo' in block)) return null;
 
   return (
     <div

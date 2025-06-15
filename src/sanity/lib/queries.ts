@@ -25,6 +25,7 @@ export const settingsQuery = defineQuery(`
         }
       },
       distributionMovieDetailTitles {
+        descriptionLabel,
         directorsLabel,
         writersLabel,
         actorsLabel,
@@ -502,5 +503,17 @@ export const fetchDistributionMovie = defineQuery(`
         asset->{ ... }
       }
     }
+  }
+`);
+
+export const fetchAllDistributionMovieSlugs = defineQuery(`
+  *[_type == "distributions" && defined(slug.current)]{
+   "slug": slug.current
+  }
+`);
+
+export const fetchDistributionParentSlug = defineQuery(`
+  *[_type == "page" && count(blockList[_type == "distributionList"]) > 0][0]{
+    "slug": slug.current
   }
 `);

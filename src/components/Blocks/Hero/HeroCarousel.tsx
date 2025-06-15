@@ -10,7 +10,7 @@ import SanityImage from '@/components/Media/SanityImage';
 const HeroCarousel = ({ block }: { block: BlockListItem }) => {
   const isDesktop = useMediaQuery({ query: '(min-width: 1024px)' });
 
-  if (block._type !== 'hero') return null;
+  if (!block || !('mediaCard' in block)) return null;
   return (
     <div className='relative lg:col-span-12'>
       <CarouselAutoplay

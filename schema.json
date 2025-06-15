@@ -77,6 +77,13 @@
         "value": {
           "type": "object",
           "attributes": {
+            "descriptionLabel": {
+              "type": "objectAttribute",
+              "value": {
+                "type": "string"
+              },
+              "optional": true
+            },
             "directorsLabel": {
               "type": "objectAttribute",
               "value": {

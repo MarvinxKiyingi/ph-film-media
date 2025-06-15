@@ -56,86 +56,72 @@ const DistributionMovieCard = ({
     notFound();
   }
 
-  const firstDetailsContent = (className?: string) => {
-    return (
-      <div
-        className={`grid gap-6 mb-6 lg:col-start-6 lg:col-span-4 lg:h-fit ${className}`}
-      >
-        <div className='flex flex-col gap-1'>
-          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
-            {directorsLabel}
-          </h4>
-          {directors &&
-            directors.map((director) => (
-              <p key={director._id}>{director.director}</p>
-            ))}
-        </div>
-
-        <div className='flex flex-col gap-1'>
-          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
-            {writersLabel}
-          </h4>
-          {writers &&
-            writers.map((writer) => <p key={writer._id}>{writer.writer}</p>)}
-        </div>
-
-        <div className='flex flex-col gap-1'>
-          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
-            {actorsLabel}
-          </h4>
-          {actors &&
-            actors.map((actor) => <p key={actor._id}>{actor.actor}</p>)}
-        </div>
-      </div>
-    );
-  };
-  const secondDetailsContent = (className?: string) => {
-    return (
-      <div
-        className={`grid gap-6 mb-6 lg:col-start-10 lg:col-span-3 lg:h-fit ${className}`}
-      >
-        <div className='flex flex-col gap-1'>
-          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
-            {languagesLabel}
-          </h4>
-          {languages &&
-            languages.map((language) => (
-              <p key={language._id}>{language.language}</p>
-            ))}
-        </div>
-
-        <div className='flex flex-col gap-1'>
-          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
-            {releaseDateLabel}
-          </h4>
-          <p>{formatDate(releaseDate)}</p>
-        </div>
-
-        <div className='flex flex-col gap-1'>
-          <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
-            {durationLabel}
-          </h4>
-          <p>{duration}</p>
-        </div>
-      </div>
-    );
-  };
-
   const movieUrl = generateDistributionMovieSlug(
     slug?.current ?? '',
     movie.slug?.current ?? ''
   );
 
+  const handleClick = (e: React.MouseEvent) => {
+    if ((e.target as HTMLElement).closest('button, a')) return;
+    router.push(movieUrl);
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if ((e.target as HTMLElement).closest('button, a')) return;
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      router.push(movieUrl);
+    }
+  };
+
+  type PersonItem = {
+    _id: string;
+    [key: string]: string | null;
+  };
+
+  const renderPersonList = (items: PersonItem[] | null, label: string) => (
+    <div className='flex flex-col gap-1'>
+      <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
+        {label}
+      </h4>
+      {items?.map((item) => <p key={item._id}>{Object.values(item)[1]}</p>)}
+    </div>
+  );
+
+  const renderMovieCredits = (className?: string) => (
+    <div
+      className={`grid gap-6 mb-6 lg:col-start-6 lg:col-span-4 lg:h-fit ${className}`}
+    >
+      {directorsLabel && renderPersonList(directors, directorsLabel)}
+      {writersLabel && renderPersonList(writers, writersLabel)}
+      {actorsLabel && renderPersonList(actors, actorsLabel)}
+    </div>
+  );
+
+  const renderMovieDetails = (className?: string) => (
+    <div
+      className={`grid gap-6 mb-6 lg:col-start-10 lg:col-span-3 lg:h-fit ${className}`}
+    >
+      {languagesLabel && renderPersonList(languages, languagesLabel)}
+      <div className='flex flex-col gap-1'>
+        <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
+          {releaseDateLabel}
+        </h4>
+        <p>{formatDate(releaseDate)}</p>
+      </div>
+      <div className='flex flex-col gap-1'>
+        <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
+          {durationLabel}
+        </h4>
+        <p>{duration}</p>
+      </div>
+    </div>
+  );
+
   return (
     <div
-      onClick={() => router.push(movieUrl)}
-      onKeyDown={(e) => {
-        if ((e.target as HTMLElement).closest('button, a')) return;
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          router.push(movieUrl);
-        }
-      }}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
       role='button'
       tabIndex={0}
       aria-label={`View details for ${title}`}
@@ -154,51 +140,43 @@ const DistributionMovieCard = ({
         <h3 className='text-h-28 uppercase lg:pr-[20%]'>{title}</h3>
       </div>
 
-      {firstDetailsContent('hidden lg:grid')}
-      {secondDetailsContent('hidden lg:grid')}
+      {renderMovieCredits('hidden lg:grid')}
+      {renderMovieDetails('hidden lg:grid')}
 
       <div className='grid grid-cols-2 pb-4 lg:hidden'>
-        {firstDetailsContent()}
-        {secondDetailsContent()}
+        {renderMovieCredits()}
+        {renderMovieDetails()}
       </div>
 
       <div className='grid gap-6 h-fit lg:col-start-13 lg:col-span-6'>
         <div className='grid gap-2 h-fit'>
-          <div className='grid'>
-            {description && (
+          {description && (
+            <div className='grid'>
               <RichText
                 content={description}
                 className='lg:!line-clamp-[8] 2xl:!line-clamp-[12]'
               />
-            )}
-          </div>
+            </div>
+          )}
 
-          <div>
-            {trailer?.trailerLink?.href && (
-              <TrailerOverlay trailerLink={trailer.trailerLink.href} />
-            )}
-          </div>
+          {trailer?.trailerLink?.href && (
+            <TrailerOverlay trailerLink={trailer.trailerLink.href} />
+          )}
         </div>
 
         <div className='flex gap-6 h-fit'>
           {ticket && (
-            <div className='flex'>
-              <Button
-                href={ticket?.ticketLink?.href ?? ''}
-                label={ticket?.ticketLinkLabel ?? 'Biljetter'}
-                className='ticket-button'
-              />
-            </div>
+            <Button
+              href={ticket?.ticketLink?.href ?? ''}
+              label={ticket?.ticketLinkLabel ?? 'Biljetter'}
+              className='ticket-button'
+            />
           )}
           {button && (
-            <div className='flex'>
-              <Button
-                href={button?.buttonLink?.href ?? ''}
-                label={
-                  button?.buttonLabel ? button.buttonLabel : 'Pressmaterial'
-                }
-              />
-            </div>
+            <Button
+              href={button?.buttonLink?.href ?? ''}
+              label={button?.buttonLabel ?? 'Pressmaterial'}
+            />
           )}
         </div>
       </div>
