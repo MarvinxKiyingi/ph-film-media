@@ -50,7 +50,10 @@ export default async function Page({ params }: { params: PageParams }) {
   );
 
   return (
-    <>
+    <main
+      id='page-main-content'
+      className='flex flex-col flex-1 pt-[20vh] mt-[var(--header-height-mobile)] lg:mt-[var(--header-height-desktop)]'
+    >
       {!isPageTitleBlock ? (
         <PageTitle _type='pageTitle' title={data.pageTitle} />
       ) : null}
@@ -78,6 +81,6 @@ export default async function Page({ params }: { params: PageParams }) {
           }
         })}
       </div>
-    </>
+    </main>
   );
 }

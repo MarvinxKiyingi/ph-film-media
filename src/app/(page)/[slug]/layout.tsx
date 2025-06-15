@@ -19,12 +19,7 @@ export default async function PageLayout({
   return (
     <>
       <Header />
-      <main
-        id='page-main-content'
-        className='flex flex-col flex-1 pt-[20vh] lg:mt-[var(--header-height-desktop)]'
-      >
-        {children}
-      </main>
+      {children}
       <Footer footer={footer} />
 
       <SanityLive />
