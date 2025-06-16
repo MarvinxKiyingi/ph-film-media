@@ -118,7 +118,7 @@ const MovieDetail = ({
           <h4 className='hidden lg:block text-h-12 !font-lato font-bold text-gray uppercase col-span-3'>
             {descriptionLabel}
           </h4>
-          <div className='flex flex-col pb-10 lg:col-span-10'>
+          <div className='flex flex-col pb-10 lg:col-span-10 lg:pb-0'>
             {description && (
               <RichText
                 content={description}

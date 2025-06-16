@@ -65,10 +65,17 @@ const TrailerOverlay = ({ trailer }: { trailer: TrailerType }) => {
 
       {isOpen && (
         <div
-          onClick={closeOverlay}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            closeOverlay();
+          }}
           className='fixed inset-0 z-backdrop bg-black/70 flex justify-center items-center cursor-pointer'
         >
-          <div className='relative w-full aspect-video z-overlay m-[5%]'>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className='relative w-full aspect-video z-overlay m-[5%] pointer-events-auto'
+          >
             <iframe
               className='w-full h-full rounded-lg'
               src={embedUrl}

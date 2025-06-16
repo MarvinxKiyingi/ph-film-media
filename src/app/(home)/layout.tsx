@@ -37,7 +37,9 @@ export default async function HomeLayout({
   return (
     <>
       <Header />
-      <main className='flex flex-col flex-1'>{children}</main>
+      <main className='flex flex-col flex-1 mt-[var(--header-height-mobile)] lg:mt-0'>
+        {children}
+      </main>
       <Footer footer={footer} hasMultipleBlocks={hasMultipleBlocks} />
 
       <SanityLive />

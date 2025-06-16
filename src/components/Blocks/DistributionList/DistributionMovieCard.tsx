@@ -125,7 +125,7 @@ const DistributionMovieCard = ({
       role='button'
       tabIndex={0}
       aria-label={`View details for ${title}`}
-      className='grid grid-cols-1 border-t border-gray pt-4 max-lg:first:pt-0 max-lg:first:border-t-0 lg:grid-cols-24 lg:gap-x-2 cursor-pointer focus:outline-2 focus:outline-blue-500'
+      className='grid grid-cols-1 border-t border-gray pt-4 max-lg:first:pt-0 max-lg:first:border-t-0 lg:grid-cols-24 lg:gap-x-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-blue-500'
     >
       <div className='mb-8 lg:row-start-1 lg:col-start-20 lg:col-span-full'>
         {moviePoster?.media && (
