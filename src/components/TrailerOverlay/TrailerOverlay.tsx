@@ -22,7 +22,12 @@ const extractVideoInfo = (
   return { platform: null, id: null };
 };
 
-const TrailerOverlay = ({ trailer }: { trailer: TrailerType }) => {
+type ITrailerOverlay = {
+  trailer: TrailerType;
+  triggerIcon?: React.ReactNode;
+};
+
+const TrailerOverlay = ({ trailer, triggerIcon }: ITrailerOverlay) => {
   const [isOpen, setIsOpen] = useState(false);
   const { platform, id: videoId } = extractVideoInfo(
     trailer.trailerLink?.href ?? ''
@@ -60,7 +65,7 @@ const TrailerOverlay = ({ trailer }: { trailer: TrailerType }) => {
         className='text-b-16 text-white underline underline-offset-4 cursor-pointer'
         style={{ textDecorationThickness: '1.2px' }}
       >
-        {trailer.trailerLinkLabel ?? 'Trailer'}
+        {triggerIcon ? triggerIcon : (trailer.trailerLinkLabel ?? 'Trailer')}
       </button>
 
       {isOpen && (

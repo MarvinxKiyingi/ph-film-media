@@ -109,7 +109,7 @@ const MovieDetail = ({
     );
   };
   return (
-    <div className='page-x-spacing max-lg:py-p-mobile grid grid-cols-1 max-lg:first:border-t-0 lg:grid-cols-24 lg:gap-x-2 focus:outline-2 focus:outline-blue-500'>
+    <div className='page-x-spacing max-lg:py-p-mobile grid grid-cols-1 max-lg:first:border-t-0 lg:grid-cols-24 lg:gap-x-2 lg:p-p-desktop focus:outline-2 focus:outline-blue-500'>
       <div className='grid grid-cols-2 gap-y-10 lg:col-span-13 lg:col-start-10 lg:grid-cols-13 lg:gap-x-2 lg:h-fit'>
         {renderMovieCredits('lg:col-span-full lg:order-2')}
         {renderMovieDetails('lg:col-span-full lg:order-3')}
@@ -119,12 +119,7 @@ const MovieDetail = ({
             {descriptionLabel}
           </h4>
           <div className='flex flex-col pb-10 lg:col-span-10 lg:pb-0'>
-            {description && (
-              <RichText
-                content={description}
-                className='lg:!line-clamp-[8] 2xl:!line-clamp-[12] '
-              />
-            )}
+            {description && <RichText content={description} />}
           </div>
         </div>
       </div>

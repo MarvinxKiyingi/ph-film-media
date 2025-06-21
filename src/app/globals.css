@@ -26,6 +26,7 @@
 
   /* Colors */
   --color-black: rgba(10, 10, 10, 1);
+  --color-white: rgba(255, 255, 255, 1);
   --color-gray: rgba(129, 129, 129, 1);
   --color-background: rgba(10, 10, 10, 1);
 
