@@ -6969,6 +6969,11 @@ next-sanity@^9.11.1:
     groq "^3.88.2"
     history "^5.3.0"
 
+next-view-transitions@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.npmjs.org/next-view-transitions/-/next-view-transitions-0.3.4.tgz#442372e1d55f25d565c063032231980784e224f0"
+  integrity sha512-SSiskenQ8JkEFGzPjvFwC5LGGoqgTxM5dxexkeugxvcXFLpWI2ZUh4IsCURD3ovW+8Ue7xXlrtrpy8b7XR7IwQ==
+
 next@15.2.2:
   version "15.2.2"
   resolved "https://registry.npmjs.org/next/-/next-15.2.2.tgz"

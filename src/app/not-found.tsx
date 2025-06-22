@@ -1,5 +1,5 @@
 import Header from '@/components/Header/Header';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 
 export default function Custom404() {
   return (

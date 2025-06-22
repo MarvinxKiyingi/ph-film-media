@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import { MenuButton } from '../MenuButton/MenuButton';
 import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import SocialIcons from '@/components/Icons/SocialIcons';
 import type { FetchHeaderResult } from '../../../../sanity.types';
 

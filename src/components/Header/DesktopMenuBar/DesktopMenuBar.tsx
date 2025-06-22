@@ -1,7 +1,7 @@
-'use client'; // Required if you're using this in a Client Component
+'use client';
 
 import { FetchHeaderResult } from '../../../../sanity.types';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import { usePathname } from 'next/navigation';
 import React from 'react';
 

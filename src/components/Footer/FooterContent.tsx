@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import RichText from '../RichText/RichText';
 import SocialIcons from '../Icons/SocialIcons';
 import React from 'react';
