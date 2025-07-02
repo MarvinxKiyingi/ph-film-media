@@ -45,18 +45,11 @@ export default async function Page({ params }: { params: PageParams }) {
     notFound();
   }
 
-  const isPageTitleBlock = data.blockList?.find(
-    (block) => block._type === 'pageTitle'
-  );
-
   return (
     <main
       id='page-main-content'
       className='flex flex-col flex-1 pt-[20vh] mt-[var(--header-height-mobile)] lg:mt-[var(--header-height-desktop)]'
     >
-      {!isPageTitleBlock ? (
-        <PageTitle _type='pageTitle' title={data.pageTitle} />
-      ) : null}
       <div className='grid grid-cols-1'>
         {data.blockList?.map((block: IPageBlockListItem, idx) => {
           switch (block._type) {
