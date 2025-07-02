@@ -19,7 +19,7 @@ const ImageWithText = (block: IImageWithTextBlocks) => {
       <div className='flex flex-col gap-8 md:col-start-13 md:col-span-10 md:h-fit'>
         {Array.isArray(textSection) &&
           textSection.map((section, idx) => (
-            <div key={section.id ?? idx} className='flex flex-col gap-4'>
+            <div key={section.id ?? idx} className='flex flex-col gap-2'>
               <h3 className='text-b-12 font-bold !font-lato text-gray h-fit'>
                 {section.title}
               </h3>

@@ -26,6 +26,7 @@
 
   /* Colors */
   --color-black: rgba(10, 10, 10, 1);
+  --color-white: rgba(255, 255, 255, 1);
   --color-gray: rgba(129, 129, 129, 1);
   --color-background: rgba(10, 10, 10, 1);
 
@@ -34,13 +35,22 @@
   --aspect-16/9: 16 / 9;
   --aspect-4/5: 4 / 5;
   --aspect-4/3: 4 / 3;
+  --aspect-2/3: 2 / 3;
 
   /* Header */
   --header-height-desktop: 63.48px;
 
+  --header-height-mobile: 70.48px;
+  --header-height-mobile-with-spacing: calc(
+    var(--header-height-mobile) + var(--spacing-p-mobile)
+  );
+
   /* Page padding */
   --spacing-p-mobile: 1.25rem;
   --spacing-p-desktop: 2.5rem;
+
+  --z-index-backdrop: 90;
+  --z-index-overlay: 100;
 }
 
 @layer utilities {
@@ -50,6 +60,70 @@
 }
 
 @layer components {
+  .primary-button {
+    @apply text-b-14 px-6 py-3 leading-[normal] h-fit whitespace-nowrap rounded-lg duration-300 bg-white text-black hover:bg-transparent border border-white hover:border-white hover:text-white cursor-pointer lg:text-b-16;
+  }
+
+  .secondary-button {
+    @apply text-b-14 px-6 py-3 leading-[normal] h-fit whitespace-nowrap rounded-lg duration-300 bg-transparent text-white border border-white hover:bg-white hover:text-black cursor-pointer lg:text-b-16;
+  }
+
+  .ticket-button {
+    @apply text-b-14 px-7 py-[13.02px] leading-[normal] h-fit whitespace-nowrap duration-300 bg-white text-black cursor-pointer lg:text-b-16;
+    position: relative;
+    float: left;
+    border-right: dotted 1px #000;
+  }
+
+  .ticket-button:after {
+    content: '';
+    position: absolute;
+    z-index: 10;
+    top: -1px;
+    left: -1px;
+    border-right: #000 7px solid;
+    border-bottom: #000 7px solid;
+    -moz-border-radius: 0 0 100% 0;
+    -webkit-border-radius: 0 0 100% 0;
+    border-radius: 0 0 100% 0;
+  }
+  .ticket-button:before {
+    content: '';
+    position: absolute;
+    z-index: 10;
+    top: -1px;
+    right: -1px;
+    border-left: #000 7px solid;
+    border-bottom: #000 7px solid;
+    -moz-border-radius: 0 0 0 100%;
+    -webkit-border-radius: 0 0 0 100%;
+    border-radius: 0 0 0 100%;
+  }
+
+  .ticket-button span:after {
+    content: '';
+    position: absolute;
+    z-index: 10;
+    bottom: -1px;
+    left: -1px;
+    border-right: #000 7px solid;
+    border-top: #000 7px solid;
+    -moz-border-radius: 0 100% 0 0;
+    -webkit-border-radius: 0 100% 0 0;
+    border-radius: 0 100% 0 0;
+  }
+  .ticket-button span:before {
+    content: '';
+    position: absolute;
+    z-index: 10;
+    bottom: -1px;
+    right: -1px;
+    border-left: #000 7px solid;
+    border-top: #000 7px solid;
+    -moz-border-radius: 100% 0 0 0;
+    -webkit-border-radius: 100% 0 0 0;
+    border-radius: 100% 0 0 0;
+  }
 }
 
 body {

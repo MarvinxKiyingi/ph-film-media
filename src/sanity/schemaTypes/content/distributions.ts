@@ -1,4 +1,4 @@
-import { PlayIcon, UserIcon, InlineElementIcon } from '@sanity/icons';
+import { PlayIcon, InlineElementIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
 
 export const distributions = defineType({
@@ -27,7 +27,14 @@ export const distributions = defineType({
       title: 'Title',
       type: 'string',
       group: 'text',
-      validation: (Rule) => Rule.required().error('Title is required.'),
+    }),
+    defineField({
+      name: 'slug',
+      title: 'Slug',
+      type: 'slug',
+      group: 'text',
+      options: { source: 'title' },
+      validation: (Rule) => Rule.required().error('Slug is required.'),
     }),
     defineField({
       name: 'releaseDate',
@@ -59,131 +66,44 @@ export const distributions = defineType({
     }),
 
     defineField({
-      name: 'director',
-      title: 'Director (Regissör)',
+      name: 'directors',
+      title: 'Directors (Regissörer)',
       type: 'array',
-      of: [
-        {
-          type: 'object',
-          name: 'directorReference',
-          title: 'Director Reference ',
-          fields: [
-            {
-              name: 'directorItems',
-              title: 'Director Items ',
-              type: 'reference',
-              to: [{ type: 'directors' }],
-            },
-          ],
-          preview: {
-            select: {
-              title: 'directorItems.director',
-            },
-            prepare({ title }) {
-              return {
-                title: title || 'No director selected',
-                media: UserIcon,
-              };
-            },
-          },
-        },
-      ],
+      of: [{ type: 'reference', to: [{ type: 'directors' }] }],
       group: 'text',
     }),
     defineField({
       name: 'writers',
       title: 'Writers (Skribenter)',
       type: 'array',
-      of: [
-        {
-          type: 'object',
-          name: 'writerReference',
-          title: 'Writer Reference',
-          fields: [
-            {
-              name: 'writerItem',
-              title: 'Writer Item',
-              type: 'reference',
-              to: [{ type: 'writers' }],
-            },
-          ],
-          preview: {
-            select: {
-              title: 'writerItem.writer',
-            },
-            prepare({ title }) {
-              return {
-                title: title || 'No writer selected',
-                media: UserIcon,
-              };
-            },
-          },
-        },
-      ],
+      of: [{ type: 'reference', to: [{ type: 'writers' }] }],
       group: 'text',
     }),
     defineField({
       name: 'actors',
       title: 'Actors (Medverkande)',
       type: 'array',
-      of: [
-        {
-          type: 'object',
-          name: 'actorReference',
-          title: 'Actor Reference',
-          fields: [
-            {
-              name: 'actorItem',
-              title: 'Actor Item',
-              type: 'reference',
-              to: [{ type: 'actors' }],
-            },
-          ],
-          preview: {
-            select: {
-              title: 'actorItem.actor',
-            },
-            prepare({ title }) {
-              return {
-                title: title || 'No actor selected',
-                media: UserIcon,
-              };
-            },
-          },
-        },
-      ],
+      of: [{ type: 'reference', to: [{ type: 'actors' }] }],
       group: 'text',
     }),
     // ----- Buttons -----
     defineField({
-      name: 'ticketLabel',
-      title: 'Ticket Label',
-      type: 'string',
+      name: 'ticket',
+      title: 'Ticket',
+      type: 'ticketType',
       group: 'buttons',
     }),
     defineField({
-      name: 'ticketLink',
-      title: 'Ticket Link',
-      type: 'linkType',
-      group: 'buttons',
-    }),
-    defineField({
-      name: 'buttonLabel',
-      title: 'Button Label',
-      type: 'string',
-      group: 'buttons',
-    }),
-    defineField({
-      name: 'buttonLink',
-      title: 'Button Link',
-      type: 'linkType',
+      name: 'button',
+      title: 'Button',
+      type: 'buttonType',
       group: 'buttons',
     }),
     // ----- Media -----
     defineField({
       name: 'trailer',
       title: 'Trailer',
-      type: 'linkType',
+      type: 'trailerType',
       group: 'media',
     }),
     defineField({

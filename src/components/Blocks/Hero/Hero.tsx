@@ -15,7 +15,7 @@ const Hero = async ({
   blockLength: number;
 }) => {
   const footer = await client.fetch(fetchFooter);
-  if (block._type !== 'hero') return null;
+  if (!block || !('logo' in block)) return null;
 
   return (
     <div

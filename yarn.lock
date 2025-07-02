@@ -4555,6 +4555,13 @@ embla-carousel-reactive-utils@8.6.0:
   resolved "https://registry.yarnpkg.com/embla-carousel-reactive-utils/-/embla-carousel-reactive-utils-8.6.0.tgz#607f1d8ab9921c906a555c206251b2c6db687223"
   integrity sha512-fMVUDUEx0/uIEDM0Mz3dHznDhfX+znCCDCeIophYb1QGVM7YThSWX+wz11zlYwWFOr74b4QLGg0hrGPJeG2s4A==
 
+embla-carousel-wheel-gestures@^8.0.2:
+  version "8.0.2"
+  resolved "https://registry.npmjs.org/embla-carousel-wheel-gestures/-/embla-carousel-wheel-gestures-8.0.2.tgz#c47e4365c0affd9622942b8ec5aea50469fc5bbf"
+  integrity sha512-gtE8xHRwMGsfsMAgco/QoYhvcxNoMLmFF0DaWH7FXJJWk8RlEZyiZHZRZL6TZVCgooo9/hKyYWITLaSZLIvkbQ==
+  dependencies:
+    wheel-gestures "^2.2.5"
+
 embla-carousel@8.6.0:
   version "8.6.0"
   resolved "https://registry.yarnpkg.com/embla-carousel/-/embla-carousel-8.6.0.tgz#abcedff2bff36992ea8ac27cd30080ca5b6a3f58"
@@ -6961,6 +6968,11 @@ next-sanity@^9.11.1:
     "@sanity/visual-editing" "^2.13.20"
     groq "^3.88.2"
     history "^5.3.0"
+
+next-view-transitions@^0.3.4:
+  version "0.3.4"
+  resolved "https://registry.npmjs.org/next-view-transitions/-/next-view-transitions-0.3.4.tgz#442372e1d55f25d565c063032231980784e224f0"
+  integrity sha512-SSiskenQ8JkEFGzPjvFwC5LGGoqgTxM5dxexkeugxvcXFLpWI2ZUh4IsCURD3ovW+8Ue7xXlrtrpy8b7XR7IwQ==
 
 next@15.2.2:
   version "15.2.2"
@@ -9490,6 +9502,11 @@ whatwg-url@^14.0.0, whatwg-url@^14.1.1:
   dependencies:
     tr46 "^5.1.0"
     webidl-conversions "^7.0.0"
+
+wheel-gestures@^2.2.5:
+  version "2.2.48"
+  resolved "https://registry.npmjs.org/wheel-gestures/-/wheel-gestures-2.2.48.tgz#7b84b2522e66962efb50b5fe7e4a55503061255e"
+  integrity sha512-f+Gy33Oa5Z14XY9679Zze+7VFhbsQfBFXodnU2x589l4kxGM9L5Y8zETTmcMR5pWOPQyRv4Z0lNax6xCO0NSlA==
 
 which-boxed-primitive@^1.1.0, which-boxed-primitive@^1.1.1:
   version "1.1.1"

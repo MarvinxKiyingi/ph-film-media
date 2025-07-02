@@ -31,6 +31,11 @@ export const settings = defineType({
       type: 'object',
       fields: [
         defineField({
+          name: 'descriptionLabel',
+          title: 'Description Label (Beskrivning titel)',
+          type: 'string',
+        }),
+        defineField({
           name: 'directorsLabel',
           title: 'Directors Label (Regissör titel)',
           type: 'string',

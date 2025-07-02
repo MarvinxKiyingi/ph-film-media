@@ -14,8 +14,8 @@ type IPageDataTitle = Extract<
 
 const PageTitle = ({ title }: IPageTitleBlock | IPageDataTitle) => {
   return (
-    <section>
-      <h1 className='grid page-x-spacing text-h-50 break-words lg:text-h-67 uppercase'>
+    <section className='grid page-x-spacing'>
+      <h1 className='text-h-50 break-words uppercase lg:leading-[1.4] 2xl:text-h-67'>
         {title}
       </h1>
     </section>

@@ -10,7 +10,7 @@ import SanityImage from '@/components/Media/SanityImage';
 const HeroCarousel = ({ block }: { block: BlockListItem }) => {
   const isDesktop = useMediaQuery({ query: '(min-width: 1024px)' });
 
-  if (block._type !== 'hero') return null;
+  if (!block || !('mediaCard' in block)) return null;
   return (
     <div className='relative lg:col-span-12'>
       <CarouselAutoplay
@@ -51,8 +51,8 @@ const HeroCarousel = ({ block }: { block: BlockListItem }) => {
 
                 <Button
                   label={card.buttonLabel}
-                  className='absolute bottom-2 right-2 lg:hidden'
-                  fill
+                  className='absolute bottom-2 right-2 px-6 py-3 lg:hidden'
+                  variant='primary'
                 />
               </div>
 
@@ -79,7 +79,11 @@ const HeroCarousel = ({ block }: { block: BlockListItem }) => {
                   </div>
 
                   <div className='hidden lg:flex lg:items-end'>
-                    <Button label={card.buttonLabel} fill />
+                    <Button
+                      label={card.buttonLabel}
+                      variant='primary'
+                      className='px-6 py-3'
+                    />
                   </div>
                 </div>
               </div>

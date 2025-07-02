@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 import { FetchPageResult } from '../../../../sanity.types';
 import Marquee from 'react-fast-marquee';
@@ -15,7 +17,7 @@ const MediaCarousel = (block: IMediaCarouselBlock) => {
 
   return (
     <section className='pb-3 md:pb-10'>
-      <Marquee pauseOnHover autoFill>
+      <Marquee pauseOnHover autoFill speed={40}>
         <ul
           className='grid grid-flow-col gap-4 pr-4'
           role='list'

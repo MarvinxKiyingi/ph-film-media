@@ -26,6 +26,7 @@ const nextConfig: NextConfig = {
   experimental: {
     optimizePackageImports: ['framer-motion'],
     webVitalsAttribution: ['CLS', 'LCP', 'FCP', 'FID', 'TTFB', 'INP'],
+    viewTransition: true,
   },
   // Cache headers
   headers: async () => [

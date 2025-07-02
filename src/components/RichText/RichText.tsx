@@ -18,7 +18,7 @@ const RichTextComponent = ({
         const parts = fullText.split(',').map((part) => part.trim());
 
         return (
-          <span className='flex flex-wrap gap-2 text-b-21 font-bold'>
+          <span className='flex flex-wrap gap-x-2 text-b-21 font-bold'>
             {parts.map((part, idx) => (
               <span key={idx}>
                 {part}

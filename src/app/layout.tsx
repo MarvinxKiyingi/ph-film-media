@@ -1,5 +1,6 @@
 import { Lato, Oswald } from 'next/font/google';
 import '@/app/globals.css';
+import { ViewTransitions } from 'next-view-transitions';
 
 const oswald = Oswald({
   variable: '--font-oswald',
@@ -33,12 +34,14 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang='en'>
-      <body
-        className={`flex flex-col antialiased ${lato.variable} ${oswald.variable}`}
-      >
-        {children}
-      </body>
-    </html>
+    <ViewTransitions>
+      <html lang='en'>
+        <body
+          className={`flex flex-col antialiased ${lato.variable} ${oswald.variable}`}
+        >
+          {children}
+        </body>
+      </html>
+    </ViewTransitions>
   );
 }

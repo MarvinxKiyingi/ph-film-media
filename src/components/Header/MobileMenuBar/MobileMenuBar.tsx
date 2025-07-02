@@ -1,8 +1,8 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MenuButton } from '../MenuButton/MenuButton';
 import { motion, AnimatePresence } from 'framer-motion';
-import Link from 'next/link';
+import { Link } from 'next-view-transitions';
 import SocialIcons from '@/components/Icons/SocialIcons';
 import type { FetchHeaderResult } from '../../../../sanity.types';
 
@@ -22,6 +22,17 @@ type IMobileMenuBar = {
 
 const MobileMenuBar: React.FC<IMobileMenuBar> = ({ data }) => {
   const [isOpen, setIsOpen] = useState(false);
+  useEffect(() => {
+    if (isOpen) {
+      // Save current overflow style
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isOpen]);
+
   if (!data) return null;
 
   const { linkReference, socialMediaLinks, homeMenuItemLabel } = data;

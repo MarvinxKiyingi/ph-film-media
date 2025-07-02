@@ -1,15 +1,27 @@
 import type { Metadata, ResolvingMetadata } from 'next';
 import { resolveOpenGraphImage } from '@/sanity/lib/utils';
-import { fetchHome, fetchPage, settingsQuery } from '@/sanity/lib/queries';
+import {
+  fetchHome,
+  fetchPage,
+  settingsQuery,
+  fetchDistributionMovie,
+} from '@/sanity/lib/queries';
 import { client } from '@/sanity/lib/client';
 import type {
   FetchHomeResult,
   SettingsQueryResult,
   FetchPageResult,
+  FetchDistributionMovieResult,
 } from '../../sanity.types';
 
+type RichTextBlock = {
+  children?: Array<{ text?: string }>;
+  _type?: string;
+  _key?: string;
+};
+
 type Props = {
-  params: Promise<{ slug: string }>;
+  params: Promise<{ slug: string; movieSlug?: string }>;
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 const DEFAULT_TITLE = 'PH Film & Media';
@@ -26,49 +38,90 @@ const DEFAULT_IMAGE = {
 };
 
 function getSeoField<T>(
+  distributionMovie: T | undefined,
   pageValue: T | undefined,
   settingsValue: T | undefined,
   fallback: T
 ): T {
-  return pageValue ?? settingsValue ?? fallback;
+  return distributionMovie ?? pageValue ?? settingsValue ?? fallback;
+}
+
+function getDescriptionText(
+  description: string | RichTextBlock[] | undefined | null
+): string {
+  if (typeof description === 'string') return description;
+  if (!description || !Array.isArray(description) || description.length === 0)
+    return DEFAULT_DESCRIPTION;
+
+  const first = description[0];
+  if (first?.children?.[0]?.text) return first.children[0].text;
+  return DEFAULT_DESCRIPTION;
+}
+
+function truncateDescription(text: string): string {
+  if (text.length <= 155) return text;
+  return text.slice(0, 152) + '...';
 }
 
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
 ): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug, movieSlug } = await params;
   const isHome = !slug || slug === '/';
+  const isDistributionMovie = slug && movieSlug;
 
   const baseUrl =
     process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL ||
     'http://localhost:3000';
 
+  // Handle regular pages
   const settings = await client.fetch<SettingsQueryResult>(settingsQuery);
+
   const page = isHome
     ? await client.fetch<FetchHomeResult>(fetchHome, { slug: '/' })
     : await client.fetch<FetchPageResult>(fetchPage, { slug });
+
+  // Handle distribution movie pages
+  const movie: FetchDistributionMovieResult | undefined = isDistributionMovie
+    ? await client.fetch(fetchDistributionMovie, {
+        slug: movieSlug,
+      })
+    : undefined;
 
   const pageSeo = page?.seo;
   const settingsSeo = settings?.seo;
 
   // Title
-  const titleFromPage = pageSeo?.metaTitle ?? page?.pageTitle;
+  const titleFromPage =
+    movie?.title || pageSeo?.metaTitle || page?.pageTitle || DEFAULT_TITLE;
   const fullTitle =
     titleFromPage && titleFromPage !== DEFAULT_TITLE
       ? `${titleFromPage} | ${DEFAULT_TITLE}`
       : DEFAULT_TITLE;
 
   // Description
-  const description =
+  const movieDescription = movie?.description
+    ? getDescriptionText(movie.description)
+    : undefined;
+  const pageDescription = pageSeo?.metaDescription || undefined;
+  const settingsDescription = settingsSeo?.metaDescription || undefined;
+
+  const description = truncateDescription(
     getSeoField(
-      pageSeo?.metaDescription ?? undefined,
-      settingsSeo?.metaDescription ?? undefined,
+      movieDescription,
+      pageDescription,
+      settingsDescription,
       DEFAULT_DESCRIPTION
-    ) ?? DEFAULT_DESCRIPTION;
+    )
+  );
 
   // Image
-  const image = pageSeo?.metaImage?.media || settingsSeo?.metaImage?.media;
+  const image =
+    movie?.movieBanner?.media ||
+    movie?.moviePoster?.media ||
+    pageSeo?.metaImage?.media ||
+    settingsSeo?.metaImage?.media;
   const ogImage =
     resolveOpenGraphImage(image, DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT) ||
     DEFAULT_IMAGE;
@@ -93,10 +146,17 @@ export async function generateMetadata(
     alternates: {
       canonical: isHome
         ? `${baseUrl.replace(/\/$/, '')}/`
-        : `${baseUrl.replace(/\/$/, '')}/${slug.replace(/^\/+/, '')}`,
+        : isDistributionMovie
+          ? `${baseUrl.replace(/\/$/, '')}/${slug}/${movieSlug}`
+          : `${baseUrl.replace(/\/$/, '')}/${slug.replace(/^\/+/, '')}`,
     },
     other: {
-      'og:site_name': settingsSeo?.metaTitle || DEFAULT_TITLE,
+      'og:site_name':
+        movie?.title ||
+        page?.pageTitle ||
+        settingsSeo?.metaTitle ||
+        settings?.seo?.metaTitle ||
+        DEFAULT_TITLE,
       'og:locale': 'en_US',
       'og:type': 'website',
       'og:image:width': '1200',

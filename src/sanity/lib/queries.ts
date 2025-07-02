@@ -25,6 +25,7 @@ export const settingsQuery = defineQuery(`
         }
       },
       distributionMovieDetailTitles {
+        descriptionLabel,
         directorsLabel,
         writersLabel,
         actorsLabel,
@@ -230,37 +231,6 @@ export const fetchHome = defineQuery(`
             }
           }
         }
-      },
-      // Distribution List Block
-      _type == "distributionList" => {
-        _type,
-        movies[]{
-          id,
-          movie->{
-            _id,
-            title,
-            moviePoster{
-              _type,
-              media{
-                _type,
-                alt,
-                crop,
-                hotspot,
-                asset->{ ... }
-              }
-            },
-            movieBanner{
-              _type,
-              media{
-                _type,
-                alt,
-                crop,
-                hotspot,
-                asset->{ ... }
-              }
-            }
-          }
-        }
       }
     },
     seo {
@@ -352,16 +322,6 @@ export const fetchPage = defineQuery(`
           movie->{
             _id,
             title,
-            moviePoster{
-              _type,
-              media{
-                _type,
-                alt,
-                crop,
-                hotspot,
-                asset->{ ... }
-              }
-            },
             movieBanner{
               _type,
               media{
@@ -429,33 +389,56 @@ export const fetchPage = defineQuery(`
       // Distribution List Block
       _type == "distributionList" => {
         _type,
-        movies[]{
-          id,
-          movie->{
-            _id,
-            title,
-            moviePoster{
-              _type,
-              media{
-                _type,
-                alt,
-                crop,
-                hotspot,
-                asset->{ ... }
-              }
-            },
-            movieBanner{
-              _type,
-              media{
-                _type,
-                alt,
-                crop,
-                hotspot,
-                asset->{ ... }
-              }
-            }
+        movies[]->{
+        _id,
+        title,
+        slug{
+          _type,
+          current
+        },
+        releaseDate,
+        description,
+        duration,
+        languages[]->{
+          _id,
+          language
+        },
+        directors[]->{
+          _id,
+          director
+        },
+        writers[]->{
+          _id,
+          writer
+        },
+        actors[]->{
+          _id,
+          actor
+        },
+        ticket,
+        button,
+        trailer,
+        moviePoster{
+          _type,
+          media{
+            _type,
+            alt,
+            crop,
+            hotspot,
+            asset->{ ... }
+          }
+        },
+        movieBanner{
+          _type,
+          media{
+            _type,
+            alt,
+            crop,
+            hotspot,
+            asset->{ ... }
           }
         }
+      }
       }
     },
     seo {
@@ -474,3 +457,63 @@ export const fetchPage = defineQuery(`
     }
   }
   `);
+export const fetchDistributionMovie = defineQuery(`
+*[_type == "distributions" && slug.current == $slug][0]{
+    title,
+    slug,
+    releaseDate,
+    description,
+    duration,
+    languages[]->{
+      _id,
+      language
+    },
+    directors[]->{
+      _id,
+      director
+    },
+    writers[]->{
+      _id,
+      writer
+    },
+    actors[]->{
+      _id,
+      actor
+    },
+    ticket,
+    button,
+    trailer,
+    moviePoster{
+      _type,
+      media{
+        _type,
+        alt,
+        crop,
+        hotspot,
+        asset->{ ... }
+      }
+    },
+    movieBanner{
+      _type,
+      media{
+        _type,
+        alt,
+        crop,
+        hotspot,
+        asset->{ ... }
+      }
+    }
+  }
+`);
+
+export const fetchAllDistributionMovieSlugs = defineQuery(`
+  *[_type == "distributions" && defined(slug.current)]{
+   "slug": slug.current
+  }
+`);
+
+export const fetchDistributionParentSlug = defineQuery(`
+  *[_type == "page" && count(blockList[_type == "distributionList"]) > 0][0]{
+    "slug": slug.current
+  }
+`);
