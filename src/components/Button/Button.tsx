@@ -28,7 +28,11 @@ const Button: React.FC<ButtonProps> = ({
   const buttonClass = `${filterClass} ${className}`;
 
   if (!href) {
-    return <span className={buttonClass}>{label}</span>;
+    return (
+      <div className={buttonClass}>
+        <span>{label}</span>
+      </div>
+    );
   }
 
   if (isExternal) {
@@ -46,7 +50,7 @@ const Button: React.FC<ButtonProps> = ({
 
   return (
     <Link href={href} className={buttonClass}>
-      {label}
+      <span>{label}</span>
     </Link>
   );
 };
