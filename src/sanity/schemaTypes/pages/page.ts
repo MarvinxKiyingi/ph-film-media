@@ -25,6 +25,7 @@ export const page = defineType({
       name: 'pageTitle',
       title: 'Page Title',
       type: 'string',
+      validation: (Rule) => Rule.required().error('Title is required.'),
     }),
     defineField({
       name: 'slug',
