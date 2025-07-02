@@ -10,7 +10,7 @@ const singletonSchemas = Object.values(singelton);
 
 export const structure: StructureResolver = (S: StructureBuilder) =>
   S.list()
-    .title('PH Film & Media')
+    .title('PH Film & Media 2.0')
     .items([
       // Pages
       S.documentTypeListItem('page').title('Pages'),
