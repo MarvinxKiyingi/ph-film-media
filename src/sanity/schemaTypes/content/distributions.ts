@@ -27,6 +27,7 @@ export const distributions = defineType({
       title: 'Title',
       type: 'string',
       group: 'text',
+      validation: (Rule) => Rule.required().error('Title is required.'),
     }),
     defineField({
       name: 'slug',
