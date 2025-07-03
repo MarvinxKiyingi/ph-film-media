@@ -23,7 +23,6 @@ export default defineConfig({
   schema,
   plugins: [
     structureTool({ structure }),
-    visionTool({ defaultApiVersion: apiVersion }),
     presentationTool({
       resolve,
       previewUrl: {
@@ -32,5 +31,6 @@ export default defineConfig({
         },
       },
     }),
+    visionTool({ defaultApiVersion: apiVersion }),
   ],
 });
