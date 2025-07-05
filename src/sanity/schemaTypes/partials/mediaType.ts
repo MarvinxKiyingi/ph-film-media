@@ -11,7 +11,7 @@ export const mediaType = defineType({
       name: 'media',
       title: 'Image',
       type: 'image',
-      options: { hotspot: true, metadata: ['lqip'] },
+      options: { hotspot: true, metadata: ['lqip'], collapsed: false },
       fields: [
         defineField({
           name: 'alt',

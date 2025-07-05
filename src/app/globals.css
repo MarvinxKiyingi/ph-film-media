@@ -51,6 +51,7 @@
 
   --z-index-backdrop: 90;
   --z-index-overlay: 100;
+  --z-index-header: 1000;
 }
 
 @layer utilities {
@@ -130,6 +131,7 @@ body {
   background: var(--color-black);
   color: var(--color-white);
   font-family: var(--default-font-family);
+  overflow-x: hidden;
   @apply min-h-svh lg:min-h-screen bg-background text-white;
 }
 

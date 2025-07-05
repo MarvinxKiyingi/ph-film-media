@@ -1,14 +1,14 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 import { MenuButton } from '../MenuButton/MenuButton';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, easeInOut } from 'framer-motion';
 import { Link } from 'next-view-transitions';
 import SocialIcons from '@/components/Icons/SocialIcons';
 import type { FetchHeaderResult } from '../../../../sanity.types';
 
 const overlayVariants = {
-  open: { opacity: 0.4, transition: { duration: 0.12, ease: 'easeInOut' } },
-  closed: { opacity: 0, transition: { duration: 0.12, ease: 'easeInOut' } },
+  open: { opacity: 0.4, transition: { duration: 0.12, ease: easeInOut } },
+  closed: { opacity: 0, transition: { duration: 0.12, ease: easeInOut } },
 };
 
 const menuVariants = {
