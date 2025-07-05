@@ -39,6 +39,7 @@
 
   /* Header */
   --header-height-desktop: 63.48px;
+  --header-height-desktop-landing-page: 100px;
 
   --header-height-mobile: 70.48px;
   --header-height-mobile-with-spacing: calc(

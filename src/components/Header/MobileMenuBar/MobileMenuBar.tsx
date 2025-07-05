@@ -17,10 +17,10 @@ const menuVariants = {
 };
 
 type IMobileMenuBar = {
-  data: FetchHeaderResult;
+  header: FetchHeaderResult;
 };
 
-const MobileMenuBar: React.FC<IMobileMenuBar> = ({ data }) => {
+const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
   const [isOpen, setIsOpen] = useState(false);
   useEffect(() => {
     if (isOpen) {
@@ -33,9 +33,9 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ data }) => {
     }
   }, [isOpen]);
 
-  if (!data) return null;
+  if (!header) return null;
 
-  const { linkReference, socialMediaLinks, homeMenuItemLabel } = data;
+  const { linkReference, socialMediaLinks, homeMenuItemLabel } = header;
 
   return (
     <div className='flex flex-col items-center fixed top-5 w-full lg:hidden'>

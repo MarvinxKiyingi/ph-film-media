@@ -87,11 +87,6 @@ const HeroCarousel = ({ block }: { block: BlockListItem }) => {
                   </div>
                 </div>
               </div>
-              {/* Bottom fade  */}
-              <div className='hidden lg:block absolute bottom-0 w-full h-2/4 bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none z-0' />
-
-              {/* Right fade */}
-              <div className='hidden lg:block absolute top-0 right-0 w-2/4 h-full bg-gradient-to-l from-background via-background/50 to-transparent pointer-events-none z-0' />
             </Wrapper>
           );
         })}

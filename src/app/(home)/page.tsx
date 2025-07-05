@@ -4,7 +4,7 @@ import { fetchAllPageSlugs, fetchHome } from '@/sanity/lib/queries';
 import { token } from '@/sanity/lib/token';
 import { generateMetadata } from '@/utils/generateMetadata';
 import { FetchHomeResult } from '../../../sanity.types';
-import Hero from '@/components/Blocks/Hero/Hero';
+import Hero from '@/components/Blocks/Hero/index';
 import MediaCarousel from '@/components/Blocks/MediaCarousel';
 import MovieClubList from '@/components/Blocks/MovieClubList';
 import MovieHero from '@/components/Blocks/MovieHero';
@@ -53,14 +53,7 @@ export default async function HomePage() {
 
         switch (block._type) {
           case 'hero':
-            return (
-              <Hero
-                key={idx}
-                block={block}
-                idx={idx}
-                blockLength={data.blockList?.length || 0}
-              />
-            );
+            return <Hero key={idx} block={block} idx={idx} />;
           case 'pageTitle':
             return <PageTitle key={idx} {...block} />;
           case 'mediaCarousel':
