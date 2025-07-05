@@ -19,10 +19,10 @@ export const structure: StructureResolver = (S: StructureBuilder) =>
 
       // Content
       S.listItem()
-        .title('Content')
+        .title('Content (References)')
         .child(
           S.list()
-            .title('Content')
+            .title('Content (References)')
             .items(
               contentSchemas.map((schema) =>
                 S.documentTypeListItem(schema.name).title(
