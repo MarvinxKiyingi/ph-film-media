@@ -9,7 +9,7 @@ const Hero = async ({ block, idx }: { block: BlockListItem; idx: number }) => {
   return (
     <div
       key={idx}
-      className='grid gap-5 lg:h-[calc(100vh-var(--header-height-desktop-landing-page))] lg:flex lg:px-p-desktop lg:overflow-hidden'
+      className='grid gap-5 lg:h-[calc(100vh-var(--header-height-desktop-landing-page))] lg:flex lg:px-p-desktop lg:overflow-hidden lg:pb-4'
     >
       <div className='relative px-5 lg:hidden'>
         <div aria-label='Ph Film & Media Big Logo' className=''>
@@ -21,9 +21,7 @@ const Hero = async ({ block, idx }: { block: BlockListItem; idx: number }) => {
         </div>
       </div>
 
-      <div className='lg:flex'>
-        <HeroCarousel block={block} />
-      </div>
+      <HeroCarousel block={block} />
     </div>
   );
 };

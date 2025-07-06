@@ -46,7 +46,7 @@ export default async function HomePage() {
 
   return (
     <div
-      className={`grid grid-cols-1 gap-8 min-h-svh lg:min-h-screen pt-52 ${isHero ? 'lg:pt-0' : 'lg:pt-48'}`}
+      className={`grid grid-cols-1 gap-8 pt-52 ${isHero ? 'lg:pt-0' : 'lg:pt-48'}`}
     >
       {data.blockList.map((block: IHomePageBlockListItem, idx) => {
         if (!block || !('_type' in block)) return null;
