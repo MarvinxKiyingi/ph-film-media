@@ -57,9 +57,11 @@ const CarouselAutoplay: React.FC<PropType> = (props) => {
   const { selectedSnap, snapCount } = useSelectedSnapDisplay(emblaApi);
 
   return (
-    <div className='relative embla lg:h-screen lg:flex lg:flex-col'>
-      <div className='overflow-hidden relative lg:flex-1' ref={emblaRef}>
-        <div className='embla__container lg:h-screen'>{children}</div>
+    <div className='relative lg:flex lg:flex-col lg:h-full lg:w-full lg:gap-4 lg:overflow-hidden'>
+      <div className='flex flex-col gap-4 lg:flex-1'>
+        <div className='overflow-hidden h-full' ref={emblaRef}>
+          <div className='flex h-full'>{children}</div>
+        </div>
       </div>
 
       <div className={`flex justify-between ${controlsClassName} `}>

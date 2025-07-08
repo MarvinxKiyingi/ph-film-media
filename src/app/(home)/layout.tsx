@@ -36,7 +36,7 @@ export default async function HomeLayout({
 
   return (
     <>
-      <Header />
+      <Header isLandingPage />
       <main className='flex flex-col flex-1 mt-[var(--header-height-mobile)] lg:mt-0'>
         {children}
       </main>

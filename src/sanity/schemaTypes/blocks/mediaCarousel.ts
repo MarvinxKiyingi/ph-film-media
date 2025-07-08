@@ -39,13 +39,10 @@ export const mediaCarousel = defineType({
     }),
   ],
   preview: {
-    select: {
-      media: 'carouselItems.0.mediaItem.media',
-    },
-    prepare({ media }) {
+    prepare() {
       return {
         title: 'Media Carousel',
-        media: media || ListIcon,
+        media: ListIcon,
       };
     },
   },

@@ -39,6 +39,7 @@
 
   /* Header */
   --header-height-desktop: 63.48px;
+  --header-height-desktop-landing-page: 200px;
 
   --header-height-mobile: 70.48px;
   --header-height-mobile-with-spacing: calc(
@@ -219,24 +220,5 @@ h6 {
       rgb(255, 255, 255) 75%,
       rgba(255, 255, 255, 0) 87.5%
     );
-  }
-}
-
-/* Embla Carousel */
-.embla {
-  --slide-spacing: 0.75rem;
-  --slide-size: 85%;
-
-  .embla__container {
-    display: flex;
-    touch-action: pan-y pinch-zoom;
-    margin-left: calc(var(--slide-spacing) * -1);
-  }
-  .embla__slide {
-    transform: translate3d(0, 0, 0);
-    flex: 0 0 var(--slide-size);
-    min-width: 0;
-    padding-left: var(--slide-spacing);
-    transition: opacity 0.5s ease-out;
   }
 }

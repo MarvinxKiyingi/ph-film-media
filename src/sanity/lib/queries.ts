@@ -99,7 +99,7 @@ export const fetchHome = defineQuery(`
         title
       },
       // Hero Block
-      _type == "hero" => {
+      _type == "heroCarousel" => {
         _type,
         mediaCard[]{
           id,
@@ -182,7 +182,7 @@ export const fetchHome = defineQuery(`
         }
       },
       // Movie Hero Block
-      _type == "movieHero" => {
+      _type == "moviesHeroCarousel" => {
         _type,
         mediaItems{
           _type,
@@ -263,7 +263,7 @@ export const fetchPage = defineQuery(`
         title
       },
       // Hero Block
-      _type == "hero" => {
+      _type == "heroCarousel" => {
         _type,
         mediaCard[]{
           id,
@@ -336,7 +336,7 @@ export const fetchPage = defineQuery(`
         }
       },
       // Movie Hero Block
-      _type == "movieHero" => {
+      _type == "moviesHeroCarousel" => {
         _type,
         mediaItems{
           _type,

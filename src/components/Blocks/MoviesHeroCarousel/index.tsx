@@ -5,12 +5,12 @@ type IMovieHeroBlocks = Extract<
   NonNullable<
     NonNullable<FetchPageResult | FetchHomeResult>['blockList']
   >[number],
-  { _type: 'movieHero' }
+  { _type: 'moviesHeroCarousel' }
 >;
 
-const MovieHero = ({ _type }: IMovieHeroBlocks) => {
+const MoviesHeroCarousel = ({ _type }: IMovieHeroBlocks) => {
   console.log('_type:', _type);
-  return <section>MovieHero</section>;
+  return <section>MoviesHeroCarousel</section>;
 };
 
-export default MovieHero;
+export default MoviesHeroCarousel;
