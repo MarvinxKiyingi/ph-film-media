@@ -41,13 +41,10 @@ export const movieClubList = defineType({
     }),
   ],
   preview: {
-    select: {
-      movieBanner: 'movies.0.movie.movieBanner.media',
-    },
-    prepare({ movieBanner }) {
+    prepare() {
       return {
-        title: 'Movie List',
-        media: movieBanner ? movieBanner : ListIcon,
+        title: 'Movie Club List',
+        media: ListIcon,
       };
     },
   },

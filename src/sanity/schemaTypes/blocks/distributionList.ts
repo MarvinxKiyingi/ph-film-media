@@ -20,15 +20,10 @@ export const distributionList = defineType({
     }),
   ],
   preview: {
-    select: {
-      title: 'movies.0.title',
-      moviePoster: 'movies.0.moviePoster.media',
-      movieBanner: 'movies.0.movieBanner.media',
-    },
-    prepare({ title, moviePoster, movieBanner }) {
+    prepare() {
       return {
-        title: title || 'Movie List',
-        media: moviePoster ? moviePoster : movieBanner ? movieBanner : ListIcon,
+        title: 'Movie List',
+        media: ListIcon,
       };
     },
   },

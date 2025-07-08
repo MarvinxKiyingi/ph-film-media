@@ -4,13 +4,13 @@ import { fetchAllPageSlugs, fetchHome } from '@/sanity/lib/queries';
 import { token } from '@/sanity/lib/token';
 import { generateMetadata } from '@/utils/generateMetadata';
 import { FetchHomeResult } from '../../../sanity.types';
-import Hero from '@/components/Blocks/Hero/index';
+import HeroCarouselBlock from '@/components/Blocks/HeroCarousel/index';
 import MediaCarousel from '@/components/Blocks/MediaCarousel';
 import MovieClubList from '@/components/Blocks/MovieClubList';
-import MovieHero from '@/components/Blocks/MovieHero';
 import ImageWithText from '@/components/Blocks/ImageWithText';
 import LogoCarousel from '@/components/Blocks/LogoCarousel';
 import PageTitle from '@/components/Blocks/PageTitle';
+import MoviesHeroCarousel from '@/components/Blocks/MoviesHeroCarousel';
 
 export { generateMetadata };
 
@@ -42,7 +42,7 @@ export default async function HomePage() {
 
   const firstBlock = data.blockList[0];
   const isHero =
-    firstBlock && '_type' in firstBlock && firstBlock._type === 'hero';
+    firstBlock && '_type' in firstBlock && firstBlock._type === 'heroCarousel';
 
   return (
     <div
@@ -52,16 +52,16 @@ export default async function HomePage() {
         if (!block || !('_type' in block)) return null;
 
         switch (block._type) {
-          case 'hero':
-            return <Hero key={idx} block={block} idx={idx} />;
+          case 'heroCarousel':
+            return <HeroCarouselBlock key={idx} block={block} idx={idx} />;
           case 'pageTitle':
             return <PageTitle key={idx} {...block} />;
           case 'mediaCarousel':
             return <MediaCarousel key={idx} {...block} />;
           case 'movieClubList':
             return <MovieClubList key={idx} {...block} />;
-          case 'movieHero':
-            return <MovieHero key={idx} {...block} />;
+          case 'moviesHeroCarousel':
+            return <MoviesHeroCarousel key={idx} {...block} />;
           case 'imageWithText':
             return <ImageWithText key={idx} {...block} />;
           case 'logoCarousel':

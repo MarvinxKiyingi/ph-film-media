@@ -6,7 +6,7 @@ import { BlockListItem } from '@/types/IBlockListItem';
 import Button from '@/components/Button/Button';
 import { useMediaQuery } from 'react-responsive';
 
-const HeroCarousel = ({ block }: { block: BlockListItem }) => {
+const HeroCarouselBlock = ({ block }: { block: BlockListItem }) => {
   const isDesktop = useMediaQuery({ query: '(min-width: 1024px)' });
 
   if (!block || !('mediaCard' in block)) return null;
@@ -91,4 +91,4 @@ const HeroCarousel = ({ block }: { block: BlockListItem }) => {
   );
 };
 
-export default HeroCarousel;
+export default HeroCarouselBlock;

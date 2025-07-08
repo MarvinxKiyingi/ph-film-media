@@ -1,9 +1,15 @@
 import { BlockListItem } from '@/types/IBlockListItem';
 import React from 'react';
-import HeroCarousel from './HeroCarousel';
+import HeroCarouselBlock from './HeroCarouselBlock';
 import SanityImage from '@/components/Media/SanityImage';
 
-const Hero = async ({ block, idx }: { block: BlockListItem; idx: number }) => {
+const HeroCarousel = async ({
+  block,
+  idx,
+}: {
+  block: BlockListItem;
+  idx: number;
+}) => {
   if (!block || !('logo' in block)) return null;
 
   return (
@@ -21,9 +27,9 @@ const Hero = async ({ block, idx }: { block: BlockListItem; idx: number }) => {
         </div>
       </div>
 
-      <HeroCarousel block={block} />
+      <HeroCarouselBlock block={block} />
     </div>
   );
 };
 
-export default Hero;
+export default HeroCarousel;

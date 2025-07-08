@@ -1,11 +1,11 @@
-import { ImagesIcon, ImageIcon, TextIcon } from '@sanity/icons';
+import { ImageIcon, ListIcon, TextIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
 
-export const hero = defineType({
-  name: 'hero',
-  title: 'Hero',
+export const heroCarousel = defineType({
+  name: 'heroCarousel',
+  title: 'Hero Carousel',
   type: 'object',
-  icon: ImagesIcon,
+  icon: ListIcon,
   fields: [
     defineField({
       name: 'mediaCard',
@@ -97,13 +97,10 @@ export const hero = defineType({
     }),
   ],
   preview: {
-    select: {
-      media: 'mediaCard.0.cardImage.media',
-    },
-    prepare({ media }) {
+    prepare() {
       return {
-        title: 'Hero',
-        media: media || ImageIcon,
+        title: 'Hero Carousel',
+        media: ListIcon,
       };
     },
   },

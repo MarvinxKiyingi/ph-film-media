@@ -1,5 +1,5 @@
-export { hero } from './hero';
-export { movieHero } from './movieHero';
+export { heroCarousel } from './heroCarousel';
+export { moviesHeroCarousel } from './moviesHeroCarousel';
 export { distributionList } from './distributionList';
 export { movieClubList } from './movieClubList';
 export { mediaCarousel } from './mediaCarousel';

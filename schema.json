@@ -1457,7 +1457,7 @@
     }
   },
   {
-    "name": "movieHero",
+    "name": "moviesHeroCarousel",
     "type": "type",
     "value": {
       "type": "object",
@@ -1466,14 +1466,28 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "movieHero"
+            "value": "moviesHeroCarousel"
           }
         },
         "mediaItems": {
           "type": "objectAttribute",
           "value": {
-            "type": "inline",
-            "name": "mediaType"
+            "type": "array",
+            "of": {
+              "type": "object",
+              "attributes": {
+                "_key": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "string"
+                  }
+                }
+              },
+              "rest": {
+                "type": "inline",
+                "name": "mediaType"
+              }
+            }
           },
           "optional": true
         }
@@ -1748,7 +1762,7 @@
     }
   },
   {
-    "name": "hero",
+    "name": "heroCarousel",
     "type": "type",
     "value": {
       "type": "object",
@@ -1757,7 +1771,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "hero"
+            "value": "heroCarousel"
           }
         },
         "mediaCard": {
@@ -2042,7 +2056,7 @@
                 },
                 "rest": {
                   "type": "inline",
-                  "name": "hero"
+                  "name": "heroCarousel"
                 }
               },
               {
@@ -2117,7 +2131,7 @@
                 },
                 "rest": {
                   "type": "inline",
-                  "name": "movieHero"
+                  "name": "moviesHeroCarousel"
                 }
               },
               {

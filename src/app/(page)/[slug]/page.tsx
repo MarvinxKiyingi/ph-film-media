@@ -9,7 +9,7 @@ import ImageWithText from '@/components/Blocks/ImageWithText';
 import LogoCarousel from '@/components/Blocks/LogoCarousel';
 import MovieClubList from '@/components/Blocks/MovieClubList';
 import DistributionList from '@/components/Blocks/DistributionList';
-import MovieHero from '@/components/Blocks/MovieHero';
+import MoviesHeroCarousel from '@/components/Blocks/MoviesHeroCarousel';
 import { FetchPageResult } from '../../../../sanity.types';
 import PageTitle from '@/components/Blocks/PageTitle';
 
@@ -59,8 +59,8 @@ export default async function Page({ params }: { params: PageParams }) {
               return <MediaCarousel key={idx} {...block} />;
             case 'movieClubList':
               return <MovieClubList key={idx} {...block} />;
-            case 'movieHero':
-              return <MovieHero key={idx} {...block} />;
+            case 'moviesHeroCarousel':
+              return <MoviesHeroCarousel key={idx} {...block} />;
             case 'imageWithText':
               return <ImageWithText key={idx} {...block} />;
             case 'logoCarousel':
