@@ -36,8 +36,15 @@ const CarouselAutoplay: React.FC<PropType> = (props) => {
     autoScrollOptions,
     isFade = false,
   } = props;
+
+  // Only include Autoplay plugin if autoScrollOptions is provided and has valid settings
+  const shouldIncludeAutoplay =
+    autoScrollOptions &&
+    (autoScrollOptions.playOnInit !== false ||
+      autoScrollOptions.delay !== undefined);
+
   const plugins = [
-    Autoplay(autoScrollOptions),
+    shouldIncludeAutoplay ? Autoplay(autoScrollOptions) : undefined,
     isFade ? Fade() : undefined,
     WheelGesturesPlugin({ forceWheelAxis: 'x' }),
   ].filter(Boolean);

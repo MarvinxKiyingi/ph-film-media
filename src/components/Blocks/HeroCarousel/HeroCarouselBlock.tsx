@@ -11,22 +11,30 @@ const HeroCarouselBlock = ({ block }: { block: BlockListItem }) => {
   const isDesktop = useMediaQuery({ query: '(min-width: 1024px)' });
 
   if (!block || !('mediaCard' in block)) return null;
+
+  // Check if we should disable autoplay on desktop (3 or fewer cards)
+  const shouldDisableAutoplay =
+    isDesktop && block.mediaCard && block.mediaCard.length <= 3;
+
   return (
     <CarouselAutoplay
       options={{
         align: isDesktop ? 'start' : 'center',
         loop: true,
       }}
-      autoScrollOptions={{
-        playOnInit: true,
-        stopOnInteraction: false,
-        stopOnMouseEnter: true,
-        delay: isDesktop ? 4500 : 3000,
-      }}
+      autoScrollOptions={
+        shouldDisableAutoplay
+          ? undefined
+          : {
+              playOnInit: true,
+              stopOnInteraction: false,
+              stopOnMouseEnter: true,
+              delay: isDesktop ? 4500 : 3000,
+            }
+      }
       controlsClassName='!hidden lg:!flex'
     >
       {block.mediaCard?.map((card, idx) => {
-        console.log('Card image:', card.cardImage);
         const href =
           card.externalButtonLink?.href ||
           card.internalButtonLink?.slug?.current;
