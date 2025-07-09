@@ -22,7 +22,11 @@ const HeroCarousel = async ({
           {block.logo?.media &&
             block.logo.media.asset &&
             block.logo.media.asset.metadata && (
-              <SanityImage {...block.logo} className='aspect-5/2' />
+              <SanityImage
+                {...block.logo}
+                className='aspect-video'
+                aspectRatio='16/9'
+              />
             )}
         </div>
       </div>

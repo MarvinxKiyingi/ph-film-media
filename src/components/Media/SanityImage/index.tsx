@@ -1,43 +1,44 @@
 import React from 'react';
 import { SanityImage as SanityImageRenderer } from 'sanity-image';
 import { baseUrl } from '@/sanity/lib/utils';
-import { determineAspectRatio } from './determineAspectRatio';
+import {
+  determineAspectRatio,
+  ASPECT_RATIO_CONFIG,
+} from './determineAspectRatio';
 import { SanityImageProps } from './SanityImageObject';
 
 const SanityImage = ({
   media,
   className = '',
-  useImageAspect = false,
+  useImageAspect = true,
+  aspectRatio = '4/5',
 }: SanityImageProps) => {
   const { asset, alt, hotspot, crop } = media || {};
 
   if (!asset) return null;
 
-  const dimensions = asset?.metadata?.dimensions;
+  const aspectRatioInfo = useImageAspect ? determineAspectRatio(media) : null;
 
-  const aspectRatioInfo = useImageAspect
-    ? determineAspectRatio(dimensions?.width || 0, dimensions?.height || 0)
-    : null;
+  // Use overridable aspectRatio prop if provided, otherwise use calculated aspectRatioInfo
+  const finalAspectRatio = aspectRatio
+    ? (`aspect-${aspectRatio}` as keyof typeof ASPECT_RATIO_CONFIG)
+    : aspectRatioInfo?.tailwindClass;
+
+  const dimensions = finalAspectRatio
+    ? ASPECT_RATIO_CONFIG[finalAspectRatio]
+    : ASPECT_RATIO_CONFIG['aspect-4/5'];
 
   return (
     <SanityImageRenderer
       id={asset._id}
       baseUrl={baseUrl}
       alt={alt ?? 'Media image'}
-      width={dimensions?.width || 100}
-      height={dimensions?.height || 100}
-      hotspot={{
-        x: hotspot?.x || 0,
-        y: hotspot?.y || 0,
-      }}
-      crop={{
-        top: crop?.top || 0,
-        left: crop?.left || 0,
-        bottom: crop?.bottom || 0,
-        right: crop?.right || 0,
-      }}
-      queryParams={{ q: 90 }}
+      width={dimensions.width}
+      height={dimensions.height}
       mode='cover'
+      hotspot={hotspot}
+      crop={crop}
+      queryParams={{ q: 90 }}
       className={`w-full object-cover ${aspectRatioInfo?.tailwindClass || ''} ${className}`}
     />
   );

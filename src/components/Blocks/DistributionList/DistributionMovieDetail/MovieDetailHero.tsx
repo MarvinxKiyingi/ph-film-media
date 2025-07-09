@@ -52,6 +52,7 @@ const MovieDetailHero = (movie: FetchDistributionMovieResult) => {
             <SanityImage
               {...movieBanner}
               className='h-full lg:aspect-video z-0'
+              aspectRatio='16/9'
             />
           )}
 

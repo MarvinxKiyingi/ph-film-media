@@ -34,7 +34,11 @@ const ImageWithText = (block: IImageWithTextBlocks) => {
 
       {mediaItem?.media && (
         <div className='grid gap-5 h-fit md:row-start-1 md:col-start-1 md:col-span-8 lg:col-span-6'>
-          <SanityImage {...mediaItem} className='aspect-4/5 rounded-lg' />
+          <SanityImage
+            {...mediaItem}
+            className='aspect-4/5 rounded-lg'
+            aspectRatio='4/5'
+          />
 
           <h2 className='text-b-12 font-bold !font-lato text-gray'>
             <span>{mediaTitle}</span>

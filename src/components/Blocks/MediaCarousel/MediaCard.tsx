@@ -9,14 +9,21 @@ type IMediaCard = NonNullable<
 const MediaCard = ({ carouselItem }: { carouselItem: IMediaCard }) => {
   if (!carouselItem) return null;
   const { title, mediaItem } = carouselItem;
+  console.log('Media item:', mediaItem);
   return (
     <li
       className='flex flex-col gap-4 lg:gap-6 w-[25vw] min-w-[354px] max-w-[600px]'
       role='listitem'
     >
-      {mediaItem?.media && (
-        <SanityImage {...mediaItem} className='rounded-lg aspect-4/3' />
-      )}
+      <div className='aspect-4/3 w-full h-full rounded-lg overflow-hidden'>
+        {mediaItem?.media && (
+          <SanityImage
+            {...mediaItem}
+            className='rounded-lg w-full h-full object-cover'
+            aspectRatio='4/3'
+          />
+        )}
+      </div>
 
       {title && <h4 className='text-b-16 font-bold !font-lato'>{title}</h4>}
     </li>
