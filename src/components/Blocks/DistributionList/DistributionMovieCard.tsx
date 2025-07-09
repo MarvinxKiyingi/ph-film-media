@@ -84,7 +84,9 @@ const DistributionMovieCard = ({
       <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
         {label}
       </h4>
-      {items?.map((item) => <p key={item._id}>{Object.values(item)[1]}</p>)}
+      {items?.map((item) => (
+        <p key={item._id}>{Object.values(item)[1]}</p>
+      ))}
     </div>
   );
 
@@ -132,6 +134,7 @@ const DistributionMovieCard = ({
           <SanityImage
             {...moviePoster}
             className='h-full rounded-lg aspect-2/3 lg:h-auto'
+            aspectRatio='2/3'
           />
         )}
       </div>

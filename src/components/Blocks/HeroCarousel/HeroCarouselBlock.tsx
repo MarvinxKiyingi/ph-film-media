@@ -5,6 +5,7 @@ import CarouselAutoplay from '@/components/Media/Carousel/CarouselAutoplay';
 import { BlockListItem } from '@/types/IBlockListItem';
 import Button from '@/components/Button/Button';
 import { useMediaQuery } from 'react-responsive';
+import SanityImage from '@/components/Media/SanityImage';
 
 const HeroCarouselBlock = ({ block }: { block: BlockListItem }) => {
   const isDesktop = useMediaQuery({ query: '(min-width: 1024px)' });
@@ -25,6 +26,7 @@ const HeroCarouselBlock = ({ block }: { block: BlockListItem }) => {
       controlsClassName='!hidden lg:!flex'
     >
       {block.mediaCard?.map((card, idx) => {
+        console.log('Card image:', card.cardImage);
         const href =
           card.externalButtonLink?.href ||
           card.internalButtonLink?.slug?.current;
@@ -40,9 +42,15 @@ const HeroCarouselBlock = ({ block }: { block: BlockListItem }) => {
               className='relative flex flex-col gap-2 select-none lg:w-full lg:h-full lg:gap-4'
               key={`card-content-${card.id ?? idx}`}
             >
-              <div className='aspect-4/5 bg-amber-600 text-white w-full h-full flex items-center justify-center'>
-                {idx + 1}
-              </div>
+              {card.cardImage && (
+                <div className='aspect-4/5 w-full h-full rounded-lg overflow-hidden'>
+                  <SanityImage
+                    {...card.cardImage}
+                    className='w-full h-full object-cover rounded-lg lg:absolute lg:inset-0'
+                    aspectRatio='4/5'
+                  />
+                </div>
+              )}
               <Button
                 label={card.buttonLabel}
                 className='absolute bottom-2 right-2 px-6 py-3 lg:hidden'

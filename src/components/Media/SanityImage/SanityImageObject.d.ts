@@ -34,4 +34,5 @@ export type SanityImageProps = SanityImageObject & {
   className?: string;
   mode?: 'cover' | 'contain' | undefined;
   useImageAspect?: boolean;
+  aspectRatio?: '4/5' | '16/9' | '4/3' | 'square' | '2/3';
 };

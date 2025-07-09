@@ -129,6 +129,7 @@ const MovieDetail = ({
           <SanityImage
             {...moviePoster}
             className='h-full rounded-lg aspect-2/3 lg:h-auto'
+            aspectRatio='2/3'
           />
         )}
       </div>

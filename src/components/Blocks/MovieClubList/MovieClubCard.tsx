@@ -16,7 +16,8 @@ const MovieClubCard = ({ movie }: IMovieClubCard) => {
           <div className='relative grid gap-4 group'>
             <SanityImage
               {...movieBanner}
-              className='rounded-lg aspect-square hover:grayscale lg:transition-all lg:duration-300'
+              className='h-full rounded-lg aspect-square hover:grayscale lg:transition-all lg:duration-300'
+              aspectRatio='square'
             />
             {title && (
               <h2
