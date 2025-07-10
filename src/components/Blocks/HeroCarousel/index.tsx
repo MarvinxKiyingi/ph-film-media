@@ -24,8 +24,8 @@ const HeroCarousel = async ({
             block.logo.media.asset.metadata && (
               <SanityImage
                 {...block.logo}
-                className='aspect-video'
-                aspectRatio='16/9'
+                className='h-full aspect-video'
+                useImageAspect
               />
             )}
         </div>
