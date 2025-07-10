@@ -54,7 +54,7 @@ const HeroCarouselBlock = ({ block }: { block: BlockListItem }) => {
                 <div className='aspect-4/5 w-full h-full rounded-lg overflow-hidden'>
                   <SanityImage
                     {...card.cardImage}
-                    className='w-full h-full object-cover rounded-lg lg:absolute lg:inset-0'
+                    className='w-full h-full object-cover rounded-lg absolute inset-0'
                     aspectRatio='4/5'
                   />
                 </div>
