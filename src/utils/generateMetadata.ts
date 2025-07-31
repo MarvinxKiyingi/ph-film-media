@@ -7,12 +7,6 @@ import {
   fetchDistributionMovie,
 } from '@/sanity/lib/queries';
 import { sanityFetch } from '@/sanity/lib/live';
-import type {
-  FetchHomeResult,
-  SettingsQueryResult,
-  FetchPageResult,
-  FetchDistributionMovieResult,
-} from '../../sanity.types';
 
 type RichTextBlock = {
   children?: Array<{ text?: string }>;
