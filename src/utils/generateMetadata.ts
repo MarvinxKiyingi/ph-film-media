@@ -6,7 +6,7 @@ import {
   settingsQuery,
   fetchDistributionMovie,
 } from '@/sanity/lib/queries';
-import { client } from '@/sanity/lib/client';
+import { sanityFetch } from '@/sanity/lib/live';
 import type {
   FetchHomeResult,
   SettingsQueryResult,
@@ -76,18 +76,19 @@ export async function generateMetadata(
     'http://localhost:3000';
 
   // Handle regular pages
-  const settings = await client.fetch<SettingsQueryResult>(settingsQuery);
+  const { data: settings } = await sanityFetch({ query: settingsQuery });
 
-  const page = isHome
-    ? await client.fetch<FetchHomeResult>(fetchHome, { slug: '/' })
-    : await client.fetch<FetchPageResult>(fetchPage, { slug });
+  const { data: page } = isHome
+    ? await sanityFetch({ query: fetchHome, params: { slug: '/' } })
+    : await sanityFetch({ query: fetchPage, params: { slug } });
 
   // Handle distribution movie pages
-  const movie: FetchDistributionMovieResult | undefined = isDistributionMovie
-    ? await client.fetch(fetchDistributionMovie, {
-        slug: movieSlug,
+  const { data: movie } = isDistributionMovie
+    ? await sanityFetch({
+        query: fetchDistributionMovie,
+        params: { slug: movieSlug },
       })
-    : undefined;
+    : { data: undefined };
 
   const pageSeo = page?.seo;
   const settingsSeo = settings?.seo;

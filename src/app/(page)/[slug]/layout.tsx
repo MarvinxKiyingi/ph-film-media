@@ -7,14 +7,14 @@ import { DisableDraftMode } from '@/components/DisableDraftMode';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import { fetchFooter } from '@/sanity/lib/queries';
-import { client } from '@/sanity/lib/client';
+import { sanityFetch } from '@/sanity/lib/live';
 
 export default async function PageLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const footer = await client.fetch(fetchFooter);
+  const { data: footer } = await sanityFetch({ query: fetchFooter });
 
   return (
     <>
