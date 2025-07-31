@@ -1,20 +1,12 @@
-import { client } from '@/sanity/lib/client';
+import { sanityFetch } from '@/sanity/lib/live';
 import { notFound } from 'next/navigation';
-import { draftMode } from 'next/headers';
-import {
-  fetchDistributionMovie,
-  settingsQuery,
-  fetchAllDistributionMovieSlugs,
-  fetchDistributionParentSlug,
-} from '@/sanity/lib/queries';
-import { token } from '@/sanity/lib/token';
-import {
-  FetchDistributionMovieResult,
-  SettingsQueryResult,
-} from '../../../../../sanity.types';
+import { fetchDistributionMovie, settingsQuery } from '@/sanity/lib/queries';
+import { FetchDistributionMovieResult } from '../../../../../sanity.types';
 import { generateMetadata } from '@/utils/generateMetadata';
 import MovieDetailHero from '@/components/Blocks/DistributionList/DistributionMovieDetail/MovieDetailHero';
 import MovieDetail from '@/components/Blocks/DistributionList/DistributionMovieDetail/MovieDetail';
+import JsonLd from '@/components/JsonLd';
+import { getMovieJsonLd } from '@/utils/jsonld';
 
 type Props = {
   params: Promise<{ slug: string; movieSlug: string }>;
@@ -22,53 +14,43 @@ type Props = {
 
 export { generateMetadata };
 
-export async function generateStaticParams() {
-  const [slugs, parentSlug] = await Promise.all([
-    client.fetch(fetchAllDistributionMovieSlugs),
-    client.fetch(fetchDistributionParentSlug),
-  ]);
-
-  if (!parentSlug?.slug) {
-    console.error('No parent distribution page found');
-    return [];
-  }
-
-  return slugs.map(({ slug }) => ({
-    slug: parentSlug.slug,
-    movieSlug: slug,
-  }));
-}
-
 export default async function MoviePage({ params }: Props) {
   const resolvedParams = await params;
-  const { isEnabled } = await draftMode();
-  const movie: FetchDistributionMovieResult = await client.fetch(
-    fetchDistributionMovie,
-    { slug: resolvedParams.movieSlug },
-    isEnabled
-      ? {
-          perspective: 'previewDrafts',
-          useCdn: false,
-          stega: true,
-          token: token,
-        }
-      : undefined
-  );
+  const { data: movie }: { data: FetchDistributionMovieResult } =
+    await sanityFetch({
+      query: fetchDistributionMovie,
+      params: { slug: resolvedParams.movieSlug },
+    });
 
-  const settings = await client.fetch<SettingsQueryResult>(settingsQuery);
+  const { data: settings } = await sanityFetch({ query: settingsQuery });
 
   if (!movie) {
     console.log('Movie not found for slug:', resolvedParams.movieSlug);
     notFound();
   }
 
+  // JSON-LD structured data for Movie
+  const movieJsonLd = getMovieJsonLd({
+    title: movie.title || '',
+    description:
+      typeof movie.description === 'string' ? movie.description : undefined,
+    datePublished: movie.releaseDate || undefined,
+    duration: movie.duration || undefined,
+    actors: movie.actors?.map((a) => ({ name: a.actor })),
+    directors: movie.directors?.map((d) => ({ name: d.director })),
+    image: movie.moviePoster?.media?.asset?.url,
+  });
+
   return (
-    <main
-      id='movie-main-content'
-      className='relative flex flex-col flex-1 lg:pt-[20vh] lg:mt-[var(--header-height-desktop)]'
-    >
-      <MovieDetailHero {...movie} />
-      <MovieDetail movie={movie} settings={settings} />
-    </main>
+    <>
+      <JsonLd data={movieJsonLd} />
+      <main
+        id='movie-main-content'
+        className='relative flex flex-col flex-1 lg:pt-[20vh] lg:mt-[var(--header-height-desktop)]'
+      >
+        <MovieDetailHero {...movie} />
+        <MovieDetail movie={movie} settings={settings} />
+      </main>
+    </>
   );
 }

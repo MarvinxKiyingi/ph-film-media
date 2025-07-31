@@ -6,32 +6,21 @@ import { SanityLive } from '@/sanity/lib/live';
 import { DisableDraftMode } from '@/components/DisableDraftMode';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
-import { token } from '@/sanity/lib/token';
 import { fetchFooter, fetchHome } from '@/sanity/lib/queries';
 import { FetchHomeResult } from '../../../sanity.types';
-import { client } from '@/sanity/lib/client';
+import { sanityFetch } from '@/sanity/lib/live';
 
 export default async function HomeLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const { isEnabled } = await draftMode();
+  const { data }: { data: FetchHomeResult } = await sanityFetch({
+    query: fetchHome,
+    params: { slug: '/' },
+  });
 
-  const data: FetchHomeResult = await client.fetch(
-    fetchHome,
-    { slug: '/' },
-    isEnabled
-      ? {
-          perspective: 'previewDrafts',
-          useCdn: false,
-          stega: true,
-          token: token,
-        }
-      : undefined
-  );
-
-  const footer = await client.fetch(fetchFooter);
+  const { data: footer } = await sanityFetch({ query: fetchFooter });
   const hasMultipleBlocks = (data?.blockList?.length || 0) > 1;
 
   return (

@@ -1,6 +1,6 @@
 import MobileMenuBar from './MobileMenuBar/MobileMenuBar';
 
-import { client } from '@/sanity/lib/client';
+import { sanityFetch } from '@/sanity/lib/live';
 import { fetchHeader } from '@/sanity/lib/queries';
 import HeaderLogo from './HeaderLogo';
 import BlurDown from './MobileMenuBar/BlurDown';
@@ -12,7 +12,7 @@ type IHeader = {
 };
 
 const Header = async ({ isLandingPage = false }: IHeader) => {
-  const header = await client.fetch(fetchHeader);
+  const { data: header } = await sanityFetch({ query: fetchHeader });
 
   return (
     <>
