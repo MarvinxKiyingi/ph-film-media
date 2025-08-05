@@ -2,12 +2,12 @@ import React from 'react';
 import {
   FetchHomeResult,
   FetchPageResult,
-  SettingsQueryResult,
   Slug,
 } from '../../../../sanity.types';
 import DistributionMovieCard from './DistributionMovieCard';
-import { client } from '@/sanity/lib/client';
+import { sanityFetch } from '@/sanity/lib/live';
 import { settingsQuery } from '@/sanity/lib/queries';
+import type { SettingsQueryResult } from '../../../../sanity.types';
 
 export type IDistributionListBlocks = Extract<
   NonNullable<
@@ -24,7 +24,11 @@ const DistributionList = async ({
   slug: Slug | null;
 }) => {
   if (block._type !== 'distributionList') return null;
-  const settings = await client.fetch<SettingsQueryResult>(settingsQuery);
+
+  const { data: settings }: { data: SettingsQueryResult } = await sanityFetch({
+    query: settingsQuery,
+  });
+
   const { movies } = block;
 
   return (

@@ -1,15 +1,23 @@
 import React from 'react';
 import SanityImage from '@/components/Media/SanityImage';
-import { IMovieClubListBlocks } from '.';
+import { FetchHomeResult, FetchPageResult } from '../../../../sanity.types';
 
-type IMovieClubCard = NonNullable<
-  NonNullable<IMovieClubListBlocks['movies']>[number]
+export type IMovieClubListBlocks = Extract<
+  NonNullable<
+    NonNullable<FetchPageResult | FetchHomeResult>['blockList']
+  >[number],
+  { _type: 'movieClubList' }
 >;
+
+type IMovieClubCard = {
+  movie: NonNullable<NonNullable<IMovieClubListBlocks['movies']>[number]>;
+};
+
 const MovieClubCard = ({ movie }: IMovieClubCard) => {
-  if (!movie) return null;
-  const { title, movieBanner } = movie || {};
+  if (!movie || !('_id' in movie)) return null;
+  const { title, movieBanner } = movie;
   return (
-    <div>
+    <div data-sanity-edit-target>
       {movieBanner &&
         movieBanner._type === 'mediaType' &&
         movieBanner.media && (

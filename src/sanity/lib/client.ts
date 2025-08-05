@@ -10,8 +10,7 @@ export const client = createClient({
   apiVersion: apiVersion,
   useCdn: true,
   token: token,
-  perspective: 'published',
   stega: {
-    studioUrl,
+    studioUrl: studioUrl,
   },
 });

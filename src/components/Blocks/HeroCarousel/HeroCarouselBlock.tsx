@@ -45,6 +45,7 @@ const HeroCarouselBlock = ({ block }: { block: BlockListItem }) => {
             {...wrapperProps}
             className={`relative flex flex-col h-full flex-shrink-0 min-w-[85%] px-2 lg:min-w-[33.3333%] max-lg:gap-4 ${idx === 0 ? 'lg:pr-2' : ''}`}
             key={`card-${card.id ?? idx}`}
+            data-sanity-edit-target
           >
             <div
               className='relative flex flex-col gap-2 select-none lg:w-full lg:h-full lg:gap-4'

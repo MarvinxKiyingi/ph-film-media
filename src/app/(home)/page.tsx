@@ -1,8 +1,8 @@
 import { sanityFetch } from '@/sanity/lib/live';
 import { fetchHome } from '@/sanity/lib/queries';
 import { generateMetadata } from '@/utils/generateMetadata';
-import { FetchHomeResult } from '../../../sanity.types';
-import HeroCarouselBlock from '@/components/Blocks/HeroCarousel/index';
+import type { FetchHomeResult } from '../../../sanity.types';
+import HeroCarouselBlock from '@/components/Blocks/HeroCarousel';
 import MediaCarousel from '@/components/Blocks/MediaCarousel';
 import MovieClubList from '@/components/Blocks/MovieClubList';
 import ImageWithText from '@/components/Blocks/ImageWithText';
@@ -13,10 +13,6 @@ import JsonLd from '@/components/JsonLd';
 import { getOrganizationJsonLd } from '@/utils/jsonld';
 
 export { generateMetadata };
-
-type IHomePageBlockListItem = NonNullable<
-  NonNullable<FetchHomeResult>['blockList']
->[number];
 
 export default async function HomePage() {
   const { data }: { data: FetchHomeResult } = await sanityFetch({
@@ -44,8 +40,8 @@ export default async function HomePage() {
       <div
         className={`grid grid-cols-1 gap-8 pt-52 ${isHero ? 'lg:pt-0' : 'lg:pt-48'}`}
       >
-        {data.blockList.map((block: IHomePageBlockListItem, idx) => {
-          if (!block || !('_type' in block)) return null;
+        {data.blockList.map((block, idx) => {
+          if (!('_type' in block)) return null;
 
           switch (block._type) {
             case 'heroCarousel':

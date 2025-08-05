@@ -1,6 +1,10 @@
 import { Lato, Oswald } from 'next/font/google';
 import '@/app/globals.css';
 import { ViewTransitions } from 'next-view-transitions';
+import { VisualEditing } from 'next-sanity';
+import { draftMode } from 'next/headers';
+import { DisableDraftMode } from '@/components/DisableDraftMode';
+import { SanityLive } from '@/sanity/lib/live';
 
 const oswald = Oswald({
   variable: '--font-oswald',
@@ -40,6 +44,13 @@ export default async function RootLayout({
           className={`flex flex-col antialiased ${lato.variable} ${oswald.variable}`}
         >
           {children}
+          <SanityLive />
+          {(await draftMode()).isEnabled && (
+            <>
+              <VisualEditing />
+              <DisableDraftMode />
+            </>
+          )}
         </body>
       </html>
     </ViewTransitions>
