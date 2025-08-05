@@ -56,7 +56,7 @@ const MovieDetailHero = (movie: FetchDistributionMovieResult) => {
             />
           )}
 
-          <div className='flex absolute inset-0 w-full h-full z-40 justify-center items-center'>
+          <div className='flex absolute inset-0 w-full h-full z-40 justify-center items-center pointer-events-none'>
             {trailer?.trailerLink?.href && (
               <TrailerOverlay trailer={trailer} triggerIcon={<PlayIcon />} />
             )}

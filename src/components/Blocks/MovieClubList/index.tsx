@@ -17,9 +17,11 @@ const MovieClubList = (block: IMovieClubListBlocks) => {
 
   return (
     <section className='page-x-spacing grid gap-10 grid-cols-1 md:grid-cols-2 lg:gap-2 lg:grid-cols-3 xl:grid-cols-4'>
-      {movies?.map((movieItem) => (
-        <MovieClubCard key={movieItem.movie?._id} {...movieItem} />
-      ))}
+      {movies?.map((movieItem, index) =>
+        movieItem && '_id' in movieItem && 'title' in movieItem ? (
+          <MovieClubCard key={`${movieItem._id}-${index}`} movie={movieItem} />
+        ) : null
+      )}
     </section>
   );
 };

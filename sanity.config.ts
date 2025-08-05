@@ -26,6 +26,9 @@ export default defineConfig({
     presentationTool({
       resolve,
       previewUrl: {
+        origin:
+          process.env.SANITY_STUDIO_PREVIEW_ORIGIN || 'http://localhost:3000',
+        preview: '/',
         previewMode: {
           enable: '/api/draft-mode/enable',
         },

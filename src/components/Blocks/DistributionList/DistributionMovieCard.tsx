@@ -139,7 +139,7 @@ const DistributionMovieCard = ({
         )}
       </div>
 
-      <div className='grid mb-10 lg:row-start-1 lg:col-start-1 lg:col-span-5'>
+      <div className='grid mb-10 lg:row-start-1 lg:col-start-1 lg:col-span-5 lg:mb-0'>
         <h3 className='text-h-28 uppercase lg:pr-[20%]'>{title}</h3>
       </div>
 

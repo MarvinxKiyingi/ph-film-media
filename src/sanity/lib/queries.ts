@@ -152,31 +152,18 @@ export const fetchHome = defineQuery(`
     },
       // Movie Club List Block
       _type == "movieClubList" => {
-        _type,
-        movies[]{
-          id,
-          movie->{
+          _type,
+          movies[]->{
             _id,
             title,
-            moviePoster{
-              _type,
-              media{
-                _type,
-                alt,
-                crop,
-                hotspot,
-                asset->{ ... }
-              }
-            },
             movieBanner{
+            _type,
+            media{
               _type,
-              media{
-                _type,
-                alt,
-                crop,
-                hotspot,
-                asset->{ ... }
-              }
+              alt,
+              crop,
+              hotspot,
+              asset->{ ... }
             }
           }
         }
@@ -316,21 +303,18 @@ export const fetchPage = defineQuery(`
     },
       // Movie Club List Block
       _type == "movieClubList" => {
-        _type,
-        movies[]{
-          id,
-          movie->{
+          _type,
+          movies[]->{
             _id,
             title,
             movieBanner{
+            _type,
+            media{
               _type,
-              media{
-                _type,
-                alt,
-                crop,
-                hotspot,
-                asset->{ ... }
-              }
+              alt,
+              crop,
+              hotspot,
+              asset->{ ... }
             }
           }
         }

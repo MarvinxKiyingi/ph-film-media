@@ -919,6 +919,58 @@
     }
   },
   {
+    "name": "movieClub",
+    "type": "document",
+    "attributes": {
+      "_id": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_type": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string",
+          "value": "movieClub"
+        }
+      },
+      "_createdAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_updatedAt": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "_rev": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        }
+      },
+      "title": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "movieBanner": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "mediaType"
+        },
+        "optional": true
+      }
+    }
+  },
+  {
     "name": "languages",
     "type": "document",
     "attributes": {
@@ -1514,44 +1566,28 @@
             "of": {
               "type": "object",
               "attributes": {
-                "movie": {
+                "_ref": {
                   "type": "objectAttribute",
                   "value": {
-                    "type": "object",
-                    "attributes": {
-                      "_ref": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "string"
-                        }
-                      },
-                      "_type": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "string",
-                          "value": "reference"
-                        }
-                      },
-                      "_weak": {
-                        "type": "objectAttribute",
-                        "value": {
-                          "type": "boolean"
-                        },
-                        "optional": true
-                      }
-                    },
-                    "dereferencesTo": "movieClub"
-                  },
-                  "optional": true
+                    "type": "string"
+                  }
                 },
                 "_type": {
                   "type": "objectAttribute",
                   "value": {
                     "type": "string",
-                    "value": "movie"
+                    "value": "reference"
                   }
+                },
+                "_weak": {
+                  "type": "objectAttribute",
+                  "value": {
+                    "type": "boolean"
+                  },
+                  "optional": true
                 }
               },
+              "dereferencesTo": "movieClub",
               "rest": {
                 "type": "object",
                 "attributes": {
@@ -2189,58 +2225,6 @@
               }
             }
           }
-        },
-        "optional": true
-      }
-    }
-  },
-  {
-    "name": "movieClub",
-    "type": "document",
-    "attributes": {
-      "_id": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_type": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string",
-          "value": "movieClub"
-        }
-      },
-      "_createdAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_updatedAt": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "_rev": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        }
-      },
-      "title": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "string"
-        },
-        "optional": true
-      },
-      "movieBanner": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "inline",
-          "name": "mediaType"
         },
         "optional": true
       }

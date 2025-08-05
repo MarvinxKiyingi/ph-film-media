@@ -1,5 +1,5 @@
-import { ListIcon, PlayIcon } from '@sanity/icons';
-import { defineField, defineType } from 'sanity';
+import { ListIcon } from '@sanity/icons';
+import { defineArrayMember, defineField, defineType } from 'sanity';
 
 export const movieClubList = defineType({
   name: 'movieClubList',
@@ -12,31 +12,10 @@ export const movieClubList = defineType({
       title: 'Movies',
       type: 'array',
       of: [
-        {
-          type: 'object',
-          name: 'movie',
-          title: 'Movie',
-          fields: [
-            {
-              name: 'movie',
-              title: 'Movie',
-              type: 'reference',
-              to: [{ type: 'movieClub' }],
-            },
-          ],
-          preview: {
-            select: {
-              title: 'movie.title',
-              movieBanner: 'movie.movieBanner.media',
-            },
-            prepare({ title, movieBanner }) {
-              return {
-                title: title || 'No movie selected',
-                media: movieBanner ? movieBanner : PlayIcon,
-              };
-            },
-          },
-        },
+        defineArrayMember({
+          type: 'reference',
+          to: [{ type: 'movieClub' }],
+        }),
       ],
     }),
   ],
