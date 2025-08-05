@@ -9,7 +9,7 @@ export const getLinkHref = (link: IMenuLink): string => {
 
 export const getLinkText = (link: IMenuLink): string => {
   if (link._type === 'internalLink') {
-    return link.page?.pageTitle || '';
+    return link.linkLabel || link.page?.pageTitle || '';
   }
   return link.linkLabel || '';
 };
