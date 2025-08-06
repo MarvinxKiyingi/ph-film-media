@@ -23,11 +23,10 @@ export const footer = defineType({
       type: 'string',
       group: 'text',
     }),
-
     defineField({
-      name: 'text',
-      type: 'richText',
-      description: 'The text to display underneath the title.',
+      name: 'email',
+      title: 'Email',
+      type: 'string',
       group: 'text',
     }),
     defineField({
@@ -38,6 +37,12 @@ export const footer = defineType({
       type: 'array',
       of: [{ type: 'linkType' }],
       validation: (Rule) => Rule.max(3),
+    }),
+    defineField({
+      name: 'text',
+      type: 'richText',
+      description: 'The text to display underneath the email address.',
+      group: 'text',
     }),
     defineField({
       name: 'rights',

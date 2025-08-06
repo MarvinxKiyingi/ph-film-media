@@ -101,8 +101,8 @@ const MovieDetail = ({
           <h4 className='text-h-12 !font-lato font-bold text-gray uppercase col-span-3'>
             {durationLabel}
           </h4>
-          <div className='col-span-10'>
-            <p>{duration}</p>
+          <div className='col-span-10 capitalize'>
+            <p className='capitalize'>{duration}</p>
           </div>
         </div>
       </div>

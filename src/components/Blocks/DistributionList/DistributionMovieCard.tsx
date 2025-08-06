@@ -84,9 +84,7 @@ const DistributionMovieCard = ({
       <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
         {label}
       </h4>
-      {items?.map((item) => (
-        <p key={item._id}>{Object.values(item)[1]}</p>
-      ))}
+      {items?.map((item) => <p key={item._id}>{Object.values(item)[1]}</p>)}
     </div>
   );
 
@@ -115,7 +113,7 @@ const DistributionMovieCard = ({
         <h4 className='text-h-12 !font-lato font-bold text-gray uppercase'>
           {durationLabel}
         </h4>
-        <p>{duration}</p>
+        <p className='capitalize'>{duration}</p>
       </div>
     </div>
   );
@@ -127,7 +125,7 @@ const DistributionMovieCard = ({
       role='button'
       tabIndex={0}
       aria-label={`View details for ${title}`}
-      className='grid grid-cols-1 border-t border-gray pt-4 max-lg:first:pt-0 max-lg:first:border-t-0 lg:grid-cols-24 lg:gap-x-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-blue-500'
+      className='grid grid-cols-1 border-t border-white/20 pt-4 max-lg:first:pt-0 max-lg:first:border-t-0 lg:grid-cols-24 lg:gap-x-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-blue-500'
     >
       <div className='mb-8 lg:row-start-1 lg:col-start-20 lg:col-span-full'>
         {moviePoster?.media && (
@@ -140,7 +138,9 @@ const DistributionMovieCard = ({
       </div>
 
       <div className='grid mb-10 lg:row-start-1 lg:col-start-1 lg:col-span-5 lg:mb-0'>
-        <h3 className='text-h-28 uppercase lg:pr-[20%]'>{title}</h3>
+        <h3 className='text-h-28 uppercase lg:text-h-21 lg:pr-[20%]'>
+          {title}
+        </h3>
       </div>
 
       {renderMovieCredits('hidden lg:grid')}

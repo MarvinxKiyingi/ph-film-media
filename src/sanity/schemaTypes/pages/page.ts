@@ -43,6 +43,18 @@ export const page = defineType({
       of: Object.values(blocks).map((block) => ({
         type: block.name,
       })),
+      options: {
+        insertMenu: {
+          // Configure the "Add Item" menu to display a thumbnail preview of the content type. https://www.sanity.io/docs/array-type#efb1fe03459d
+          views: [
+            {
+              name: 'grid',
+              previewImageUrl: (schemaTypeName) =>
+                `/blockListThumbnails/${schemaTypeName}.png`,
+            },
+          ],
+        },
+      },
     }),
     defineField({
       name: 'seo',

@@ -22,7 +22,7 @@ const HeaderLogo = () => {
       ) : (
         <Link
           href='/'
-          className='hidden uppercase font-oswald font-bold lg:flex lg:col-span-1 lg:text-b-21 w-fit'
+          className='hidden uppercase font-oswald font-bold lg:flex lg:col-span-1 lg:text-[1.5rem] w-fit'
           aria-label='PH Film & Media homepage'
         >
           <span>PH Film & Media</span>

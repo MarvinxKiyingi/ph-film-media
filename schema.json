@@ -350,6 +350,35 @@
         },
         "optional": true
       },
+      "email": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "string"
+        },
+        "optional": true
+      },
+      "socialMediaLinks": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "array",
+          "of": {
+            "type": "object",
+            "attributes": {
+              "_key": {
+                "type": "objectAttribute",
+                "value": {
+                  "type": "string"
+                }
+              }
+            },
+            "rest": {
+              "type": "inline",
+              "name": "linkType"
+            }
+          }
+        },
+        "optional": true
+      },
       "text": {
         "type": "objectAttribute",
         "value": {
@@ -510,28 +539,6 @@
                 }
               }
             ]
-          }
-        },
-        "optional": true
-      },
-      "socialMediaLinks": {
-        "type": "objectAttribute",
-        "value": {
-          "type": "array",
-          "of": {
-            "type": "object",
-            "attributes": {
-              "_key": {
-                "type": "objectAttribute",
-                "value": {
-                  "type": "string"
-                }
-              }
-            },
-            "rest": {
-              "type": "inline",
-              "name": "linkType"
-            }
           }
         },
         "optional": true
