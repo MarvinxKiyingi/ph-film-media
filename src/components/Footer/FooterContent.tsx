@@ -3,6 +3,7 @@ import RichText from '../RichText/RichText';
 import SocialIcons from '../Icons/SocialIcons';
 import React from 'react';
 import { FetchFooterResult } from '../../../sanity.types';
+import ClickableEmail from './ClickableEmail';
 
 const currentYear = new Date().getFullYear();
 
@@ -19,9 +20,7 @@ const FooterContent = ({ data }: { data: FetchFooterResult }) => {
       <div className='flex flex-col gap-8 flex-1 lg:gap-3'>
         <div className='flex flex-col gap-2'>
           <div className='flex flex-col gap-4 lg:flex-row lg:justify-between lg:border-b lg:border-gray lg:pb-1'>
-            <p className='flex flex-wrap text-h-28 font-oswald uppercase border-b border-gray pb-1 lg:border-b-0 lg:pb-0 lg:w-full'>
-              {email}
-            </p>
+            {email && <ClickableEmail email={email} />}
             {text && <RichText content={text} className='text-b-12 gap-2' />}
 
             <ul className='flex items-center'>
