@@ -40,7 +40,7 @@ const FooterContent = ({ data }: { data: FetchFooterResult }) => {
           {text && <RichText content={text} className='text-b-12 gap-2' />}
         </div>
 
-        <p className='flex text-b-9 font-bold text-gray lg:text-b-16'>
+        <p className='flex text-b-9 font-bold text-gray lg:text-b-14'>
           {rights} ⏤ {currentYear} ©
         </p>
       </div>
