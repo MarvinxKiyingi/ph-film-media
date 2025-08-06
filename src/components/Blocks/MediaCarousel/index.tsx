@@ -19,7 +19,7 @@ const MediaCarousel = (block: IMediaCarouselBlock) => {
     <section className='pb-3 md:pb-10'>
       <Marquee pauseOnHover autoFill speed={40}>
         <ul
-          className='grid grid-flow-col gap-4 pr-4'
+          className='grid grid-flow-col gap-1.5 pr-1.5'
           role='list'
           aria-label='Scrolling list of featured media cards'
         >

@@ -16,7 +16,7 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   if (!label) return null;
 
-  const isExternal = href && /^(https?:\/\/)?(www\.)/.test(href);
+  const isExternal = href && /^https?:\/\//.test(href);
   const filterClass =
     variant === 'primary'
       ? 'primary-button'

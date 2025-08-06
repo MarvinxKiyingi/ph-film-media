@@ -75,6 +75,7 @@ export const fetchFooter = defineQuery(`
     _id,
     _type,
     title,
+    email,
     text[],
     socialMediaLinks[]{
       _key,

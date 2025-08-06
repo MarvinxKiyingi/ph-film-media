@@ -56,6 +56,7 @@ export const distributions = defineType({
       title: 'Duration',
       type: 'string',
       group: 'text',
+      initialValue: 'minuter',
     }),
 
     defineField({

@@ -115,7 +115,7 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
               style={{ originY: 0, willChange: 'height, opacity' }}
               className='flex flex-col items-start text-b-21 w-full max-w-[352px] bg-white text-black p-6 overflow-hidden gap-3 rounded-bl-[3px] rounded-br-[3px]'
             >
-              <li className='pt-3 border-t border-gray w-full'>
+              <li className='pt-3 border-t border-black/40 w-full'>
                 <Link
                   href='/'
                   className='flex'
@@ -129,7 +129,7 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
                 link._type === 'externalLink' ? (
                   <li
                     key={link._key}
-                    className='pt-3 border-t border-gray w-full'
+                    className='pt-3 border-t border-black/40 w-full'
                   >
                     <Link
                       href={link.link?.href || ''}
@@ -144,7 +144,7 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
                 ) : link._type === 'internalLink' ? (
                   <li
                     key={link._key}
-                    className='pt-3 border-t border-gray w-full'
+                    className='pt-3 border-t border-black/40 w-full'
                   >
                     <Link
                       href={`/${link.page?.slug?.current || ''}`}
