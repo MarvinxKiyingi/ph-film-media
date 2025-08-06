@@ -45,39 +45,6 @@ const FooterContent = ({ data }: { data: FetchFooterResult }) => {
           {rights} ⏤ {currentYear} ©
         </p>
       </div>
-
-      {/* <div className='flex flex-col gap-10 lg:grid lg:grid-cols-2 lg:gap-2'>
-        <div className='lg:col-span-1 lg:flex lg:flex-col lg:justify-between'>
-          <ul>
-            {socialMediaLinks?.map((link) => (
-              <li key={link._key}>
-                <Link
-                  href={link.href || ''}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                >
-                  <SocialIcons href={link.href ?? undefined} />
-                </Link>
-              </li>
-            ))}
-          </ul>
-
-          <p className='text-b-9 font-bold hidden lg:flex'>
-            {rights} ⏤ {currentYear} ©
-          </p>
-        </div>
-
-        <div className='grid gap-4 lg:col-span-1'>
-          <h3 className='text-h-28 uppercase lg:border-b lg:border-gray lg:pb-1'>
-            {title}
-          </h3>
-          {text && <RichText content={text} className='text-b-12 gap-2' />}
-        </div>
-      </div>
-
-      <p className='flex text-b-9 font-bold lg:hidden'>
-        {rights} ⏤ {currentYear} ©
-      </p> */}
     </footer>
   );
 };
