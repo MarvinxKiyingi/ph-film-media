@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { MenuButton } from '../MenuButton/MenuButton';
 import { motion, AnimatePresence, easeInOut } from 'framer-motion';
 import { Link } from 'next-view-transitions';
+import { useRouter } from 'next/navigation';
 import SocialIcons from '@/components/Icons/SocialIcons';
 import type { FetchHeaderResult } from '../../../../sanity.types';
 
@@ -22,6 +23,7 @@ type IMobileMenuBar = {
 
 const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const router = useRouter();
   useEffect(() => {
     if (isOpen) {
       // Save current overflow style
@@ -36,6 +38,18 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
   if (!header) return null;
 
   const { linkReference, socialMediaLinks, homeMenuItemLabel } = header;
+
+  const handleLinkClick = (href: string, isExternal: boolean = false) => {
+    setIsOpen(false);
+
+    setTimeout(() => {
+      if (isExternal) {
+        window.open(href, '_blank', 'noopener,noreferrer');
+      } else {
+        router.push(href);
+      }
+    }, 120);
+  };
 
   return (
     <div className='flex flex-col items-center fixed top-5 w-full lg:hidden'>
@@ -116,13 +130,12 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
               className='flex flex-col items-start text-b-21 w-full max-w-[352px] bg-white text-black p-6 overflow-hidden gap-3 rounded-bl-[3px] rounded-br-[3px]'
             >
               <li className='pt-3 border-t border-black/40 w-full'>
-                <Link
-                  href='/'
-                  className='flex'
-                  onClick={() => setIsOpen(false)}
+                <button
+                  onClick={() => handleLinkClick('/')}
+                  className='flex text-left w-full'
                 >
                   {homeMenuItemLabel ? homeMenuItemLabel : 'Home'}
-                </Link>
+                </button>
               </li>
 
               {linkReference?.map((link) =>
@@ -131,28 +144,28 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
                     key={link._key}
                     className='pt-3 border-t border-black/40 w-full'
                   >
-                    <Link
-                      href={link.link?.href || ''}
-                      className='flex'
-                      target='_blank'
-                      rel='noopener noreferrer'
-                      onClick={() => setIsOpen(false)}
+                    <button
+                      onClick={() =>
+                        handleLinkClick(link.link?.href || '', true)
+                      }
+                      className='flex text-left w-full'
                     >
                       {link.linkLabel}
-                    </Link>
+                    </button>
                   </li>
                 ) : link._type === 'internalLink' ? (
                   <li
                     key={link._key}
                     className='pt-3 border-t border-black/40 w-full'
                   >
-                    <Link
-                      href={`/${link.page?.slug?.current || ''}`}
-                      className='flex'
-                      onClick={() => setIsOpen(false)}
+                    <button
+                      onClick={() =>
+                        handleLinkClick(`/${link.page?.slug?.current || ''}`)
+                      }
+                      className='flex text-left w-full'
                     >
                       {link.page?.pageTitle}
-                    </Link>
+                    </button>
                   </li>
                 ) : null
               )}
