@@ -9,6 +9,7 @@ import TrailerOverlay from '@/components/TrailerOverlay/TrailerOverlay';
 import RichText from '@/components/RichText/RichText';
 import { generateDistributionMovieSlug } from '@/utils/generateDistributionMovieSlug';
 import { IDistributionListBlocks } from '.';
+import { useInView } from 'react-intersection-observer';
 
 type IDistributionMovieType = NonNullable<
   IDistributionListBlocks['movies']
@@ -26,6 +27,11 @@ const DistributionMovieCard = ({
   slug,
 }: IDistributionMovieCard) => {
   const router = useRouter();
+  const { ref: posterRef, inView: isPosterVisible } = useInView({
+    threshold: 0.3,
+    triggerOnce: true,
+  });
+
   if (!movie || !('_id' in movie)) return null;
   const {
     title,
@@ -127,7 +133,14 @@ const DistributionMovieCard = ({
       aria-label={`View details for ${title}`}
       className='grid grid-cols-1 border-t border-white/20 pt-4 max-lg:first:pt-0 max-lg:first:border-t-0 lg:grid-cols-24 lg:gap-x-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-blue-500'
     >
-      <div className='mb-8 lg:row-start-1 lg:col-start-20 lg:col-span-full'>
+      <div
+        ref={posterRef}
+        className={`mb-8 lg:row-start-1 lg:col-start-20 lg:col-span-full transition-all duration-700 ease-out ${
+          isPosterVisible
+            ? 'opacity-100 translate-y-0'
+            : 'opacity-0 translate-y-8'
+        }`}
+      >
         {moviePoster?.media && (
           <SanityImage
             {...moviePoster}
