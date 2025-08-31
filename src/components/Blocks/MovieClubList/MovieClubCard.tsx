@@ -9,13 +9,15 @@ export type IMovieClubListBlocks = Extract<
   { _type: 'movieClubList' }
 >;
 
-type IMovieClubCard = {
+type MovieClubCardProps = {
   movie: NonNullable<NonNullable<IMovieClubListBlocks['movies']>[number]>;
 };
 
-const MovieClubCard = ({ movie }: IMovieClubCard) => {
+const MovieClubCard = ({ movie }: MovieClubCardProps) => {
   if (!movie || !('_id' in movie)) return null;
+
   const { title, movieBanner } = movie;
+
   return (
     <div data-sanity-edit-target>
       {movieBanner &&
@@ -28,12 +30,7 @@ const MovieClubCard = ({ movie }: IMovieClubCard) => {
               aspectRatio='square'
             />
             {title && (
-              <h2
-                className='relative text-b-21  font-bold text-gray md:text-white
-                lg:absolute lg:inset-0 lg:p-4 lg:flex lg:text-h-28 lg:items-center lg:justify-center lg:text-center uppercase 2xl:text-h-37
-                lg:pointer-events-none lg:opacity-0 lg:group-hover:opacity-100
-                lg:transition-opacity lg:duration-300'
-              >
+              <h2 className='relative text-b-21 font-bold text-gray md:text-white lg:absolute lg:inset-0 lg:p-4 lg:flex lg:text-h-28 lg:items-center lg:justify-center lg:text-center uppercase 2xl:text-h-37 lg:pointer-events-none lg:opacity-0 lg:group-hover:opacity-100 lg:transition-opacity lg:duration-300'>
                 {title}
               </h2>
             )}
