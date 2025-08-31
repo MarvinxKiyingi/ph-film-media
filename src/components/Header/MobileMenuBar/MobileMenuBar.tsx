@@ -48,7 +48,7 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
       } else {
         router.push(href);
       }
-    }, 120);
+    }, 60);
   };
 
   return (

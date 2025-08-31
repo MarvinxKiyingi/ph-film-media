@@ -38,7 +38,7 @@ export default async function HomePage() {
     <>
       <JsonLd data={orgJsonLd} />
       <div
-        className={`grid grid-cols-1 gap-8 pt-52 ${isHero ? 'lg:pt-0' : 'lg:pt-48'}`}
+        className={`grid grid-cols-1 gap-8 pt-[22%] ${isHero ? 'lg:pt-0' : 'lg:pt-48'}`}
       >
         {data.blockList.map((block, idx) => {
           if (!('_type' in block)) return null;
