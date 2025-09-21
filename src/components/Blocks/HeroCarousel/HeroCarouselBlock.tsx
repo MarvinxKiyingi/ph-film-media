@@ -122,6 +122,7 @@ const HeroCardWithAnimation = ({
       variants={variants}
       initial='hidden'
       animate={isAnimated ? 'visible' : 'hidden'}
+      className='aspect-4/5 h-full'
     >
       {cardContent}
     </motion.div>
