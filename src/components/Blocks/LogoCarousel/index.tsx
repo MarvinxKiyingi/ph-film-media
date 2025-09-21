@@ -11,23 +11,33 @@ type ILogoCarouselBlocks = Extract<
 >;
 
 const LogoCarousel = ({ logoItems }: ILogoCarouselBlocks) => {
+  // Calculate speed based on the number of items to maintain consistent visual speed
+  // More items = slower speed, fewer items = faster speed
+  const itemCount = logoItems?.length || 0;
+  const baseSpeed = 40;
+  const speed =
+    itemCount > 0
+      ? Math.max(10, Math.min(50, baseSpeed * (5 / itemCount)))
+      : baseSpeed;
+
   return (
     <section className='py-10'>
       <Marquee
         autoFill
         className='w-full'
-        speed={80}
+        speed={speed}
         gradient={true}
         gradientColor={'var(--color-background)'}
         gradientWidth={100}
+        direction='right'
       >
-        <ul className='flex w-full overflow-x-auto items-center justify-center gap-32 pr-32'>
+        <ul className='flex w-fit h-fit overflow-x-auto items-center justify-center gap-16 pr-16'>
           {logoItems?.map((logo, idx) =>
             logo.mediaItem?.media ? (
-              <li key={idx} className='w-full h-full'>
+              <li key={idx} className='w-[200px] h-20'>
                 <SanityImage
                   useImageAspect
-                  className='w-full h-auto max-h-[10vh] lg:max-h-[115px] !object-contain'
+                  className='w-full h-full !object-contain'
                   {...logo.mediaItem}
                 />
               </li>

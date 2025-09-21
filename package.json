@@ -32,6 +32,7 @@
     "react-responsive": "^10.0.1",
     "responsive-react": "^5.0.0",
     "sanity-image": "^1.0.0",
+    "sanity-plugin-media": "^4.0.0",
     "styled-components": "^6.1.16",
     "yarn-upgrade-all": "^0.7.5"
   },
