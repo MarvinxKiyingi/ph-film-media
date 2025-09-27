@@ -59,31 +59,45 @@ export const heroCarousel = defineType({
               ],
             },
             {
-              name: 'buttonLabel',
-              title: 'Button Label',
-              type: 'string',
-            },
-            {
-              name: 'internalButtonLink',
-              title: 'Button Link (Internal)',
-              type: 'reference',
-              to: [{ type: 'page' }],
-            },
-            {
-              name: 'externalButtonLink',
-              title: 'Button Link (External)',
+              name: 'cardLink',
+              title: 'Card Link',
               type: 'linkType',
+              description:
+                'Takes you to an internal page or external page, upon clicking the card.',
             },
           ],
           preview: {
             select: {
               title: 'title',
               media: 'cardImage.media',
+              linkType: 'cardLink.linkType',
+              externalLink: 'cardLink.externalLink',
+              internalLink: 'cardLink.internalLink',
+              pageTitle: 'cardLink.internalLink.pageTitle',
             },
-            prepare({ title, media }) {
+            prepare({
+              title,
+              media,
+              linkType,
+              externalLink,
+              internalLink,
+              pageTitle,
+            }) {
+              let subtitle = '';
+
+              if (linkType === 'externalLink' && externalLink) {
+                subtitle = `Link to: ${externalLink}`;
+              } else if (
+                (linkType === 'internalLink' || linkType === 'page') &&
+                internalLink
+              ) {
+                subtitle = `Link to page: ${pageTitle || 'Unknown page'}`;
+              }
+
               return {
                 title: title || 'No title',
                 media: media || ImageIcon,
+                ...(subtitle && { subtitle }),
               };
             },
           },

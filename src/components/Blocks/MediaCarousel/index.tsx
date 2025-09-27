@@ -16,7 +16,7 @@ const MediaCarousel = (block: IMediaCarouselBlock) => {
   const { carouselItems } = block;
 
   return (
-    <section className='pb-3 md:pb-10'>
+    <section className='pb-3 md:pb-10' data-sanity-edit-target>
       <Marquee pauseOnHover autoFill speed={40}>
         <ul
           className='grid grid-flow-col gap-1.5 pr-1.5'

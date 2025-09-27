@@ -1,25 +1,27 @@
 import { IMenuLink } from './DesktopMenuBar';
 
-export const getLinkHref = (link: IMenuLink): string => {
-  if (link._type === 'internalLink') {
-    return `/${link.page?.slug?.current || ''}`;
+export const getLinkHref = (linkData: IMenuLink): string => {
+  if (linkData.link?.linkType === 'internalLink') {
+    return `/${linkData.link?.internalLink?.slug?.current || ''}`;
   }
-  return link.link?.href || '';
+  return linkData.link?.externalLink || '';
 };
 
-export const getLinkText = (link: IMenuLink): string => {
-  if (link._type === 'internalLink') {
-    return link.linkLabel || link.page?.pageTitle || '';
+export const getLinkText = (linkData: IMenuLink): string => {
+  if (linkData.link?.linkType === 'internalLink') {
+    return linkData.link?.internalLink?.pageTitle || linkData.label || '';
   }
-  return link.linkLabel || '';
+  return linkData.label || '';
 };
 
-export const getLinkTarget = (link: IMenuLink): string | undefined => {
-  return link._type === 'externalLink' ? '_blank' : undefined;
+export const getLinkTarget = (linkData: IMenuLink): string | undefined => {
+  return linkData.link?.linkType === 'externalLink' ? '_blank' : undefined;
 };
 
-export const getLinkRel = (link: IMenuLink): string | undefined => {
-  return link._type === 'externalLink' ? 'noopener noreferrer' : undefined;
+export const getLinkRel = (linkData: IMenuLink): string | undefined => {
+  return linkData.link?.linkType === 'externalLink'
+    ? 'noopener noreferrer'
+    : undefined;
 };
 
 export const generateLinkClasses = (
@@ -34,9 +36,12 @@ export const generateLinkClasses = (
   return `${baseClasses} ${colorClasses}`;
 };
 
-export const isLinkActive = (pathname: string, link: IMenuLink): boolean => {
-  if (link._type === 'internalLink') {
-    const slug = `/${link.page?.slug?.current || ''}`;
+export const isLinkActive = (
+  pathname: string,
+  linkData: IMenuLink
+): boolean => {
+  if (linkData.link?.linkType === 'internalLink') {
+    const slug = `/${linkData.link?.internalLink?.slug?.current || ''}`;
     return pathname === slug;
   }
   return false;

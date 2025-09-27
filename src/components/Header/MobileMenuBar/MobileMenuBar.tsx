@@ -105,12 +105,12 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
             {socialMediaLinks?.map((link) => (
               <Link
                 key={link._key}
-                href={link.href || ''}
+                href={link.externalLink || ''}
                 target='_blank'
                 rel='noopener noreferrer'
               >
                 <SocialIcons
-                  href={link.href ?? undefined}
+                  href={link.externalLink ?? undefined}
                   color='var(--color-black)'
                 />
               </Link>
@@ -138,37 +138,47 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
                 </button>
               </li>
 
-              {linkReference?.map((link) =>
-                link._type === 'externalLink' ? (
-                  <li
-                    key={link._key}
-                    className='pt-3 border-t border-black/40 w-full'
-                  >
-                    <button
-                      onClick={() =>
-                        handleLinkClick(link.link?.href || '', true)
-                      }
-                      className='flex text-left w-full'
+              {linkReference?.map((link) => {
+                const isExternal = link.link?.linkType === 'externalLink';
+                const isInternal = link.link?.linkType === 'internalLink';
+
+                if (isExternal) {
+                  return (
+                    <li
+                      key={link._key}
+                      className='pt-3 border-t border-black/40 w-full'
                     >
-                      {link.linkLabel}
-                    </button>
-                  </li>
-                ) : link._type === 'internalLink' ? (
-                  <li
-                    key={link._key}
-                    className='pt-3 border-t border-black/40 w-full'
-                  >
-                    <button
-                      onClick={() =>
-                        handleLinkClick(`/${link.page?.slug?.current || ''}`)
-                      }
-                      className='flex text-left w-full'
+                      <button
+                        onClick={() =>
+                          handleLinkClick(link.link?.externalLink || '', true)
+                        }
+                        className='flex text-left w-full'
+                      >
+                        {link.label}
+                      </button>
+                    </li>
+                  );
+                } else if (isInternal) {
+                  return (
+                    <li
+                      key={link._key}
+                      className='pt-3 border-t border-black/40 w-full'
                     >
-                      {link.page?.pageTitle}
-                    </button>
-                  </li>
-                ) : null
-              )}
+                      <button
+                        onClick={() =>
+                          handleLinkClick(
+                            `/${link.link?.internalLink?.slug?.current || ''}`
+                          )
+                        }
+                        className='flex text-left w-full'
+                      >
+                        {link.link?.internalLink?.pageTitle || link.label}
+                      </button>
+                    </li>
+                  );
+                }
+                return null;
+              })}
             </motion.ul>
           )}
         </AnimatePresence>

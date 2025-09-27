@@ -9,11 +9,11 @@ type IMediaCard = NonNullable<
 const MediaCard = ({ carouselItem }: { carouselItem: IMediaCard }) => {
   if (!carouselItem) return null;
   const { title, mediaItem } = carouselItem;
-  console.log('Media item:', mediaItem);
   return (
     <li
       className='flex flex-col gap-4 lg:gap-6 w-[25vw] min-w-[354px] max-w-[600px]'
       role='listitem'
+      data-sanity-edit-target
     >
       <div className='aspect-4/3 w-full h-full rounded-lg overflow-hidden'>
         {mediaItem?.media && (

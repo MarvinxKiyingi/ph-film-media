@@ -2,15 +2,23 @@
 
 'use client';
 
-import { useTransition } from 'react';
+import { useTransition, useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { disableDraftMode } from '@/app/actions';
 
 export function DisableDraftMode() {
   const router = useRouter();
   const [pending, startTransition] = useTransition();
+  const [shouldRender, setShouldRender] = useState(false);
 
-  if (window !== window.parent || !!window.opener) {
+  useEffect(() => {
+    // Check if we're in an iframe or popup window
+    if (typeof window !== 'undefined') {
+      setShouldRender(window === window.parent && !window.opener);
+    }
+  }, []);
+
+  if (!shouldRender) {
     return null;
   }
 

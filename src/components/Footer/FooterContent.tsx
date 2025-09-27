@@ -4,6 +4,7 @@ import SocialIcons from '../Icons/SocialIcons';
 import React from 'react';
 import { FetchFooterResult } from '../../../sanity.types';
 import ClickableEmail from './ClickableEmail';
+import { linkResolver } from '@/sanity/lib/utils';
 
 const currentYear = new Date().getFullYear();
 
@@ -24,17 +25,32 @@ const FooterContent = ({ data }: { data: FetchFooterResult }) => {
             {text && <RichText content={text} className='text-b-12 gap-2' />}
 
             <ul className='flex items-center'>
-              {socialMediaLinks?.map((link) => (
-                <li key={link._key}>
-                  <Link
-                    href={link.href || ''}
-                    target='_blank'
-                    rel='noopener noreferrer'
-                  >
-                    <SocialIcons href={link.href ?? undefined} />
-                  </Link>
-                </li>
-              ))}
+              {socialMediaLinks?.map((link) => {
+                const resolvedHref = linkResolver(link);
+                const isExternal =
+                  resolvedHref &&
+                  /^https?:\/\/|^mailto:|^tel:/.test(resolvedHref);
+
+                if (!resolvedHref) return null;
+
+                return (
+                  <li key={link._key}>
+                    {isExternal ? (
+                      <a
+                        href={resolvedHref}
+                        target='_blank'
+                        rel='noopener noreferrer'
+                      >
+                        <SocialIcons href={resolvedHref} />
+                      </a>
+                    ) : (
+                      <Link href={resolvedHref}>
+                        <SocialIcons href={resolvedHref} />
+                      </Link>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </div>
           {text && <RichText content={text} className='text-b-12 gap-2' />}

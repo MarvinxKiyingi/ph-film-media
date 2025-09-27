@@ -1,4 +1,4 @@
-import { LinkIcon, LaunchIcon } from '@sanity/icons';
+import { LinkIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
 
 export const header = defineType({
@@ -23,72 +23,54 @@ export const header = defineType({
       type: 'array',
       group: ['mobileMenu', 'desktopMenu'],
       of: [
-        {
-          name: 'internalLink',
-          title: 'Link (Internal)',
+        defineField({
+          name: 'navigationItem',
+          title: 'Navigation Item',
           type: 'object',
-          description: 'Used to link to an existing page',
           fields: [
-            {
-              name: 'linkLabel',
-              title: 'Link Label',
+            defineField({
+              name: 'label',
+              title: 'Label',
+              type: 'string',
               description:
-                'Used to override the default label for the page, if not provided, the page title will be used',
-              type: 'string',
-            },
-            {
-              name: 'page',
-              title: 'Page',
-              type: 'reference',
-              to: [{ type: 'page' }],
-            },
-          ],
-          preview: {
-            select: {
-              title: 'linkLabel',
-              pageTitle: 'page.pageTitle',
-            },
-            prepare({ title, pageTitle }) {
-              return {
-                title: title ? title : pageTitle || 'No label',
-                subtitle: pageTitle
-                  ? `Link to: ${pageTitle}`
-                  : 'No page selected',
-              };
-            },
-          },
-        },
-        {
-          type: 'object',
-          name: 'externalLink',
-          title: 'Link (External)',
-          description: 'Used to override the default label for the page',
-          fields: [
-            {
-              name: 'linkLabel',
-              title: 'Link Label',
-              type: 'string',
-            },
-            {
+                'This is used to override the default label for the navigation item.',
+            }),
+            defineField({
               name: 'link',
               title: 'Link',
               type: 'linkType',
-            },
+            }),
           ],
           preview: {
             select: {
-              title: 'linkLabel',
-              url: 'link.href',
+              label: 'label',
+              linkType: 'link.linkType',
+              externalLink: 'link.externalLink',
+              internalLink: 'link.internalLink',
+              pageTitle: 'link.internalLink.pageTitle',
             },
-            prepare({ title, url }) {
+            prepare(selection) {
+              const { label, linkType, externalLink, internalLink, pageTitle } =
+                selection;
+              const title = label || 'Navigation Item';
+              let subtitle = '';
+
+              if (linkType === 'externalLink' && externalLink) {
+                subtitle = `Link to: ${externalLink}`;
+              } else if (linkType === 'internalLink' && internalLink) {
+                subtitle = `Link to page: ${pageTitle}`;
+              } else {
+                subtitle = 'No link configured';
+              }
+
               return {
-                title: title || 'No label',
-                subtitle: url ? `Link to: ${url}` : 'No URL',
-                media: LaunchIcon,
+                title,
+                subtitle,
+                media: LinkIcon,
               };
             },
           },
-        },
+        }),
       ],
     }),
     defineField({
