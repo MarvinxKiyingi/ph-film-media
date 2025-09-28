@@ -30,7 +30,7 @@ type ITrailerOverlay = {
 const TrailerOverlay = ({ trailer, triggerIcon }: ITrailerOverlay) => {
   const [isOpen, setIsOpen] = useState(false);
   const { platform, id: videoId } = extractVideoInfo(
-    trailer.trailerLink?.href ?? ''
+    trailer.trailerLink?.externalLink ?? ''
   );
 
   useEffect(() => {

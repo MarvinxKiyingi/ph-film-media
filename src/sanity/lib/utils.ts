@@ -2,6 +2,7 @@ import createImageUrlBuilder from '@sanity/image-url';
 
 import { createDataAttribute, CreateDataAttributeProps } from 'next-sanity';
 import { dataset, projectId, studioUrl } from '../env';
+import type { LinkInput } from '@/types/linkTypes';
 
 const imageBuilder = createImageUrlBuilder({
   projectId: projectId || '',
@@ -34,6 +35,35 @@ export function dataAttr(config: DataAttributeConfig) {
     dataset,
     baseUrl: studioUrl,
   }).combine(config);
+}
+
+export function linkResolver(link: LinkInput) {
+  if (!link) return null;
+
+  if (!link.linkType && link.externalLink) {
+    (link as { linkType: string }).linkType = 'externalLink';
+  }
+
+  if (
+    link.linkType === 'externalLink' ||
+    (link.linkType as string) === 'href'
+  ) {
+    return link.externalLink || null;
+  }
+
+  if (link.linkType === 'internalLink') {
+    if (
+      'internalLink' in link &&
+      link.internalLink &&
+      'slug' in link.internalLink &&
+      link.internalLink.slug?.current
+    ) {
+      return `/${link.internalLink.slug.current}`;
+    }
+    return null;
+  }
+
+  return null;
 }
 
 // for sanity image component url

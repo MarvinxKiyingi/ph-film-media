@@ -32,7 +32,7 @@ const DistributionList = async ({
   const { movies } = block;
 
   return (
-    <section className='page-x-spacing grid gap-5'>
+    <section className='page-x-spacing grid gap-5' data-sanity-edit-target>
       {movies?.map((movieItem, index) =>
         movieItem && '_id' in movieItem && 'title' in movieItem ? (
           <DistributionMovieCard

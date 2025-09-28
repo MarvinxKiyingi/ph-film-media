@@ -11,24 +11,30 @@ const MovieDetailHero = (movie: FetchDistributionMovieResult) => {
   const { title, movieBanner, description, button, ticket, trailer } = movie;
 
   return (
-    <section className='grid max-lg:top-0 max-lg:left-0 max-lg:right-0 max-lg:items-center'>
+    <section
+      className='grid max-lg:top-0 max-lg:left-0 max-lg:right-0 max-lg:items-center'
+      data-sanity-edit-target
+    >
       <div className='flex flex-col justify-end relative max-lg:h-screen lg:grid lg:grid-cols-24 lg:gap-2'>
         <div className='flex flex-col gap-8 z-10 max-lg:px-p-mobile max-lg:pb-p-mobile lg:px-p-desktop lg:col-span-full lg:flex-row lg:justify-between '>
           <div className='grid gap-4 lg:whitespace-nowrap'>
-            <h1 className='text-h-50 leading-none uppercase lg:leading-[1.4] 2xl:text-h-67'>
+            <h1
+              className='text-h-50 leading-none uppercase lg:leading-[1.4] 2xl:text-h-67'
+              data-sanity-edit-target
+            >
               {title}
             </h1>
-            <div className='block lg:hidden'>
+            <div className='block lg:hidden' data-sanity-edit-target>
               {description && (
                 <RichText content={description} className='!line-clamp-[5]' />
               )}
             </div>
           </div>
-          <div className='flex gap-6 lg:items-center'>
+          <div className='flex gap-6 lg:items-center' data-sanity-edit-target>
             {ticket && (
               <div className='flex'>
                 <Button
-                  href={ticket?.ticketLink?.href ?? ''}
+                  href={ticket?.ticketLink?.externalLink ?? ''}
                   label={ticket?.ticketLinkLabel ?? 'Biljetter'}
                   className='ticket-button'
                 />
@@ -37,7 +43,7 @@ const MovieDetailHero = (movie: FetchDistributionMovieResult) => {
             {button && (
               <div className='flex'>
                 <Button
-                  href={button?.buttonLink?.href ?? ''}
+                  href={button?.buttonLink?.externalLink ?? ''}
                   label={
                     button?.buttonLabel ? button.buttonLabel : 'Pressmaterial'
                   }
@@ -49,15 +55,20 @@ const MovieDetailHero = (movie: FetchDistributionMovieResult) => {
 
         <div className='absolute inset-0 h-full lg:relative lg:h-auto lg:col-span-full'>
           {movieBanner?.media && (
-            <SanityImage
-              {...movieBanner}
-              className='h-full lg:aspect-video z-0'
-              aspectRatio='16/9'
-            />
+            <div data-sanity-edit-target>
+              <SanityImage
+                {...movieBanner}
+                className='h-full lg:aspect-video z-0'
+                aspectRatio='16/9'
+              />
+            </div>
           )}
 
-          <div className='flex absolute inset-0 w-full h-full z-40 justify-center items-center'>
-            {trailer?.trailerLink?.href && (
+          <div
+            className='flex absolute inset-0 w-full h-full z-40 justify-center items-center'
+            data-sanity-edit-target
+          >
+            {trailer?.trailerLink?.externalLink && (
               <TrailerOverlay trailer={trailer} triggerIcon={<PlayIcon />} />
             )}
           </div>

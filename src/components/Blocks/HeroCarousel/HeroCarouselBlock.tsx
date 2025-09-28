@@ -1,11 +1,12 @@
 'use client';
 
 import React, { useEffect, useRef, useState } from 'react';
-import { motion, Variants } from 'framer-motion';
+import { Variants } from 'framer-motion';
 import CarouselAutoplay from '@/components/Media/Carousel/CarouselAutoplay';
 import { BlockListItem } from '@/types/IBlockListItem';
-import Button from '@/components/Button/Button';
-import SanityImage from '@/components/Media/SanityImage';
+
+import HeroCardWithAnimation from './HeroCardWithAnimation';
+import CardWrapper from './CardWrapper';
 
 // Animation configuration
 const CARD_VARIANTS: Variants = {
@@ -44,91 +45,6 @@ const useAnimationQueue = () => {
   }, []);
 
   return { animatedCards, startAnimations };
-};
-
-// Individual card component
-const HeroCardWithAnimation = ({
-  card,
-  index,
-  variants,
-  isAnimated,
-  isDesktop,
-}: {
-  card: NonNullable<
-    Extract<BlockListItem, { _type: 'heroCarousel' }>['mediaCard']
-  >[number];
-  index: number;
-  variants: Variants;
-  isAnimated: boolean;
-  isDesktop: boolean;
-}) => {
-  const href =
-    card.externalButtonLink?.href || card.internalButtonLink?.slug?.current;
-  const Wrapper = href ? 'a' : 'div';
-  const wrapperProps = href ? { href } : {};
-  const cardContent = (
-    <Wrapper
-      {...wrapperProps}
-      className={`relative flex flex-col h-full flex-shrink-0 min-w-[85%] mr-2 lg:min-w-[33.3333%] max-lg:gap-4`}
-      data-sanity-edit-target
-    >
-      <div className='relative flex flex-col gap-2 select-none lg:w-full lg:h-full lg:gap-4'>
-        {card.cardImage && (
-          <div className='aspect-4/5 w-full h-full rounded-lg overflow-hidden'>
-            <SanityImage
-              {...card.cardImage}
-              className='w-full h-full object-cover rounded-lg absolute inset-0'
-              aspectRatio='4/5'
-            />
-          </div>
-        )}
-        <Button
-          label={card.buttonLabel}
-          className='absolute bottom-2 right-2 px-6 py-3 lg:hidden'
-          variant='primary'
-        />
-      </div>
-
-      <div className='relative flex flex-col gap-2 z-10 lg:justify-end lg:px-10 lg:pb-4 lg:h-full lg:w-full lg:!absolute lg:top-0 lg:left-0 lg:right-0 lg:bottom-0'>
-        <div className='flex flex-col gap-4 lg:flex-row lg:justify-between'>
-          <div className='flex flex-col gap-2 flex-1'>
-            <h3 className='text-h-21 uppercase lg:text-h-28'>{card.title}</h3>
-            <div className='flex flex-wrap gap-3 lg:gap-6'>
-              {card.infoItems?.map((item, itemIdx: number) => (
-                <p
-                  key={`info-item-${card.id ?? index}-${item.id ?? itemIdx}`}
-                  className='text-b-12 lg:text-b-16'
-                >
-                  {item.infoItemTitle}
-                </p>
-              ))}
-            </div>
-          </div>
-          <div className='hidden lg:flex lg:items-end'>
-            <Button
-              label={card.buttonLabel}
-              variant='primary'
-              className='px-6 py-3'
-            />
-          </div>
-        </div>
-      </div>
-    </Wrapper>
-  );
-
-  return isDesktop ? (
-    <motion.div
-      key={`motion-card-${card.id ?? index}`}
-      variants={variants}
-      initial='hidden'
-      animate={isAnimated ? 'visible' : 'hidden'}
-      className='aspect-4/5 h-full'
-    >
-      {cardContent}
-    </motion.div>
-  ) : (
-    <div key={`static-card-${card.id ?? index}`}>{cardContent}</div>
-  );
 };
 
 // Custom hook to avoid hydration issues
@@ -225,66 +141,11 @@ const HeroCarouselBlock = ({ block }: { block: BlockListItem }) => {
           />
         ) : (
           // Mobile: Direct rendering without animation wrapper
-          <div
+          <CardWrapper
             key={`hero-card-${card.id ?? idx}`}
-            className={`relative flex flex-col h-full flex-shrink-0 min-w-[85%] mr-2 lg:min-w-[33.3333%] max-lg:gap-4`}
-          >
-            {(() => {
-              const href =
-                card.externalButtonLink?.href ||
-                card.internalButtonLink?.slug?.current;
-              const Wrapper = href ? 'a' : 'div';
-              const wrapperProps = href ? { href } : {};
-
-              return (
-                <Wrapper {...wrapperProps} data-sanity-edit-target>
-                  <div className='relative flex flex-col gap-2 select-none lg:w-full lg:h-full lg:gap-4'>
-                    {card.cardImage && (
-                      <div className='aspect-4/5 w-full h-full rounded-lg overflow-hidden'>
-                        <SanityImage
-                          {...card.cardImage}
-                          className='w-full h-full object-cover rounded-lg absolute inset-0'
-                          aspectRatio='4/5'
-                        />
-                      </div>
-                    )}
-                    <Button
-                      label={card.buttonLabel}
-                      className='absolute bottom-2 right-2 px-6 py-3 lg:hidden'
-                      variant='primary'
-                    />
-                  </div>
-
-                  <div className='relative flex flex-col gap-2 z-10 lg:justify-end lg:px-10 lg:pb-4 lg:h-full lg:w-full lg:!absolute lg:top-0 lg:left-0 lg:right-0 lg:bottom-0'>
-                    <div className='flex flex-col gap-4 lg:flex-row lg:justify-between'>
-                      <div className='flex flex-col gap-2 flex-1'>
-                        <h3 className='text-h-21 uppercase lg:text-h-28'>
-                          {card.title}
-                        </h3>
-                        <div className='flex flex-wrap gap-3 lg:gap-6'>
-                          {card.infoItems?.map((item, itemIdx: number) => (
-                            <p
-                              key={`info-item-${card.id ?? idx}-${item.id ?? itemIdx}`}
-                              className='text-b-12 lg:text-b-16'
-                            >
-                              {item.infoItemTitle}
-                            </p>
-                          ))}
-                        </div>
-                      </div>
-                      <div className='hidden lg:flex lg:items-end'>
-                        <Button
-                          label={card.buttonLabel}
-                          variant='primary'
-                          className='px-6 py-3'
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </Wrapper>
-              );
-            })()}
-          </div>
+            card={card}
+            index={idx}
+          />
         )
       )}
     </CarouselAutoplay>

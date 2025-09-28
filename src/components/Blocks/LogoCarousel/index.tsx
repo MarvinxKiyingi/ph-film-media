@@ -10,7 +10,9 @@ type ILogoCarouselBlocks = Extract<
   { _type: 'logoCarousel' }
 >;
 
-const LogoCarousel = ({ logoItems }: ILogoCarouselBlocks) => {
+const LogoCarousel = (block: ILogoCarouselBlocks) => {
+  const { logoItems } = block;
+
   // Calculate speed based on the number of items to maintain consistent visual speed
   // More items = slower speed, fewer items = faster speed
   const itemCount = logoItems?.length || 0;
@@ -21,7 +23,7 @@ const LogoCarousel = ({ logoItems }: ILogoCarouselBlocks) => {
       : baseSpeed;
 
   return (
-    <section className='py-10'>
+    <section className='py-10' data-sanity-edit-target>
       <Marquee
         autoFill
         className='w-full'

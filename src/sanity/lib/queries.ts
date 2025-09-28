@@ -39,33 +39,28 @@ export const settingsQuery = defineQuery(`
 export const fetchHeader = defineQuery(`
  *[_type == "header"][0]{
   linkReference[]{
-    id,
     _key,
-    _type,
-    _id,
-    // For internal links
-    _type == "internalLink" => {
-      linkLabel,
-      page->{
+    label,
+    link{
+      linkType,
+      externalLink,
+      internalLink->{
         _id,
         pageTitle,
         slug
-      }
-    },
-    // For external links
-    _type == "externalLink" => {
-      linkLabel,
-      link{
-        href
       }
     }
   },
   homeMenuItemLabel,
   socialMediaLinks[]{
     _key,
-    _type,
-    _id,
-    href
+    linkType,
+    externalLink,
+    internalLink->{
+      _id,
+      pageTitle,
+      slug
+    }
   }
 }
 `);
@@ -79,9 +74,13 @@ export const fetchFooter = defineQuery(`
     text[],
     socialMediaLinks[]{
       _key,
-      _type,
-      _id,
-      href
+      linkType,
+      externalLink,
+      internalLink->{
+        _id,
+        pageTitle,
+        slug
+      }
     },
     rights
   }
@@ -96,13 +95,16 @@ export const fetchHome = defineQuery(`
     blockList[]{
       // Page Title Block
       _type == "pageTitle" => {
+        _key,
         _type,
         title
       },
       // Hero Block
       _type == "heroCarousel" => {
+        _key,
         _type,
         mediaCard[]{
+          _key,
           id,
           cardImage{
             _type,
@@ -119,9 +121,15 @@ export const fetchHome = defineQuery(`
             id,
             infoItemTitle
           },
-          buttonLabel,
-          internalButtonLink->{_id, title, slug},
-          externalButtonLink{href}
+          cardLink{
+            linkType,
+            externalLink,
+            internalLink->{
+              _id,
+              pageTitle,
+              slug
+            }
+          }
         },
         logo{
           _type,
@@ -136,8 +144,10 @@ export const fetchHome = defineQuery(`
       },
     // Media Carousel Block
     _type == "mediaCarousel" => {
+      _key,
       _type,
       carouselItems[]{
+        _key,
         title,
         mediaItem{
           _type,
@@ -153,6 +163,7 @@ export const fetchHome = defineQuery(`
     },
       // Movie Club List Block
       _type == "movieClubList" => {
+          _key,
           _type,
           movies[]->{
             _id,
@@ -185,6 +196,7 @@ export const fetchHome = defineQuery(`
       },
       // Image With Text Block
       _type == "imageWithText" => {
+        _key,
         _type,
         mediaItem{
           _type,
@@ -205,6 +217,7 @@ export const fetchHome = defineQuery(`
       },
       // Logo Carousel Block
       _type == "logoCarousel" => {
+        _key,
         _type,
         logoItems[]{
           id,
@@ -247,13 +260,16 @@ export const fetchPage = defineQuery(`
     blockList[]{
       // Page Title Block
       _type == "pageTitle" => {
+        _key,
         _type,
         title
       },
       // Hero Block
       _type == "heroCarousel" => {
+        _key,
         _type,
         mediaCard[]{
+          _key,
           id,
           cardImage{
             _type,
@@ -270,9 +286,15 @@ export const fetchPage = defineQuery(`
             id,
             infoItemTitle
           },
-          buttonLabel,
-          internalButtonLink->{_id, title, slug},
-          externalButtonLink{href}
+          cardLink{
+            linkType,
+            externalLink,
+            internalLink->{
+              _id,
+              pageTitle,
+              slug
+            }
+          }
         },
         logo{
           _type,
@@ -287,8 +309,10 @@ export const fetchPage = defineQuery(`
       },
     // Media Carousel Block
     _type == "mediaCarousel" => {
+      _key,
       _type,
       carouselItems[]{
+        _key,
         title,
         mediaItem{
           _type,
@@ -304,6 +328,7 @@ export const fetchPage = defineQuery(`
     },
       // Movie Club List Block
       _type == "movieClubList" => {
+          _key,
           _type,
           movies[]->{
             _id,
@@ -336,6 +361,7 @@ export const fetchPage = defineQuery(`
       },
       // Image With Text Block
       _type == "imageWithText" => {
+        _key,
         _type,
         mediaItem{
           _type,
@@ -356,6 +382,7 @@ export const fetchPage = defineQuery(`
       },
       // Logo Carousel Block
       _type == "logoCarousel" => {
+        _key,
         _type,
         logoItems[]{
           id,
@@ -373,6 +400,7 @@ export const fetchPage = defineQuery(`
       },
       // Distribution List Block
       _type == "distributionList" => {
+        _key,
         _type,
         movies[]->{
         _id,

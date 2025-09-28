@@ -15,7 +15,10 @@ const ImageWithText = (block: IImageWithTextBlocks) => {
   const { textSection, mediaItem, mediaTitle } = block;
 
   return (
-    <section className='grid gap-10 page-x-spacing py-7 md:gap-1.5 md:grid-cols-24 md:py-10'>
+    <section
+      className='grid gap-10 page-x-spacing py-7 md:gap-1.5 md:grid-cols-24 md:py-10'
+      data-sanity-edit-target
+    >
       <div className='flex flex-col gap-8 md:col-start-13 md:col-span-10 md:h-fit'>
         {Array.isArray(textSection) &&
           textSection.map((section, idx) => (
@@ -33,10 +36,7 @@ const ImageWithText = (block: IImageWithTextBlocks) => {
       </div>
 
       {mediaItem?.media && (
-        <div
-          className='grid gap-5 h-fit md:row-start-1 md:col-start-1 md:col-span-8 lg:col-span-6'
-          data-sanity-edit-target
-        >
+        <div className='grid gap-5 h-fit md:row-start-1 md:col-start-1 md:col-span-8 lg:col-span-6'>
           <SanityImage
             {...mediaItem}
             className='aspect-4/5 rounded-lg'

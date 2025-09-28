@@ -1,11 +1,14 @@
 import React from 'react';
 import { Link } from 'next-view-transitions';
+import { linkResolver } from '@/sanity/lib/utils';
+import type { ResolvedLinkType } from '@/types/linkTypes';
 
 interface ButtonProps {
   href?: string | null;
   label?: string | null;
   className?: string;
   variant?: 'primary' | 'secondary' | 'ticket';
+  linkType?: ResolvedLinkType | null;
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -13,10 +16,15 @@ const Button: React.FC<ButtonProps> = ({
   label,
   className = '',
   variant = 'secondary',
+  linkType,
 }) => {
   if (!label) return null;
 
-  const isExternal = href && /^https?:\/\//.test(href);
+  // Use linkResolver if linkType provided, otherwise fall back to href prop
+  const resolvedHref = linkType ? linkResolver(linkType) : href;
+  const isExternal =
+    resolvedHref && /^https?:\/\/|^mailto:|^tel:/.test(resolvedHref);
+
   const filterClass =
     variant === 'primary'
       ? 'primary-button'
@@ -27,7 +35,7 @@ const Button: React.FC<ButtonProps> = ({
           : `${variant}-button`;
   const buttonClass = `${filterClass} ${className}`;
 
-  if (!href) {
+  if (!resolvedHref) {
     return (
       <div className={buttonClass}>
         <span>{label}</span>
@@ -38,7 +46,7 @@ const Button: React.FC<ButtonProps> = ({
   if (isExternal) {
     return (
       <a
-        href={href}
+        href={resolvedHref}
         target='_blank'
         rel='noopener noreferrer'
         className={buttonClass}
@@ -49,7 +57,7 @@ const Button: React.FC<ButtonProps> = ({
   }
 
   return (
-    <Link href={href} className={buttonClass}>
+    <Link href={resolvedHref} className={buttonClass}>
       <span>{label}</span>
     </Link>
   );
