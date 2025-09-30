@@ -2,13 +2,7 @@ import { sanityFetch } from '@/sanity/lib/live';
 import { fetchHome } from '@/sanity/lib/queries';
 import { generateMetadata } from '@/utils/generateMetadata';
 import type { FetchHomeResult } from '../../../sanity.types';
-import HeroCarouselBlock from '@/components/Blocks/HeroCarousel';
-import MediaCarousel from '@/components/Blocks/MediaCarousel';
-import MovieClubList from '@/components/Blocks/MovieClubList';
-import ImageWithText from '@/components/Blocks/ImageWithText';
-import LogoCarousel from '@/components/Blocks/LogoCarousel';
-import PageTitle from '@/components/Blocks/PageTitle';
-import MoviesHeroCarousel from '@/components/Blocks/MoviesHeroCarousel';
+import BlockRenderer from '@/components/BlockRenderer';
 import JsonLd from '@/components/JsonLd';
 import { getOrganizationJsonLd } from '@/utils/jsonld';
 
@@ -42,25 +36,14 @@ export default async function HomePage() {
       >
         {data.blockList.map((block, idx) => {
           if (!('_type' in block)) return null;
-
-          switch (block._type) {
-            case 'heroCarousel':
-              return <HeroCarouselBlock key={idx} block={block} idx={idx} />;
-            case 'pageTitle':
-              return <PageTitle key={idx} {...block} />;
-            case 'mediaCarousel':
-              return <MediaCarousel key={idx} {...block} />;
-            case 'movieClubList':
-              return <MovieClubList key={idx} {...block} />;
-            case 'moviesHeroCarousel':
-              return <MoviesHeroCarousel key={idx} {...block} />;
-            case 'imageWithText':
-              return <ImageWithText key={idx} {...block} />;
-            case 'logoCarousel':
-              return <LogoCarousel key={idx} {...block} />;
-            default:
-              return null;
-          }
+          return (
+            <BlockRenderer
+              key={'_key' in block ? block._key : idx}
+              block={block}
+              index={idx}
+              slug={data.slug?.current || undefined}
+            />
+          );
         })}
       </div>
     </>

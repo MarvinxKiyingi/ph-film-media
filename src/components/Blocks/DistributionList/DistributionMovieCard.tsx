@@ -26,6 +26,14 @@ const DistributionMovieCard = ({
   settings,
   slug,
 }: IDistributionMovieCard) => {
+  console.log('slug', slug);
+  console.log(
+    'movieUrl',
+    generateDistributionMovieSlug(
+      slug?.current ?? '',
+      movie.slug?.current ?? ''
+    )
+  );
   const router = useRouter();
   const { ref: posterRef, inView: isPosterVisible } = useInView({
     threshold: 0.3,

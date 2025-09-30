@@ -232,6 +232,67 @@ export const fetchHome = defineQuery(`
             }
           }
         }
+      },
+            // Distribution List Block
+            _type == "distributionList" => {
+        _key,
+        _type,
+        movies[]->{
+        _id,
+        title,
+        slug{
+          _type,
+          current
+        },
+        releaseDate,
+        description,
+        duration,
+        languages[]->{
+          _id,
+          language
+        },
+        directors[]->{
+          _id,
+          director
+        },
+        writers[]->{
+          _id,
+          writer
+        },
+        actors[]->{
+          _id,
+          actor
+        },
+        ticket,
+        button,
+        trailer,
+        moviePoster{
+          _type,
+          media{
+            _type,
+            alt,
+            crop,
+            hotspot,
+            asset->{ ... }
+          }
+        },
+        movieBanner{
+          _type,
+          media{
+            _type,
+            alt,
+            crop,
+            hotspot,
+            asset->{ ... }
+          }
+        }
+      }
+      },
+      // Projects Grid Block
+      _type == "projectsGrid" => {
+        _key,
+        _type,
+        showFeaturedProjectCard
       }
     },
     seo {
@@ -452,6 +513,12 @@ export const fetchPage = defineQuery(`
           }
         }
       }
+      },
+      // Projects Grid Block
+      _type == "projectsGrid" => {
+        _key,
+        _type,
+        showFeaturedProjectCard
       }
     },
     seo {
@@ -528,5 +595,58 @@ export const fetchAllDistributionMovieSlugs = defineQuery(`
 export const fetchDistributionParentSlug = defineQuery(`
   *[_type == "page" && count(blockList[_type == "distributionList"]) > 0][0]{
     "slug": slug.current
+  }
+`);
+
+export const fetchAllProjects = defineQuery(`
+  *[_type == "projects"] | order(_createdAt desc) {
+    _id,
+    _type,
+    _createdAt,
+    _updatedAt,
+    _rev,
+    title,
+    description,
+    projectImage {
+      _type,
+      media {
+        _type,
+        alt,
+        crop,
+        hotspot,
+        asset->{ ... }
+      }
+    },
+    link{
+      linkType,
+      externalLink,
+      internalLink->{
+        _id,
+        pageTitle,
+        slug
+      }
+    }
+  }
+`);
+
+export const fetchLatestProject = defineQuery(`
+  *[_type == "projects"] | order(_createdAt desc)[0] {
+    _id,
+    _type,
+    _createdAt,
+    _updatedAt,
+    _rev,
+    title,
+    description,
+    projectImage {
+      _type,
+      media {
+        _type,
+        "alt": coalesce(alt, null),
+        crop,
+        hotspot,
+        asset->{ ... }
+      }
+    }
   }
 `);

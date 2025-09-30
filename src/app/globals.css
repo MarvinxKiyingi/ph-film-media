@@ -8,7 +8,7 @@
 
   /* Header scale */
   --text-h-12: 0.75rem; /* 12px */
-  --text-h-21: 1rem; /* 16px */
+  --text-h-16: 1rem; /* 16px */
   --text-h-21: 1.312rem; /* 21px */
   --text-h-28: 1.75rem; /* 28px */
   --text-h-37: 2.312rem; /* 37px */
@@ -23,12 +23,14 @@
   --text-b-16: 1rem; /* 16px */
   --text-b-21: 1.312rem; /* 21px */
   --text-b-28: 1.75rem; /* 28px */
+  --text-b-37: 2.312rem; /* 37px */
 
   /* Colors */
   --color-black: rgba(10, 10, 10, 1);
   --color-white: rgba(255, 255, 255, 1);
   --color-gray: rgba(255, 255, 255, 0.4);
   --color-background: rgba(10, 10, 10, 1);
+  --color-dark-gray: rgba(24, 24, 26, 1);
 
   /* Aspect ratios */
   --aspect-5/2: 5 / 2;
@@ -143,6 +145,7 @@ h4,
 h5,
 h6 {
   font-family: var(--font-oswald);
+  line-height: 1.2;
 }
 
 /* Nav-bar blur down */
