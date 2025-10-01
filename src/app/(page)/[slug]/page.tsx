@@ -36,7 +36,7 @@ export default async function Page({
               key={'_key' in block ? block._key : idx}
               block={block}
               index={idx}
-              slug={data.slug?.current || undefined}
+              slug={data.slug || undefined}
             />
           );
         })}

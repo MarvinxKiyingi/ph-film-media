@@ -65,15 +65,17 @@ const MovieDetailHero = (movie: FetchDistributionMovieResult) => {
           )}
 
           <div
-            className='flex absolute inset-0 w-full h-full z-40 justify-center items-center'
+            className='flex absolute inset-0 w-full h-full z-40 justify-center items-center pointer-events-none'
             data-sanity-edit-target
           >
             {trailer?.trailerLink?.externalLink && (
-              <TrailerOverlay trailer={trailer} triggerIcon={<PlayIcon />} />
+              <div className='pointer-events-auto'>
+                <TrailerOverlay trailer={trailer} triggerIcon={<PlayIcon />} />
+              </div>
             )}
           </div>
-          {/* Bottom fade  */}
 
+          {/* Bottom fade  */}
           <div className='block absolute bottom-0 w-full h-2/4 bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none z-0' />
         </div>
       </div>

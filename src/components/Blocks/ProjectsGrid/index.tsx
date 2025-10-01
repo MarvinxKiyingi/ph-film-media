@@ -21,7 +21,7 @@ const ProjectsGrid = async ({ showFeaturedProjectCard }: IProjectsGrid) => {
       {showFeaturedProjectCard && projectToDisplay && (
         <FeaturedProjectCard project={projectToDisplay} />
       )}
-      <div className='grid gap-x-2 gap-y-5 grid-cols-1 md:grid-cols-2 lg:gap-y-10 lg:grid-cols-3'>
+      <div className='grid gap-x-2 gap-y-5 grid-cols-1 md:grid-cols-2 lg:gap-y-10 lg:grid-cols-3 2xl:grid-cols-4'>
         {projectsForGrid.map((project, index) => {
           const isFirstHighlighted = !showFeaturedProjectCard && index === 0;
           const className = `grid gap-6 ${isFirstHighlighted && 'p-2.5 bg-dark-gray rounded-lg'}`;

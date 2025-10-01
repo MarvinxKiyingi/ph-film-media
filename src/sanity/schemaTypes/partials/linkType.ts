@@ -25,7 +25,7 @@ export const linkType = defineType({
       title: 'Link (Internal)',
       description: 'Select internal page that will be linked to.',
       type: 'reference',
-      to: [{ type: 'page' }, { type: 'distributions' }],
+      to: [{ type: 'page' }],
       hidden: ({ parent }) => parent?.linkType !== 'internalLink',
       validation: (Rule) =>
         // Custom validation to ensure page reference is provided if the link type is 'page'

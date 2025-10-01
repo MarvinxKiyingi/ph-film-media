@@ -9,7 +9,11 @@ import MoviesHeroCarousel from '@/components/Blocks/MoviesHeroCarousel';
 import DistributionList from '@/components/Blocks/DistributionList';
 import FeaturedProjectCard from '@/components/Blocks/FeaturedProjectCard';
 import ProjectsGrid from '@/components/Blocks/ProjectsGrid';
-import type { FetchHomeResult, FetchPageResult } from '../../sanity.types';
+import type {
+  FetchHomeResult,
+  FetchPageResult,
+  Slug,
+} from '../../sanity.types';
 
 // Extract block types from the generated Sanity types
 type HomeBlockType = NonNullable<
@@ -26,7 +30,7 @@ type ValidBlockType = IBlockType & { _type: string };
 type IBlockRenderer = {
   index: number;
   block: ValidBlockType;
-  slug?: string;
+  slug?: Slug;
   // Add any other props that specific blocks might need
   [key: string]: unknown;
 };

@@ -19,7 +19,7 @@ const RegularPageMenu: React.FC<IRegularPageMenu> = ({
 
   return (
     <div className='hidden lg:flex group'>
-      <ul className='flex px-4 items-start text-b-21 lg:col-span-1 lg:flex-row lg:w-full lg:justify-end lg:gap-0 lg:text-b-12 lg:font-bold lg:px-0'>
+      <ul className='flex px-4 items-start text-b-21 lg:col-span-1 lg:flex-row lg:w-full lg:justify-end lg:gap-0 lg:text-b-14 lg:font-extrabold lg:px-0 2xl:text-b-16'>
         {links.map((link) => {
           const isActive = isLinkActive(pathname, link);
           return (
