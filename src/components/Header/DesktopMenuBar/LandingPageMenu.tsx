@@ -27,7 +27,7 @@ const LandingPageMenu: React.FC<ILandingPageMenu> = ({
   );
 
   return (
-    <div className='hidden lg:w-full lg:flex lg:flex-1 lg:justify-between lg:font-extrabold lg:text-b-14 2xl:text-b-16'>
+    <div className='hidden lg:w-full lg:flex lg:flex-1 lg:justify-between lg:font-extrabold lg:text-b-12 2xl:text-b-14'>
       {/* Internal Links */}
       <ul className='flex group'>
         {internalLinks.map((link) => {
