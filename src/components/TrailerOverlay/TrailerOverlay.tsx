@@ -44,7 +44,11 @@ const TrailerOverlay = ({ trailer, triggerIcon }: ITrailerOverlay) => {
     }
   }, [isOpen]);
 
-  const openOverlay = () => setIsOpen(true);
+  const openOverlay = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsOpen(true);
+  };
   const closeOverlay = () => setIsOpen(false);
 
   if (!videoId || !platform) {

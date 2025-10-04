@@ -11,7 +11,7 @@ export const linkType = defineType({
       name: 'linkType',
       title: 'Link Type',
       type: 'string',
-      initialValue: 'url',
+      initialValue: 'internalLink',
       options: {
         list: [
           { title: 'Link (Internal)', value: 'internalLink' },

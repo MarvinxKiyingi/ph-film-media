@@ -1,15 +1,15 @@
 'use client';
 
 import SanityImage from '@/components/Media/SanityImage';
-import { notFound, useRouter } from 'next/navigation';
+import { notFound } from 'next/navigation';
 import { SettingsQueryResult, Slug } from '../../../../sanity.types';
-import Button from '@/components/Button/Button';
 import { formatDate } from '@/utils/formatDate';
 import TrailerOverlay from '@/components/TrailerOverlay/TrailerOverlay';
 import RichText from '@/components/RichText/RichText';
 import { generateDistributionMovieSlug } from '@/utils/generateDistributionMovieSlug';
 import { IDistributionListBlocks } from '.';
 import { useInView } from 'react-intersection-observer';
+import Link from 'next/link';
 
 type IDistributionMovieType = NonNullable<
   IDistributionListBlocks['movies']
@@ -26,7 +26,6 @@ const DistributionMovieCard = ({
   settings,
   slug,
 }: IDistributionMovieCard) => {
-  const router = useRouter();
   const { ref: posterRef, inView: isPosterVisible } = useInView({
     threshold: 0.3,
     triggerOnce: true,
@@ -67,17 +66,10 @@ const DistributionMovieCard = ({
     movie.slug?.current ?? ''
   );
 
-  const handleClick = (e: React.MouseEvent) => {
-    if ((e.target as HTMLElement).closest('button, a')) return;
-    router.push(movieUrl);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if ((e.target as HTMLElement).closest('button, a')) return;
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      router.push(movieUrl);
-    }
+  const handleButtonClick = (e: React.MouseEvent, url: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   type PersonItem = {
@@ -125,11 +117,8 @@ const DistributionMovieCard = ({
   );
 
   return (
-    <div
-      onClick={handleClick}
-      onKeyDown={handleKeyDown}
-      role='button'
-      tabIndex={0}
+    <Link
+      href={movieUrl}
       aria-label={`View details for ${title}`}
       className='grid grid-cols-1 border-t border-white/20 pt-4 max-lg:first:pt-0 max-lg:first:border-t-0 lg:grid-cols-24 lg:gap-x-2 cursor-pointer focus-visible:outline-2 focus-visible:outline-blue-500'
       data-sanity-edit-target
@@ -183,21 +172,58 @@ const DistributionMovieCard = ({
 
         <div className='flex gap-6 h-fit'>
           {ticket && (
-            <Button
-              href={ticket?.ticketLink?.externalLink ?? ''}
-              label={ticket?.ticketLinkLabel ?? 'Biljetter'}
-              className='ticket-button'
-            />
+            <div
+              onClick={(e) => {
+                const url = ticket.ticketLink?.externalLink;
+                if (url) {
+                  handleButtonClick(e, url);
+                }
+              }}
+              className='ticket-button cursor-pointer'
+              role='button'
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  const url = ticket.ticketLink?.externalLink;
+                  if (url) {
+                    window.open(url, '_blank', 'noopener,noreferrer');
+                  }
+                }
+              }}
+            >
+              <span>{ticket.ticketLinkLabel ?? 'Biljetter'}</span>
+            </div>
           )}
           {button && (
-            <Button
-              href={button?.buttonLink?.externalLink ?? ''}
-              label={button?.buttonLabel ?? 'Pressmaterial'}
-            />
+            <div
+              onClick={(e) => {
+                const url = button.buttonLink?.externalLink;
+                if (url) {
+                  handleButtonClick(e, url);
+                }
+              }}
+              className='secondary-button cursor-pointer'
+              role='button'
+              tabIndex={0}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  const url = button.buttonLink?.externalLink;
+                  if (url) {
+                    window.open(url, '_blank', 'noopener,noreferrer');
+                  }
+                }
+              }}
+            >
+              <span>{button.buttonLabel ?? 'Pressmaterial'}</span>
+            </div>
           )}
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 

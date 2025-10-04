@@ -27,7 +27,7 @@ export default function CardContent({ card, index }: ICardContentProps) {
       </div>
 
       <div className='relative flex flex-col gap-2 z-10 lg:justify-end lg:px-10 lg:pb-4 lg:h-full lg:w-full lg:!absolute lg:top-0 lg:left-0 lg:right-0 lg:bottom-0'>
-        <div className='flex flex-col gap-4 lg:flex-row lg:justify-between'>
+        <div className='flex flex-col gap-4 lg:flex-row lg:justify-between z-10'>
           <div className='flex flex-col gap-2 flex-1'>
             <h3
               className='text-h-21 uppercase lg:text-h-28'
@@ -42,7 +42,7 @@ export default function CardContent({ card, index }: ICardContentProps) {
               {card.infoItems?.map((item, itemIdx: number) => (
                 <p
                   key={`info-item-${card.id ?? index}-${item.id ?? itemIdx}`}
-                  className='text-b-12 lg:text-b-16'
+                  className='text-b-12 lg:text-b-16 font-oswald'
                 >
                   {item.infoItemTitle}
                 </p>
@@ -50,6 +50,9 @@ export default function CardContent({ card, index }: ICardContentProps) {
             </div>
           </div>
         </div>
+
+        {/* Bottom fade  */}
+        <div className='block absolute left-0 right-0 bottom-0 w-full h-2/4 bg-gradient-to-t from-background via-background/60 to-transparent pointer-events-none z-0' />
       </div>
     </>
   );

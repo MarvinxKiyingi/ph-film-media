@@ -7,6 +7,14 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'cdn.sanity.io',
       },
+      {
+        protocol: 'https',
+        hostname: 'substackcdn.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'substack-post-media.s3.amazonaws.com',
+      },
     ],
     deviceSizes: [640, 768, 1024, 1280, 1536, 1920],
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
