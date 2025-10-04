@@ -3,14 +3,14 @@ import SanityImage from '@/components/Media/SanityImage';
 import RichText from '@/components/RichText/RichText';
 import ResolvedLink from '@/components/ResolvedLink';
 import type {
-  Projects,
+  FetchAllProjectsResult,
   LinkType,
   RichText as SanityRichText,
 } from '../../../../../../sanity.types';
 import type { SanityImageObject } from '@/components/Media/SanityImage/SanityImageObject';
 
 type SanityProjectCardProps = {
-  project: Projects;
+  project: FetchAllProjectsResult[number];
   className?: string;
   isFeatured?: boolean;
 };
@@ -47,7 +47,7 @@ const SanityProjectCard = ({
 
     return project.link ? (
       <ResolvedLink
-        link={project.link as LinkType}
+        link={project.link as unknown as LinkType}
         className={featuredClassName}
       >
         {featuredContent}
@@ -78,7 +78,10 @@ const SanityProjectCard = ({
   );
 
   return project.link ? (
-    <ResolvedLink link={project.link as LinkType} className={className}>
+    <ResolvedLink
+      link={project.link as unknown as LinkType}
+      className={className}
+    >
       {content}
     </ResolvedLink>
   ) : (
