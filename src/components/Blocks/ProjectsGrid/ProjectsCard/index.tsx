@@ -1,46 +1,35 @@
 import React from 'react';
-import SanityImage from '@/components/Media/SanityImage';
-import RichText from '@/components/RichText/RichText';
-import ResolvedLink from '@/components/ResolvedLink';
-import type {
-  Projects,
-  LinkType,
-  RichText as SanityRichText,
-} from '../../../../../sanity.types';
-import type { SanityImageObject } from '@/components/Media/SanityImage/SanityImageObject';
+import SanityProjectCard from './SanityProjectCard/index';
+import SubstackPostCard from './SubstackPostCard/index';
+import type { UnifiedProjectItem } from '../types';
 
 type ProjectCardProps = {
-  project: Projects;
+  item: UnifiedProjectItem;
   className?: string;
+  isFeatured?: boolean;
 };
 
-const ProjectCard = ({ project, className }: ProjectCardProps) => {
-  const content = (
-    <>
-      {project.projectImage && (
-        <SanityImage
-          {...(project.projectImage as unknown as SanityImageObject)}
-          aspectRatio='16/9'
-          className='rounded-lg'
-        />
-      )}
-      <div className='grid gap-5'>
-        <h3 className='text-b-21 font-bold'>{project.title}</h3>
-        {project.description && (
-          <div className='text-b-16 lg:text-b-14 xl:text-b-16'>
-            <RichText content={project.description as SanityRichText} />
-          </div>
-        )}
-      </div>
-    </>
-  );
+const ProjectCard = ({
+  item,
+  className,
+  isFeatured = false,
+}: ProjectCardProps) => {
+  if (item.type === 'sanity') {
+    return (
+      <SanityProjectCard
+        project={item.data}
+        className={className}
+        isFeatured={isFeatured}
+      />
+    );
+  }
 
-  return project.link ? (
-    <ResolvedLink link={project.link as LinkType} className={className}>
-      {content}
-    </ResolvedLink>
-  ) : (
-    <div className={className}>{content}</div>
+  return (
+    <SubstackPostCard
+      post={item.data}
+      className={className}
+      isFeatured={isFeatured}
+    />
   );
 };
 

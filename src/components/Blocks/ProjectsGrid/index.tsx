@@ -1,9 +1,10 @@
 import React from 'react';
 import { client } from '@/sanity/lib/client';
 import { fetchAllProjects } from '@/sanity/lib/queries';
+import { fetchSubstackPosts } from '@/utils/fetchSubstackPosts';
 import ProjectCard from './ProjectsCard';
-import FeaturedProjectCard from './FeaturedProjectCard';
 import type { Projects } from '../../../../sanity.types';
+import type { UnifiedProjectItem } from './types';
 
 type IProjectsGrid = {
   showFeaturedProjectCard?: boolean;
@@ -11,25 +12,54 @@ type IProjectsGrid = {
 
 const ProjectsGrid = async ({ showFeaturedProjectCard }: IProjectsGrid) => {
   const projects: Projects[] = await client.fetch(fetchAllProjects);
-  const projectToDisplay = projects[0];
-  const projectsForGrid = showFeaturedProjectCard
-    ? projects.slice(1)
-    : projects;
+  const substackPosts = await fetchSubstackPosts();
+
+  const unifiedItems: UnifiedProjectItem[] = [
+    ...projects.map((project) => ({
+      type: 'sanity' as const,
+      date: project._createdAt || '',
+      data: project,
+    })),
+    ...substackPosts.map((post) => ({
+      type: 'substack' as const,
+      date: post.pubDate || '',
+      data: post,
+    })),
+  ];
+
+  const sortedItems = unifiedItems.sort((a, b) => {
+    const dateA = new Date(a.date).getTime();
+    const dateB = new Date(b.date).getTime();
+    return dateB - dateA;
+  });
+
+  const featuredItem = showFeaturedProjectCard ? sortedItems[0] : null;
+  const regularItems = showFeaturedProjectCard
+    ? sortedItems.slice(1)
+    : sortedItems;
 
   return (
     <section className='page-x-spacing grid gap-2'>
-      {showFeaturedProjectCard && projectToDisplay && (
-        <FeaturedProjectCard project={projectToDisplay} />
+      {featuredItem && (
+        <ProjectCard
+          key={
+            featuredItem.type === 'sanity'
+              ? featuredItem.data._id
+              : featuredItem.data.link
+          }
+          item={featuredItem}
+          isFeatured={true}
+        />
       )}
       <div className='grid gap-x-2 gap-y-5 grid-cols-1 md:grid-cols-2 lg:gap-y-10 lg:grid-cols-3 2xl:grid-cols-4'>
-        {projectsForGrid.map((project, index) => {
+        {regularItems.map((item, index) => {
           const isFirstHighlighted = !showFeaturedProjectCard && index === 0;
-          const className = `grid gap-6 ${isFirstHighlighted && 'p-2.5 bg-dark-gray rounded-lg'}`;
+          const className = `flex flex-col gap-6 hover:opacity-80 transition-opacity ${isFirstHighlighted ? 'p-2.5 bg-dark-gray rounded-lg' : ''}`;
 
           return (
             <ProjectCard
-              key={project._id}
-              project={project}
+              key={item.type === 'sanity' ? item.data._id : item.data.link}
+              item={item}
               className={className}
             />
           );
