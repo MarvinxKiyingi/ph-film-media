@@ -292,7 +292,8 @@ export const fetchHome = defineQuery(`
       _type == "projectsGrid" => {
         _key,
         _type,
-        showFeaturedProjectCard
+        showFeaturedProjectCard,
+        showSubstackPostsCard
       }
     },
     seo {
@@ -518,7 +519,8 @@ export const fetchPage = defineQuery(`
       _type == "projectsGrid" => {
         _key,
         _type,
-        showFeaturedProjectCard
+        showFeaturedProjectCard,
+        showSubstackPostsCard
       }
     },
     seo {

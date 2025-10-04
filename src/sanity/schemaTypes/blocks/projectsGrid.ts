@@ -15,15 +15,23 @@ export const projectsGrid = defineType({
         'Enable to display a highlighted featured project at the top of the grid.',
       initialValue: true,
     }),
+    defineField({
+      name: 'showSubstackPostsCard',
+      title: 'Show Substack Posts Card',
+      type: 'boolean',
+      description: 'Enable to display Substack posts at the top of the grid.',
+      initialValue: true,
+    }),
   ],
   preview: {
     select: {
       showFeaturedProjectCard: 'showFeaturedProjectCard',
+      showSubstackPostsCard: 'showSubstackPostsCard',
     },
-    prepare({ showFeaturedProjectCard }) {
+    prepare({ showFeaturedProjectCard, showSubstackPostsCard }) {
       return {
         title: 'Projects Grid',
-        subtitle: `Featured card: ${showFeaturedProjectCard ? 'Enabled 🟢' : 'Disabled 🔴'}`,
+        subtitle: `Featured: ${showFeaturedProjectCard ? '🟢' : '🔴'} | Substack: ${showSubstackPostsCard ? '🟢' : '🔴'}`,
         media: ThLargeIcon,
       };
     },

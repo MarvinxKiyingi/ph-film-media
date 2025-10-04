@@ -1,4 +1,4 @@
-import { Projects } from '../../sanity.types';
+import type { FetchAllProjectsResult } from '../../sanity.types';
 
 export type ISubstackPost = {
   title: string;
@@ -19,7 +19,7 @@ export type IUnifiedProjectItem =
   | {
       type: 'sanity';
       date: string;
-      data: Projects;
+      data: FetchAllProjectsResult[number];
     }
   | {
       type: 'substack';

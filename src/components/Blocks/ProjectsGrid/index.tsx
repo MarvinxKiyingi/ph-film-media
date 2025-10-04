@@ -3,16 +3,19 @@ import { client } from '@/sanity/lib/client';
 import { fetchAllProjects } from '@/sanity/lib/queries';
 import { fetchSubstackPosts } from '@/utils/fetchSubstackPosts';
 import ProjectCard from './ProjectsCard';
-import type { Projects } from '../../../../sanity.types';
 import type { IUnifiedProjectItem } from '@/types/IProjectsGrid';
 
 type IProjectsGrid = {
   showFeaturedProjectCard?: boolean;
+  showSubstackPostsCard?: boolean;
 };
 
-const ProjectsGrid = async ({ showFeaturedProjectCard }: IProjectsGrid) => {
-  const projects: Projects[] = await client.fetch(fetchAllProjects);
-  const substackPosts = await fetchSubstackPosts();
+const ProjectsGrid = async ({
+  showFeaturedProjectCard,
+  showSubstackPostsCard,
+}: IProjectsGrid) => {
+  const projects = await client.fetch(fetchAllProjects);
+  const substackPosts = showSubstackPostsCard ? await fetchSubstackPosts() : [];
 
   const unifiedItems: IUnifiedProjectItem[] = [
     ...projects.map((project) => ({
@@ -51,10 +54,10 @@ const ProjectsGrid = async ({ showFeaturedProjectCard }: IProjectsGrid) => {
           isFeatured={true}
         />
       )}
-      <div className='grid gap-x-2 gap-y-5 grid-cols-1 md:grid-cols-2 lg:gap-y-10 lg:grid-cols-3 2xl:grid-cols-4'>
+      <div className='grid gap-x-2 gap-y-5 grid-cols-1 md:grid-cols-2 lg:gap-y-10 lg:grid-cols-3 2xl:grid-cols-4 auto-rows-fr'>
         {regularItems.map((item, index) => {
           const isFirstHighlighted = !showFeaturedProjectCard && index === 0;
-          const className = `flex flex-col gap-6 hover:opacity-80 transition-opacity ${isFirstHighlighted ? 'p-2.5 bg-dark-gray rounded-lg' : ''}`;
+          const className = `flex flex-col gap-6 hover:opacity-80 transition-opacity h-full ${isFirstHighlighted ? 'p-2.5 bg-dark-gray rounded-lg' : ''}`;
 
           return (
             <ProjectCard
