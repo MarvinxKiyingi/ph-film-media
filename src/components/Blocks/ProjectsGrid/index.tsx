@@ -4,7 +4,7 @@ import { fetchAllProjects } from '@/sanity/lib/queries';
 import { fetchSubstackPosts } from '@/utils/fetchSubstackPosts';
 import ProjectCard from './ProjectsCard';
 import type { Projects } from '../../../../sanity.types';
-import type { UnifiedProjectItem } from './types';
+import type { IUnifiedProjectItem } from '@/types/IProjectsGrid';
 
 type IProjectsGrid = {
   showFeaturedProjectCard?: boolean;
@@ -14,7 +14,7 @@ const ProjectsGrid = async ({ showFeaturedProjectCard }: IProjectsGrid) => {
   const projects: Projects[] = await client.fetch(fetchAllProjects);
   const substackPosts = await fetchSubstackPosts();
 
-  const unifiedItems: UnifiedProjectItem[] = [
+  const unifiedItems: IUnifiedProjectItem[] = [
     ...projects.map((project) => ({
       type: 'sanity' as const,
       date: project._createdAt || '',

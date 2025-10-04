@@ -1,6 +1,6 @@
-import type { Projects } from '../../../../sanity.types';
+import { Projects } from '../../sanity.types';
 
-export type SubstackPost = {
+export type ISubstackPost = {
   title: string;
   link: string;
   pubDate: string;
@@ -9,13 +9,13 @@ export type SubstackPost = {
   image: string | null;
 };
 
-export type SubstackFeed = {
+export type ISubstackFeed = {
   title: string;
   description: string;
-  posts: SubstackPost[];
+  posts: ISubstackPost[];
 };
 
-export type UnifiedProjectItem =
+export type IUnifiedProjectItem =
   | {
       type: 'sanity';
       date: string;
@@ -24,5 +24,5 @@ export type UnifiedProjectItem =
   | {
       type: 'substack';
       date: string;
-      data: SubstackPost;
+      data: ISubstackPost;
     };

@@ -1,10 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { SubstackPost } from '../../types';
+import { ISubstackPost } from '@/types/IProjectsGrid';
 
 type SubstackPostCardProps = {
-  post: SubstackPost;
+  post: ISubstackPost;
   className?: string;
   isFeatured?: boolean;
 };

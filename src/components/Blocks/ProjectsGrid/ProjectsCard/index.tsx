@@ -1,10 +1,10 @@
 import React from 'react';
 import SanityProjectCard from './SanityProjectCard/index';
 import SubstackPostCard from './SubstackPostCard/index';
-import type { UnifiedProjectItem } from '../types';
+import { IUnifiedProjectItem } from '@/types/IProjectsGrid';
 
 type ProjectCardProps = {
-  item: UnifiedProjectItem;
+  item: IUnifiedProjectItem;
   className?: string;
   isFeatured?: boolean;
 };

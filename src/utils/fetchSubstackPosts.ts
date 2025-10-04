@@ -1,6 +1,6 @@
-import type { SubstackFeed } from '@/components/Blocks/ProjectsGrid/types';
+import { ISubstackFeed } from '@/types/IProjectsGrid';
 
-export async function fetchSubstackPosts(): Promise<SubstackFeed['posts']> {
+export async function fetchSubstackPosts(): Promise<ISubstackFeed['posts']> {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
     const response = await fetch(`${baseUrl}/api/substack`, {
@@ -12,7 +12,7 @@ export async function fetchSubstackPosts(): Promise<SubstackFeed['posts']> {
       return [];
     }
 
-    const feed: SubstackFeed = await response.json();
+    const feed: ISubstackFeed = await response.json();
     return feed.posts;
   } catch (error) {
     console.error('Error loading Substack posts:', error);
