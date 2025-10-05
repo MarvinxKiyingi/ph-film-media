@@ -1,7 +1,6 @@
 import MobileMenuBar from './MobileMenuBar/MobileMenuBar';
 import { sanityFetch } from '@/sanity/lib/live';
 import { fetchHeader } from '@/sanity/lib/queries';
-import HeaderLogo from './HeaderLogo';
 import BlurDown from './MobileMenuBar/BlurDown';
 import DesktopMenuBar from './DesktopMenuBar';
 
@@ -17,7 +16,6 @@ const Header = async () => {
       >
         <BlurDown />
         <div className='z-50 lg:grid lg:grid-cols-2 lg:items-center lg:px-10 lg:py-4 lg:top-0 lg:fixed lg:w-full'>
-          <HeaderLogo header={header} />
           <MobileMenuBar header={header} />
           <DesktopMenuBar header={header} />
         </div>

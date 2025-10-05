@@ -6,15 +6,20 @@ import type { FetchHeaderResult } from '../../../sanity.types';
 
 type HeaderLogoProps = {
   header: FetchHeaderResult | null;
+  variant?: 'mobile' | 'desktop' | 'both';
 };
 
-const HeaderLogo = ({ header }: HeaderLogoProps) => {
+const HeaderLogo = ({ header, variant = 'both' }: HeaderLogoProps) => {
   const pathname = usePathname();
   const isHome = pathname === '/';
   const mobileLogo = header?.mobileLogo;
   const desktopLogo = header?.desktopLogo;
 
   if (!mobileLogo && !desktopLogo) return null;
+
+  // Determine which logos to show based on variant
+  const showMobileLogo = variant === 'mobile' || variant === 'both';
+  const showDesktopLogo = variant === 'desktop' || variant === 'both';
 
   return (
     <>
@@ -26,21 +31,23 @@ const HeaderLogo = ({ header }: HeaderLogoProps) => {
             aria-current='page'
             aria-label='homepage | PH Film & Media'
           >
-            {mobileLogo && (
-              <SanityImage
-                {...mobileLogo}
-                className='max-h-full w-auto object-contain lg:hidden lg:max-h-12'
-                aspectRatio='16/9'
-                mode='cover'
-              />
+            {mobileLogo && showMobileLogo && (
+              <div className='lg:hidden'>
+                <SanityImage
+                  {...mobileLogo}
+                  className='max-h-full w-auto object-contain'
+                  aspectRatio='4/5'
+                />
+              </div>
             )}
-            {desktopLogo && (
-              <SanityImage
-                {...desktopLogo}
-                className='max-h-full w-auto object-contain max-lg:hidden lg:max-h-12'
-                aspectRatio='16/9'
-                mode='cover'
-              />
+            {desktopLogo && showDesktopLogo && (
+              <div className='hidden lg:block'>
+                <SanityImage
+                  {...desktopLogo}
+                  className='max-h-full lg:max-h-12 w-auto object-contain'
+                  aspectRatio='4/5'
+                />
+              </div>
             )}
           </Link>
         </h1>
@@ -50,21 +57,23 @@ const HeaderLogo = ({ header }: HeaderLogoProps) => {
           className='lg:flex lg:col-span-1 w-fit'
           aria-label='PH Film & Media homepage'
         >
-          {mobileLogo && (
-            <SanityImage
-              {...mobileLogo}
-              className='max-h-full w-auto object-contain lg:hidden lg:max-h-12'
-              aspectRatio='16/9'
-              mode='cover'
-            />
+          {mobileLogo && showMobileLogo && (
+            <div className='lg:hidden'>
+              <SanityImage
+                {...mobileLogo}
+                className='max-h-full w-auto object-contain'
+                aspectRatio='4/5'
+              />
+            </div>
           )}
-          {desktopLogo && (
-            <SanityImage
-              {...desktopLogo}
-              className='max-h-full w-auto object-contain max-lg:hidden lg:max-h-12'
-              aspectRatio='16/9'
-              mode='cover'
-            />
+          {desktopLogo && showDesktopLogo && (
+            <div className='hidden lg:block'>
+              <SanityImage
+                {...desktopLogo}
+                className='max-h-full lg:max-h-12 w-auto object-contain'
+                aspectRatio='4/5'
+              />
+            </div>
           )}
         </Link>
       )}

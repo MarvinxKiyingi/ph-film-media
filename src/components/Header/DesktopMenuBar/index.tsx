@@ -1,35 +1,24 @@
 'use client';
 
 import React from 'react';
-
-import LandingPageMenu from './LandingPageMenu';
 import RegularPageMenu from './RegularPageMenu';
 import { IDesktopMenuBar } from './DesktopMenuBar';
+import HeaderLogo from '../HeaderLogo';
 
-const DesktopMenuBar = ({
-  isLandingPage,
-  baseClassesOverride,
-  header,
-}: IDesktopMenuBar) => {
+const DesktopMenuBar = ({ baseClassesOverride, header }: IDesktopMenuBar) => {
   if (!header?.linkReference) return null;
 
   const { linkReference } = header;
 
-  if (isLandingPage) {
-    return (
-      <LandingPageMenu
+  return (
+    <>
+      <HeaderLogo header={header} variant='desktop' />
+
+      <RegularPageMenu
         links={linkReference}
         baseClassesOverride={baseClassesOverride}
-        header={header}
       />
-    );
-  }
-
-  return (
-    <RegularPageMenu
-      links={linkReference}
-      baseClassesOverride={baseClassesOverride}
-    />
+    </>
   );
 };
 

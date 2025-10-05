@@ -82,7 +82,7 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
             style={{ willChange: 'transform', transform: 'translateZ(0)' }}
           >
             <div className='aspect-4/5 h-full w-auto'>
-              <HeaderLogo header={header} />
+              <HeaderLogo header={header} variant='mobile' />
             </div>
           </motion.div>
           <motion.div
