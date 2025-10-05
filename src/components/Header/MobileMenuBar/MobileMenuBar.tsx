@@ -6,6 +6,7 @@ import { Link } from 'next-view-transitions';
 import { useRouter } from 'next/navigation';
 import SocialIcons from '@/components/Icons/SocialIcons';
 import HeaderLogo from '../HeaderLogo';
+import { useMobileHeaderHeight } from './useMobileHeaderHeight';
 import type { FetchHeaderResult } from '../../../../sanity.types';
 
 const overlayVariants = {
@@ -25,6 +26,8 @@ type IMobileMenuBar = {
 const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const headerRef = useMobileHeaderHeight();
+
   useEffect(() => {
     if (isOpen) {
       // Save current overflow style
@@ -74,7 +77,10 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
         aria-modal='true'
         tabIndex={-1}
       >
-        <div className='flex w-full items-center justify-between px-4 py-2.5 gap-4'>
+        <div
+          ref={headerRef}
+          className='flex w-full items-center justify-between px-4 py-2.5 gap-4'
+        >
           <motion.div
             className='flex items-center gap-4 max-w-7 h-auto'
             animate={isOpen ? { x: 9.6, y: 9.6 } : { x: 0, y: 0 }}
