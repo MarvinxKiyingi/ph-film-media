@@ -104,11 +104,6 @@ export const heroCarousel = defineType({
         },
       ],
     }),
-    defineField({
-      name: 'logo',
-      title: 'Logo',
-      type: 'mediaType',
-    }),
   ],
   preview: {
     prepare() {

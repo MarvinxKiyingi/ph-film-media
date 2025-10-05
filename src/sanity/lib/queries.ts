@@ -38,6 +38,26 @@ export const settingsQuery = defineQuery(`
 
 export const fetchHeader = defineQuery(`
  *[_type == "header"][0]{
+  mobileLogo{
+    _type,
+    media{
+      _type,
+      alt,
+      crop,
+      hotspot,
+      asset->{ ... }
+    }
+  },
+  desktopLogo{
+    _type,
+    media{
+      _type,
+      alt,
+      crop,
+      hotspot,
+      asset->{ ... }
+    }
+  },
   linkReference[]{
     _key,
     label,
@@ -135,16 +155,6 @@ export const fetchHome = defineQuery(`
             }
           }
         },
-        logo{
-          _type,
-          media{
-            _type,
-            alt,
-            crop,
-            hotspot,
-            asset->{ ... }
-          }
-        }
       },
     // Media Carousel Block
     _type == "mediaCarousel" => {
@@ -364,16 +374,6 @@ export const fetchPage = defineQuery(`
               pageTitle,
               slug
             }
-          }
-        },
-        logo{
-          _type,
-          media{
-            _type,
-            alt,
-            crop,
-            hotspot,
-            asset->{ ... }
           }
         }
       },

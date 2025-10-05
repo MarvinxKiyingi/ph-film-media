@@ -167,6 +167,22 @@
           "type": "string"
         }
       },
+      "mobileLogo": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "mediaType"
+        },
+        "optional": true
+      },
+      "desktopLogo": {
+        "type": "objectAttribute",
+        "value": {
+          "type": "inline",
+          "name": "mediaType"
+        },
+        "optional": true
+      },
       "linkReference": {
         "type": "objectAttribute",
         "value": {
@@ -1975,14 +1991,6 @@
                 }
               }
             }
-          },
-          "optional": true
-        },
-        "logo": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "inline",
-            "name": "mediaType"
           },
           "optional": true
         }

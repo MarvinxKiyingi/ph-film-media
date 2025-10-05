@@ -2,7 +2,7 @@ import '@/app/globals.css';
 import Footer from '@/components/Footer/Footer';
 import Header from '@/components/Header/Header';
 import { fetchFooter, fetchHome } from '@/sanity/lib/queries';
-import { FetchHomeResult, FetchFooterResult } from '../../../sanity.types';
+import { FetchFooterResult } from '../../../sanity.types';
 import { sanityFetch } from '@/sanity/lib/live';
 
 export default async function HomeLayout({
@@ -10,7 +10,7 @@ export default async function HomeLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { data }: { data: FetchHomeResult } = await sanityFetch({
+  await sanityFetch({
     query: fetchHome,
     params: { slug: '/' },
   });
@@ -19,15 +19,13 @@ export default async function HomeLayout({
     query: fetchFooter,
   });
 
-  const hasMultipleBlocks = (data?.blockList?.length || 0) > 1;
-
   return (
     <>
-      <Header isLandingPage />
+      <Header />
       <main className='flex flex-col flex-1 mt-[var(--header-height-mobile)] lg:mt-0'>
         {children}
       </main>
-      <Footer footer={footer} hasMultipleBlocks={hasMultipleBlocks} />
+      <Footer footer={footer} />
     </>
   );
 }

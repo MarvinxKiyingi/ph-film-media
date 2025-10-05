@@ -24,16 +24,10 @@ export default async function HomePage() {
       'http://localhost:3000',
   });
 
-  const firstBlock = data.blockList[0];
-  const isHero =
-    firstBlock && '_type' in firstBlock && firstBlock._type === 'heroCarousel';
-
   return (
     <>
       <JsonLd data={orgJsonLd} />
-      <div
-        className={`grid grid-cols-1 gap-8 pt-[22%] ${isHero ? 'lg:pt-0' : 'lg:pt-48'}`}
-      >
+      <div className={`grid grid-cols-1 gap-8 pt-[22%]`}>
         {data.blockList.map((block, idx) => {
           if (!('_type' in block)) return null;
           return (
