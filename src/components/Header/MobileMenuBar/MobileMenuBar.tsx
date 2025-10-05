@@ -91,18 +91,16 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
               <HeaderLogo header={header} variant='mobile' />
             </div>
           </motion.div>
-          <motion.div
-            className='flex items-center'
+          <motion.button
+            onClick={() => setIsOpen(!isOpen)}
+            className='flex flex-1 items-center justify-end cursor-pointer'
             animate={isOpen ? { x: -9.6, y: 9.6 } : { x: 0, y: 0 }}
             transition={{ duration: 0.15, ease: 'easeInOut' }}
             style={{ willChange: 'transform', transform: 'translateZ(0)' }}
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
           >
-            <MenuButton
-              color='var(--color-black)'
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-            />
-          </motion.div>
+            <MenuButton color='var(--color-black)' isOpen={isOpen} />
+          </motion.button>
         </div>
         <AnimatePresence>
           {isOpen && (
