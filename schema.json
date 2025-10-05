@@ -1544,6 +1544,44 @@
             "type": "string"
           },
           "optional": true
+        },
+        "visibility": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "visibilityType"
+          },
+          "optional": true
+        }
+      }
+    }
+  },
+  {
+    "name": "visibilityType",
+    "type": "type",
+    "value": {
+      "type": "object",
+      "attributes": {
+        "_type": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "string",
+            "value": "visibilityType"
+          }
+        },
+        "hideOnMobile": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
+        },
+        "hideOnDesktop": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "boolean"
+          },
+          "optional": true
         }
       }
     }

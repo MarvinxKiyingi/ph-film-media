@@ -97,7 +97,11 @@ export const fetchHome = defineQuery(`
       _type == "pageTitle" => {
         _key,
         _type,
-        title
+        title,
+        visibility {
+          hideOnMobile,
+          hideOnDesktop
+        }
       },
       // Hero Block
       _type == "heroCarousel" => {
@@ -324,7 +328,11 @@ export const fetchPage = defineQuery(`
       _type == "pageTitle" => {
         _key,
         _type,
-        title
+        title,
+        visibility {
+          hideOnMobile,
+          hideOnDesktop
+        }
       },
       // Hero Block
       _type == "heroCarousel" => {
