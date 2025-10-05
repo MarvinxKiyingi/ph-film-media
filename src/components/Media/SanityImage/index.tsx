@@ -10,8 +10,9 @@ import { SanityImageProps } from './SanityImageObject';
 const SanityImage = ({
   media,
   className = '',
-  useImageAspect = true,
+  useImageAspect = false,
   aspectRatio = '4/5',
+  mode = 'cover',
 }: SanityImageProps) => {
   const { asset, alt, hotspot, crop } = media || {};
 
@@ -35,11 +36,11 @@ const SanityImage = ({
       alt={alt ?? 'Media image'}
       width={dimensions.width}
       height={dimensions.height}
-      mode='cover'
+      mode={mode}
       hotspot={hotspot}
       crop={crop}
       queryParams={{ q: 90 }}
-      className={`w-full object-cover ${aspectRatioInfo?.tailwindClass || ''} ${className}`}
+      className={`w-full ${aspectRatioInfo?.tailwindClass || ''} ${className}`}
     />
   );
 };

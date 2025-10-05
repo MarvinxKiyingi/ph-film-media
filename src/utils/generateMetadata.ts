@@ -57,6 +57,65 @@ function truncateDescription(text: string): string {
   return text.slice(0, 152) + '...';
 }
 
+async function extractFirstImageFromProjectsGrid(
+  blockList: Array<{ _type: string; [key: string]: unknown }> | undefined | null
+): Promise<unknown | null> {
+  if (!blockList || !Array.isArray(blockList)) return null;
+
+  // Check if page has a projectsGrid block
+  const hasProjectsGrid = blockList.some(
+    (block) => block._type === 'projectsGrid'
+  );
+
+  if (!hasProjectsGrid) return null;
+
+  // Optimized: Only fetch minimal data needed for comparison
+  try {
+    const { client } = await import('@/sanity/lib/client');
+    const { defineQuery } = await import('groq');
+
+    // Optimized query: Only fetch the most recent project with an image
+    const firstProjectQuery = defineQuery(`
+      *[_type == "projects" && defined(projectImage.media)] 
+      | order(_createdAt desc) [0] {
+        _createdAt,
+        "image": projectImage.media
+      }
+    `);
+
+    const firstProject = await client.fetch(
+      firstProjectQuery,
+      {},
+      { next: { revalidate: 3600 } }
+    );
+
+    // Try Substack only if project is missing or might not be most recent
+    // Substack API is already cached, so this fetch is cheap
+    const { fetchSubstackPosts } = await import('@/utils/fetchSubstackPosts');
+    const substackPosts = await fetchSubstackPosts();
+    const firstSubstack = substackPosts[0];
+
+    // Compare dates to determine which is most recent
+    const projectDate = firstProject?._createdAt
+      ? new Date(firstProject._createdAt).getTime()
+      : 0;
+    const substackDate = firstSubstack?.pubDate
+      ? new Date(firstSubstack.pubDate).getTime()
+      : 0;
+
+    // Return the most recent image
+    if (substackDate > projectDate && firstSubstack?.image) {
+      return firstSubstack.image;
+    } else if (firstProject?.image) {
+      return firstProject.image;
+    }
+  } catch (error) {
+    console.error('Error fetching projects for metadata:', error);
+  }
+
+  return null;
+}
+
 export async function generateMetadata(
   { params }: Props,
   parent: ResolvingMetadata
@@ -111,15 +170,36 @@ export async function generateMetadata(
     )
   );
 
-  // Image
-  const image =
+  // Image - try SEO fields first, only fetch project image if needed
+  const seoImage =
     movie?.movieBanner?.media ||
     movie?.moviePoster?.media ||
     pageSeo?.metaImage?.media ||
     settingsSeo?.metaImage?.media;
-  const ogImage =
-    resolveOpenGraphImage(image, DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT) ||
-    DEFAULT_IMAGE;
+
+  // Only fetch project grid image if no SEO image is set (performance optimization)
+  const firstProjectImage = !seoImage
+    ? await extractFirstImageFromProjectsGrid(page?.blockList)
+    : null;
+
+  const image = seoImage || firstProjectImage;
+
+  // Handle both Sanity media objects and plain URL strings (Substack)
+  let ogImage;
+  if (typeof image === 'string') {
+    // Substack image URL
+    ogImage = {
+      url: image,
+      alt: fullTitle,
+      width: DEFAULT_IMAGE_WIDTH,
+      height: DEFAULT_IMAGE_HEIGHT,
+    };
+  } else {
+    // Sanity media object
+    ogImage =
+      resolveOpenGraphImage(image, DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT) ||
+      DEFAULT_IMAGE;
+  }
 
   const previousImages = (await parent).openGraph?.images || [];
 
