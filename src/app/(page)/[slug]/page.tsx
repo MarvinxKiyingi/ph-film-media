@@ -2,7 +2,7 @@ import { sanityFetch } from '@/sanity/lib/live';
 import { fetchPage } from '@/sanity/lib/queries';
 import { notFound } from 'next/navigation';
 import { generateMetadata } from '@/utils/generateMetadata';
-import BlockRenderer from '@/components/BlockRenderer';
+import BlockRenderer from '@/components/PageBuilder/BlockRenderer';
 import type { FetchPageResult } from '../../../../sanity.types';
 
 export { generateMetadata };

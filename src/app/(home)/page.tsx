@@ -2,7 +2,7 @@ import { sanityFetch } from '@/sanity/lib/live';
 import { fetchHome } from '@/sanity/lib/queries';
 import { generateMetadata } from '@/utils/generateMetadata';
 import type { FetchHomeResult } from '../../../sanity.types';
-import BlockRenderer from '@/components/BlockRenderer';
+import BlockRenderer from '@/components/PageBuilder/BlockRenderer';
 import JsonLd from '@/components/JsonLd';
 import { getOrganizationJsonLd } from '@/utils/jsonld';
 
