@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { Variants } from 'framer-motion';
-import CarouselAutoplay from '@/components/Media/Carousel/CarouselAutoplay';
+import HeroCarouselWithIndicators from './HeroCarouselWithIndicators';
 import { BlockListItem } from '@/types/IBlockListItem';
 
 import HeroCardWithAnimation from './HeroCardWithAnimation';
@@ -111,23 +111,25 @@ const HeroCarouselBlock = ({ block }: { block: BlockListItem }) => {
     isDesktop && block.mediaCard && block.mediaCard.length <= 3;
 
   return (
-    <CarouselAutoplay
+    <HeroCarouselWithIndicators
       options={{
         align: isDesktop ? 'start' : 'center',
         loop: true,
         skipSnaps: !isReady,
+        watchDrag: true,
+        duration: 20,
       }}
-      autoScrollOptions={
+      autoplayOptions={
         shouldDisableAutoplay
           ? undefined
           : {
               playOnInit: true,
               stopOnInteraction: false,
-              stopOnMouseEnter: true,
-              delay: isDesktop ? 4500 : 3000,
+              stopOnMouseEnter: isDesktop,
+              delay: isDesktop ? 3500 : 6000,
             }
       }
-      controlsClassName='!hidden lg:!flex'
+      showIndicators={!isDesktop}
     >
       {block.mediaCard?.map((card, idx) =>
         isDesktop ? (
@@ -148,7 +150,7 @@ const HeroCarouselBlock = ({ block }: { block: BlockListItem }) => {
           />
         )
       )}
-    </CarouselAutoplay>
+    </HeroCarouselWithIndicators>
   );
 };
 

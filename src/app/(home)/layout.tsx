@@ -10,7 +10,7 @@ export default async function HomeLayout({
 }: {
   children: React.ReactNode;
 }) {
-  await sanityFetch({
+  const { data: homeData } = await sanityFetch({
     query: fetchHome,
     params: { slug: '/' },
   });
@@ -19,10 +19,17 @@ export default async function HomeLayout({
     query: fetchFooter,
   });
 
+  // Check if first block is hero carousel
+  const firstBlock = homeData?.blockList?.[0];
+  const isHeroCarousel =
+    firstBlock && '_type' in firstBlock && firstBlock._type === 'heroCarousel';
+
   return (
     <>
       <Header />
-      <main className='flex flex-col flex-1 mt-[var(--header-height-mobile)] lg:mt-0'>
+      <main
+        className={`flex flex-col flex-1 ${isHeroCarousel ? '' : 'mt-[var(--header-height-mobile)]'} lg:mt-0`}
+      >
         {children}
       </main>
       <Footer footer={footer} />
