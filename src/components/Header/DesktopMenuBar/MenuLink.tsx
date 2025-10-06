@@ -15,10 +15,8 @@ const MenuLink: React.FC<ILinkProps> = ({
   const className = generateLinkClasses(isActive, baseClassesOverride);
 
   return (
-    <li className='flex'>
-      <ResolvedLink link={link.link as LinkInput} className={className}>
-        {text}
-      </ResolvedLink>
+    <li className={`flex py-2.5 w-full ${className}`}>
+      <ResolvedLink link={link.link as LinkInput}>{text}</ResolvedLink>
     </li>
   );
 };

@@ -28,11 +28,12 @@ export default async function HomeLayout({
     <>
       <Header />
       <main
-        className={`flex flex-col flex-1 ${isHeroCarousel ? '' : 'mt-[var(--header-height-mobile)]'} lg:mt-0`}
+        className={`grid ${isHeroCarousel ? '' : 'mt-[var(--header-height-mobile)] max-lg:pt-[22%]'} lg:mt-0 lg:col-span-10 lg:row-span-full lg:overflow-y-scroll lg:py-p-desktop`}
+        id='home-main-content'
       >
         {children}
+        <Footer footer={footer} />
       </main>
-      <Footer footer={footer} />
     </>
   );
 }

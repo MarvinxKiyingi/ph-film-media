@@ -24,15 +24,15 @@ const HeaderLogo = ({ header, variant = 'both' }: HeaderLogoProps) => {
   return (
     <>
       {isHome ? (
-        <h1 className='lg:flex lg:col-span-1'>
+        <h1 className='lg:flex lg:col-span-full lg:row-span-1'>
           <Link
             href='/'
-            className='w-fit'
+            className='w-full'
             aria-current='page'
             aria-label='homepage | PH Film & Media'
           >
             {mobileLogo && showMobileLogo && (
-              <div className='lg:hidden'>
+              <div className='w-fit lg:hidden'>
                 <SanityImage
                   {...mobileLogo}
                   className='max-h-full w-auto object-contain'
@@ -41,10 +41,10 @@ const HeaderLogo = ({ header, variant = 'both' }: HeaderLogoProps) => {
               </div>
             )}
             {desktopLogo && showDesktopLogo && (
-              <div className='hidden lg:block'>
+              <div className='w-full h-full hidden lg:block'>
                 <SanityImage
                   {...desktopLogo}
-                  className='max-h-full lg:max-h-12 w-auto object-contain'
+                  className='max-h-full w-auto object-contain'
                   aspectRatio='4/5'
                 />
               </div>
@@ -54,11 +54,11 @@ const HeaderLogo = ({ header, variant = 'both' }: HeaderLogoProps) => {
       ) : (
         <Link
           href='/'
-          className='lg:flex lg:col-span-1 w-fit'
+          className='lg:flex w-full lg:col-span-full lg:row-span-1'
           aria-label='PH Film & Media homepage'
         >
           {mobileLogo && showMobileLogo && (
-            <div className='lg:hidden'>
+            <div className='w-fit lg:hidden'>
               <SanityImage
                 {...mobileLogo}
                 className='max-h-full w-auto object-contain'
@@ -67,10 +67,10 @@ const HeaderLogo = ({ header, variant = 'both' }: HeaderLogoProps) => {
             </div>
           )}
           {desktopLogo && showDesktopLogo && (
-            <div className='hidden lg:block'>
+            <div className='w-full h-full hidden lg:block'>
               <SanityImage
                 {...desktopLogo}
-                className='max-h-full lg:max-h-12 w-auto object-contain'
+                className='max-h-full w-auto object-contain'
                 aspectRatio='4/5'
               />
             </div>

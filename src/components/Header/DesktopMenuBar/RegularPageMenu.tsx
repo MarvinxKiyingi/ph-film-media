@@ -18,8 +18,8 @@ const RegularPageMenu: React.FC<IRegularPageMenu> = ({
   const pathname = usePathname();
 
   return (
-    <div className='hidden lg:flex group'>
-      <ul className='flex px-4 items-start text-b-21 lg:col-span-1 lg:flex-row lg:w-full lg:justify-end lg:gap-0 lg:font-extrabold lg:px-0 lg:text-b-12 2xl:text-b-14'>
+    <div className='hidden lg:grid lg:items-end'>
+      <ul className='grid h-fit text-b-21 lg:font-extrabold lg:text-b-14 xl:text-b-16 2xl:text-b-21 group'>
         {links.map((link) => {
           const isActive = isLinkActive(pathname, link);
           return (

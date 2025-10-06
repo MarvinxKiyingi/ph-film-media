@@ -28,10 +28,8 @@ export const generateLinkClasses = (
   isActive: boolean,
   baseClassesOverride?: string
 ): string => {
-  const baseClasses = `transition-colors duration-300 lg:pl-8 hover:text-white leading-[normal] ${baseClassesOverride || ''}`;
-  const colorClasses = isActive
-    ? 'text-white'
-    : 'text-white group-hover:text-gray-500';
+  const baseClasses = `transition-colors duration-300 hover:text-white leading-[normal] ${baseClassesOverride || ''}`;
+  const colorClasses = isActive ? 'text-white' : 'text-gray-500';
 
   return `${baseClasses} ${colorClasses}`;
 };
@@ -42,7 +40,12 @@ export const isLinkActive = (
 ): boolean => {
   if (linkData.link?.linkType === 'internalLink') {
     const slug = `/${linkData.link?.internalLink?.slug?.current || ''}`;
-    return pathname === slug;
+
+    if (slug === '/') {
+      return pathname === '/';
+    }
+
+    return pathname === slug || pathname.startsWith(slug + '/');
   }
   return false;
 };

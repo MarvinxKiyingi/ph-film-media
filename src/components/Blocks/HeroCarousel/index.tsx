@@ -12,12 +12,12 @@ const HeroCarousel = async ({
   if (!block) return null;
 
   return (
-    <div
+    <section
       key={idx}
-      className='h-dvh lg:h-screen lg:px-p-desktop lg:overflow-hidden lg:pb-6'
+      className='max-lg:min-h-screen h-dvh lg:h-[calc(100dvh-var(--spacing-p-desktop))] lg:overflow-hidden'
     >
       <HeroCarouselBlock block={block} />
-    </div>
+    </section>
   );
 };
 

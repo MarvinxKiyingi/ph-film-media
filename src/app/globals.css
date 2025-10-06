@@ -59,7 +59,7 @@
 
 @layer utilities {
   .page-x-spacing {
-    @apply px-p-mobile lg:px-p-desktop;
+    @apply px-p-mobile lg:px-p-desktop lg:!pl-0;
   }
 }
 
