@@ -1,6 +1,7 @@
 'use client';
 
 import React from 'react';
+import { usePathname } from 'next/navigation';
 import { ILinkProps } from './DesktopMenuBar';
 import { getLinkText, generateLinkClasses } from './utils';
 import ResolvedLink from '@/components/ResolvedLink';
@@ -11,8 +12,13 @@ const MenuLink: React.FC<ILinkProps> = ({
   isActive,
   baseClassesOverride,
 }) => {
+  const pathname = usePathname();
   const text = getLinkText(link);
-  const className = generateLinkClasses(isActive, baseClassesOverride);
+  const className = generateLinkClasses(
+    isActive,
+    pathname,
+    baseClassesOverride
+  );
 
   return (
     <li className={`flex py-2.5 w-full ${className}`}>

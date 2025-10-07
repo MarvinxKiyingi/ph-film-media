@@ -26,10 +26,17 @@ export const getLinkRel = (linkData: IMenuLink): string | undefined => {
 
 export const generateLinkClasses = (
   isActive: boolean,
+  pathname: string,
   baseClassesOverride?: string
 ): string => {
+  const isHomePage = pathname === '/';
+
   const baseClasses = `transition-colors duration-300 hover:text-white leading-[normal] ${baseClassesOverride || ''}`;
-  const colorClasses = isActive ? 'text-white' : 'text-gray-500';
+
+  const colorClasses =
+    isHomePage || isActive
+      ? 'text-white group-hover:text-gray-500'
+      : 'text-gray-500';
 
   return `${baseClasses} ${colorClasses}`;
 };
