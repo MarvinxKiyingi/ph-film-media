@@ -14,7 +14,7 @@ const HeroCarousel = async ({
   return (
     <section
       key={idx}
-      className='max-lg:min-h-screen h-dvh lg:h-[calc(100dvh-var(--spacing-p-desktop))] lg:overflow-hidden'
+      className='max-lg:min-h-screen h-dvh lg:h-[calc(100dvh-2*var(--spacing-p-desktop))] lg:overflow-hidden'
     >
       <HeroCarouselBlock block={block} />
     </section>
