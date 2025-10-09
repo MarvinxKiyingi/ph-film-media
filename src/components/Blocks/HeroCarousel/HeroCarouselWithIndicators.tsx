@@ -52,9 +52,13 @@ const HeroCarouselWithIndicators: React.FC<PropType> = ({
         <div className='flex h-full'>{children}</div>
       </div>
 
-      {/* Indicators - positioned at bottom over the image on mobile */}
-      {showIndicators && isMobile && scrollSnaps.length > 1 && (
-        <div className='absolute bottom-0 left-0 right-0 flex justify-center items-center gap-3 py-5 z-20 lg:hidden'>
+      {/* Indicators - absolute on mobile, relative on desktop */}
+      {showIndicators && scrollSnaps.length > 1 && (
+        <div
+          className={`flex justify-center items-center gap-3 py-5 z-20 ${
+            isMobile ? 'absolute bottom-0 left-0 right-0' : 'relative'
+          }`}
+        >
           {scrollSnaps.map((_, index) => (
             <DotButton
               key={index}

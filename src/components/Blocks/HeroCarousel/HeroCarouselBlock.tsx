@@ -118,6 +118,8 @@ const HeroCarouselBlock = ({ block }: { block: BlockListItem }) => {
         skipSnaps: !isReady,
         watchDrag: true,
         duration: 20,
+        containScroll: false,
+        dragThreshold: isDesktop ? 5 : 10,
       }}
       autoplayOptions={
         shouldDisableAutoplay
@@ -129,7 +131,7 @@ const HeroCarouselBlock = ({ block }: { block: BlockListItem }) => {
               delay: isDesktop ? 3500 : 6000,
             }
       }
-      showIndicators={!isDesktop}
+      showIndicators={true}
     >
       {block.mediaCard?.map((card, idx) =>
         isDesktop ? (
