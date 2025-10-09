@@ -13,7 +13,7 @@ import type {
   FetchHomeResult,
   FetchPageResult,
   Slug,
-} from '../../sanity.types';
+} from '../../../../sanity.types';
 
 // Extract block types from the generated Sanity types
 type HomeBlockType = NonNullable<

@@ -41,7 +41,7 @@ export default async function RootLayout({
     <ViewTransitions>
       <html lang='en'>
         <body
-          className={`flex flex-col antialiased ${lato.variable} ${oswald.variable}`}
+          className={`grid lg:grid-cols-12 lg:grid-rows-6 lg:gap-x-p-desktop lg:h-screen lg:overflow-hidden antialiased ${lato.variable} ${oswald.variable}`}
         >
           {children}
           <SanityLive />

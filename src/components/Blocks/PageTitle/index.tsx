@@ -13,10 +13,21 @@ type IPageDataTitle = Extract<
 >;
 
 const PageTitle = (block: IPageTitleBlock | IPageDataTitle) => {
-  const { title } = block;
+  const { title, visibility } = block;
+
+  // Build visibility classes based on settings
+  const visibilityClasses = [
+    visibility?.hideOnMobile && 'max-lg:hidden',
+    visibility?.hideOnDesktop && 'lg:hidden',
+  ]
+    .filter(Boolean)
+    .join(' ');
 
   return (
-    <section className='grid page-x-spacing' data-sanity-edit-target>
+    <section
+      className={`grid page-x-spacing ${visibilityClasses}`}
+      data-sanity-edit-target
+    >
       <h1 className='text-h-50 break-words uppercase lg:leading-[1.4] 2xl:text-h-67'>
         {title}
       </h1>

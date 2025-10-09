@@ -43,7 +43,7 @@
   --header-height-desktop: 63.48px;
   --header-height-desktop-landing-page: 200px;
 
-  --header-height-mobile: 70.48px;
+  --header-height-mobile: 75px;
   --header-height-mobile-with-spacing: calc(
     var(--header-height-mobile) + var(--spacing-p-mobile)
   );
@@ -59,7 +59,7 @@
 
 @layer utilities {
   .page-x-spacing {
-    @apply px-p-mobile lg:px-p-desktop;
+    @apply px-p-mobile lg:px-p-desktop lg:!pl-0;
   }
 }
 

@@ -38,6 +38,26 @@ export const settingsQuery = defineQuery(`
 
 export const fetchHeader = defineQuery(`
  *[_type == "header"][0]{
+  mobileLogo{
+    _type,
+    media{
+      _type,
+      alt,
+      crop,
+      hotspot,
+      asset->{ ... }
+    }
+  },
+  desktopLogo{
+    _type,
+    media{
+      _type,
+      alt,
+      crop,
+      hotspot,
+      asset->{ ... }
+    }
+  },
   linkReference[]{
     _key,
     label,
@@ -97,7 +117,11 @@ export const fetchHome = defineQuery(`
       _type == "pageTitle" => {
         _key,
         _type,
-        title
+        title,
+        visibility {
+          hideOnMobile,
+          hideOnDesktop
+        }
       },
       // Hero Block
       _type == "heroCarousel" => {
@@ -131,16 +155,6 @@ export const fetchHome = defineQuery(`
             }
           }
         },
-        logo{
-          _type,
-          media{
-            _type,
-            alt,
-            crop,
-            hotspot,
-            asset->{ ... }
-          }
-        }
       },
     // Media Carousel Block
     _type == "mediaCarousel" => {
@@ -324,7 +338,11 @@ export const fetchPage = defineQuery(`
       _type == "pageTitle" => {
         _key,
         _type,
-        title
+        title,
+        visibility {
+          hideOnMobile,
+          hideOnDesktop
+        }
       },
       // Hero Block
       _type == "heroCarousel" => {
@@ -356,16 +374,6 @@ export const fetchPage = defineQuery(`
               pageTitle,
               slug
             }
-          }
-        },
-        logo{
-          _type,
-          media{
-            _type,
-            alt,
-            crop,
-            hotspot,
-            asset->{ ... }
           }
         }
       },

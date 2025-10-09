@@ -1,9 +1,14 @@
 import { sanityFetch } from '@/sanity/lib/live';
-import { fetchPage } from '@/sanity/lib/queries';
+import { fetchPage, fetchFooter } from '@/sanity/lib/queries';
 import { notFound } from 'next/navigation';
 import { generateMetadata } from '@/utils/generateMetadata';
-import BlockRenderer from '@/components/BlockRenderer';
-import type { FetchPageResult } from '../../../../sanity.types';
+import BlockRenderer from '@/components/PageBuilder/BlockRenderer';
+import type {
+  FetchPageResult,
+  FetchFooterResult,
+} from '../../../../sanity.types';
+import Header from '@/components/Header/Header';
+import Footer from '@/components/Footer/Footer';
 
 export { generateMetadata };
 
@@ -23,12 +28,17 @@ export default async function Page({
     notFound();
   }
 
+  const { data: footer }: { data: FetchFooterResult } = await sanityFetch({
+    query: fetchFooter,
+  });
+
   return (
-    <main
-      id='page-main-content'
-      className='flex flex-col flex-1 pt-[20vh] mt-[var(--header-height-mobile)] lg:mt-[var(--header-height-desktop)]'
-    >
-      <div className='grid grid-cols-1'>
+    <>
+      <Header />
+      <main
+        className='grid grid-cols-1 max-lg:pt-[22%] mt-[var(--header-height-mobile)] lg:mt-0 lg:col-span-10 lg:row-span-full lg:overflow-y-scroll lg:py-p-desktop'
+        id='page-main-content'
+      >
         {data.blockList?.map((block, idx) => {
           if (!('_type' in block)) return null;
           return (
@@ -37,10 +47,12 @@ export default async function Page({
               block={block}
               index={idx}
               slug={data.slug || undefined}
+              className='grid grid-cols-1'
             />
           );
         })}
-      </div>
-    </main>
+        <Footer footer={footer} />
+      </main>
+    </>
   );
 }

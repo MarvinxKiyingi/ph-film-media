@@ -8,6 +8,10 @@ export const header = defineType({
   icon: LinkIcon,
   groups: [
     {
+      name: 'logo',
+      title: 'Logo',
+    },
+    {
       name: 'mobileMenu',
       title: 'Mobile Menu',
     },
@@ -17,6 +21,20 @@ export const header = defineType({
     },
   ],
   fields: [
+    defineField({
+      name: 'mobileLogo',
+      title: 'Mobile Logo',
+      type: 'mediaType',
+      group: 'logo',
+      description: 'Logo displayed on mobile devices',
+    }),
+    defineField({
+      name: 'desktopLogo',
+      title: 'Desktop Logo',
+      type: 'mediaType',
+      group: 'logo',
+      description: 'Logo displayed on desktop devices',
+    }),
     defineField({
       name: 'linkReference',
       title: 'Link Reference',

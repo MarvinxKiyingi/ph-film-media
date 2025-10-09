@@ -19,7 +19,6 @@ export const MenuButton = ({
   transition,
   lineProps,
   isOpen,
-  setIsOpen,
   ...props
 }: Props) => {
   const variant = isOpen ? 'opened' : 'closed';
@@ -59,36 +58,31 @@ export const MenuButton = ({
   };
 
   return (
-    <button
-      onClick={() => setIsOpen && setIsOpen(!isOpen)}
+    <motion.svg
+      viewBox={`0 0 ${unitWidth} ${unitHeight}`}
+      overflow='visible'
+      preserveAspectRatio='none'
+      width={width}
+      height={height}
       className='cursor-pointer'
+      {...props}
     >
-      <motion.svg
-        viewBox={`0 0 ${unitWidth} ${unitHeight}`}
-        overflow='visible'
-        preserveAspectRatio='none'
-        width={width}
-        height={height}
-        className='cursor-pointer'
-        {...props}
-      >
-        <motion.line
-          x1='0'
-          x2={unitWidth}
-          y1={centerY}
-          y2={centerY}
-          variants={top}
-          {...lineProps}
-        />
-        <motion.line
-          x1='0'
-          x2={unitWidth}
-          y1={centerY}
-          y2={centerY}
-          variants={bottom}
-          {...lineProps}
-        />
-      </motion.svg>
-    </button>
+      <motion.line
+        x1='0'
+        x2={unitWidth}
+        y1={centerY}
+        y2={centerY}
+        variants={top}
+        {...lineProps}
+      />
+      <motion.line
+        x1='0'
+        x2={unitWidth}
+        y1={centerY}
+        y2={centerY}
+        variants={bottom}
+        {...lineProps}
+      />
+    </motion.svg>
   );
 };

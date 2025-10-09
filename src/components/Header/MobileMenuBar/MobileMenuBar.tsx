@@ -5,6 +5,8 @@ import { motion, AnimatePresence, easeInOut } from 'framer-motion';
 import { Link } from 'next-view-transitions';
 import { useRouter } from 'next/navigation';
 import SocialIcons from '@/components/Icons/SocialIcons';
+import HeaderLogo from '../HeaderLogo';
+import { useMobileHeaderHeight } from './useMobileHeaderHeight';
 import type { FetchHeaderResult } from '../../../../sanity.types';
 
 const overlayVariants = {
@@ -24,6 +26,8 @@ type IMobileMenuBar = {
 const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
+  const headerRef = useMobileHeaderHeight();
+
   useEffect(() => {
     if (isOpen) {
       // Save current overflow style
@@ -73,49 +77,30 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
         aria-modal='true'
         tabIndex={-1}
       >
-        <div className='flex w-full items-center justify-between px-4 py-2.5 gap-4'>
+        <div
+          ref={headerRef}
+          className='flex w-full items-center justify-between px-4 py-2.5 gap-4'
+        >
           <motion.div
-            className='flex items-center gap-4 min-h-[30px] flex-1'
+            className='flex items-center gap-4 max-w-7 h-auto'
             animate={isOpen ? { x: 9.6, y: 9.6 } : { x: 0, y: 0 }}
             transition={{ duration: 0.15, ease: 'easeInOut' }}
             style={{ willChange: 'transform', transform: 'translateZ(0)' }}
           >
-            <MenuButton
-              color='var(--color-black)'
-              isOpen={isOpen}
-              setIsOpen={setIsOpen}
-            />
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className='text-h-21 font-oswald uppercase leading-[1] cursor-pointer w-full text-start'
-              tabIndex={0}
-              role='button'
-              aria-label='Menu'
-              aria-pressed={isOpen}
-            >
-              Menu
-            </button>
+            <div className='aspect-4/5 h-full w-auto'>
+              <HeaderLogo header={header} variant='mobile' />
+            </div>
           </motion.div>
-          <motion.div
-            className='flex items-center'
+          <motion.button
+            onClick={() => setIsOpen(!isOpen)}
+            className='flex flex-1 items-center justify-end cursor-pointer'
             animate={isOpen ? { x: -9.6, y: 9.6 } : { x: 0, y: 0 }}
             transition={{ duration: 0.15, ease: 'easeInOut' }}
             style={{ willChange: 'transform', transform: 'translateZ(0)' }}
+            aria-label={isOpen ? 'Close menu' : 'Open menu'}
           >
-            {socialMediaLinks?.map((link) => (
-              <Link
-                key={link._key}
-                href={link.externalLink || ''}
-                target='_blank'
-                rel='noopener noreferrer'
-              >
-                <SocialIcons
-                  href={link.externalLink ?? undefined}
-                  color='var(--color-black)'
-                />
-              </Link>
-            ))}
-          </motion.div>
+            <MenuButton color='var(--color-black)' isOpen={isOpen} />
+          </motion.button>
         </div>
         <AnimatePresence>
           {isOpen && (
@@ -179,6 +164,25 @@ const MobileMenuBar: React.FC<IMobileMenuBar> = ({ header }) => {
                 }
                 return null;
               })}
+
+              {/* Social Media Links at bottom */}
+              <li className='pt-3 border-t border-black/40 w-full'>
+                <div className='flex justify-end gap-4'>
+                  {socialMediaLinks?.map((link) => (
+                    <Link
+                      key={link._key}
+                      href={link.externalLink || ''}
+                      target='_blank'
+                      rel='noopener noreferrer'
+                    >
+                      <SocialIcons
+                        href={link.externalLink ?? undefined}
+                        color='var(--color-black)'
+                      />
+                    </Link>
+                  ))}
+                </div>
+              </li>
             </motion.ul>
           )}
         </AnimatePresence>

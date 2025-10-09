@@ -50,13 +50,9 @@ export default async function MoviePage({ params }: Props) {
   return (
     <>
       <JsonLd data={movieJsonLd} />
-      <main
-        id='movie-main-content'
-        className='relative flex flex-col flex-1 lg:pt-[20vh] lg:mt-[var(--header-height-desktop)]'
-      >
-        <MovieDetailHero {...movie} />
-        <MovieDetail movie={movie} settings={settings} />
-      </main>
+
+      <MovieDetailHero {...movie} />
+      <MovieDetail movie={movie} settings={settings} />
     </>
   );
 }

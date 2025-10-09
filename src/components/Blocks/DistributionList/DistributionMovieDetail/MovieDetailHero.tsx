@@ -16,7 +16,7 @@ const MovieDetailHero = (movie: FetchDistributionMovieResult) => {
       data-sanity-edit-target
     >
       <div className='flex flex-col justify-end relative max-lg:h-screen lg:grid lg:grid-cols-24 lg:gap-2'>
-        <div className='flex flex-col gap-8 z-10 max-lg:px-p-mobile max-lg:pb-p-mobile lg:px-p-desktop lg:col-span-full lg:flex-row lg:justify-between '>
+        <div className='flex flex-col gap-8 z-10 max-lg:px-p-mobile max-lg:pb-p-mobile lg:pr-p-desktop lg:col-span-full lg:flex-row lg:justify-between '>
           <div className='grid gap-4 lg:whitespace-nowrap'>
             <h1
               className='text-h-50 leading-none uppercase lg:leading-[1.4] 2xl:text-h-67'
@@ -30,7 +30,10 @@ const MovieDetailHero = (movie: FetchDistributionMovieResult) => {
               )}
             </div>
           </div>
-          <div className='flex gap-6 lg:items-center' data-sanity-edit-target>
+          <div
+            className='flex gap-6 lg:items-center flex-wrap'
+            data-sanity-edit-target
+          >
             {ticket && (
               <div className='flex'>
                 <Button
@@ -55,13 +58,13 @@ const MovieDetailHero = (movie: FetchDistributionMovieResult) => {
 
         <div className='absolute inset-0 h-full lg:relative lg:h-auto lg:col-span-full'>
           {movieBanner?.media && (
-            <div data-sanity-edit-target>
-              <SanityImage
-                {...movieBanner}
-                className='h-full lg:aspect-video z-0'
-                aspectRatio='16/9'
-              />
-            </div>
+            <SanityImage
+              data-sanity-edit-target
+              {...movieBanner}
+              className='w-full h-full object-cover z-0'
+              aspectRatio='16/9'
+              mode='cover'
+            />
           )}
 
           <div

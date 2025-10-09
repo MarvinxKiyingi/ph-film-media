@@ -14,15 +14,24 @@ export const pageTitle = defineType({
       type: 'string',
       description: 'If no title is provided, the page title will be used',
     }),
+    defineField({
+      name: 'visibility',
+      title: 'Visibility',
+      type: 'visibilityType',
+    }),
   ],
   preview: {
     select: {
       title: 'title',
+      visibility: 'visibility',
     },
-    prepare({ title }) {
+    prepare({ title, visibility }) {
       return {
         title: title || 'No title',
-        subtitle: 'Page Title Override',
+        media: TextIcon,
+        subtitle: visibility
+          ? `Visible on - Mobile: ${visibility.hideOnMobile ? '🔴' : '🟢'} | Desktop: ${visibility.hideOnDesktop ? '🔴' : '🟢'}`
+          : 'Visible on - Mobile: 🟢 | Desktop: 🟢',
       };
     },
   },
