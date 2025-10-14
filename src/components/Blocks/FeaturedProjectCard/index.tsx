@@ -24,7 +24,10 @@ const index = async () => {
           </h2>
           {projectToDisplay?.description && (
             <div className='text-b-16'>
-              <RichText content={projectToDisplay?.description} />
+              <RichText
+                content={projectToDisplay?.description}
+                className='!line-clamp-[5] lg:!line-clamp-[8] 2xl:!line-clamp-[12]'
+              />
             </div>
           )}
         </div>

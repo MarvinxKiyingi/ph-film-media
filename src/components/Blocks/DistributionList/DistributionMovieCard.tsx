@@ -154,7 +154,7 @@ const DistributionMovieCard = ({
         {renderMovieDetails()}
       </div>
 
-      <div className='grid gap-6 h-fit lg:col-start-13 lg:col-span-6'>
+      <div className='flex flex-col gap-6 h-fit lg:col-start-13 lg:col-span-6'>
         <div className='grid gap-2 h-fit'>
           {description && (
             <div className='grid'>
@@ -170,7 +170,7 @@ const DistributionMovieCard = ({
           )}
         </div>
 
-        <div className='flex gap-6 h-fit'>
+        <div className='flex gap-6 h-fit flex-wrap'>
           {ticket && (
             <div
               onClick={(e) => {

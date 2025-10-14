@@ -70,7 +70,10 @@ const SanityProjectCard = ({
         <h3 className='text-b-21 font-bold'>{project.title}</h3>
         {project.description && (
           <div className='text-b-16 lg:text-b-14 xl:text-b-16'>
-            <RichText content={project.description as SanityRichText} />
+            <RichText
+              content={project.description as SanityRichText}
+              className='!line-clamp-[4] lg:!line-clamp-[5] 2xl:!line-clamp-[8]'
+            />
           </div>
         )}
       </div>
