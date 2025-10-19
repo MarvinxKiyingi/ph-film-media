@@ -20,6 +20,9 @@ const lato = Lato({
 
 export const metadata = {
   title: 'Ph Film & Media',
+  appleWebApp: {
+    title: 'PH Film',
+  },
   icons: {
     icon: '/icon1.png',
     apple: '/apple-icon.png',
