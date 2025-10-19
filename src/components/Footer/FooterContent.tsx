@@ -13,7 +13,7 @@ const FooterContent = ({ data }: { data: FetchFooterResult }) => {
   const { title, email, text, socialMediaLinks, rights } = data;
 
   return (
-    <footer className='flex gap-x-8 gap-y-10 page-x-spacing py-10 pt-20 lg:py-10 lg:pt-20 md:gap-1.5'>
+    <footer className='flex max-lg:flex-col gap-x-8 gap-y-5 page-x-spacing py-10 pt-20 lg:gap-y-10 lg:py-10 lg:pt-20 '>
       <div className='flex flex-1'>
         <h3 className='text-b-16 text-gray'>{title}</h3>
       </div>

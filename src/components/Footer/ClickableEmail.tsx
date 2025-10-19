@@ -12,6 +12,12 @@ const ClickableEmail = ({ email }: ClickableEmailProps) => {
   const handleEmailClick = async () => {
     if (!email) return;
 
+    // Check if clipboard API is available
+    if (!navigator?.clipboard?.writeText) {
+      console.warn('Clipboard API not available');
+      return;
+    }
+
     try {
       await navigator.clipboard.writeText(email);
       setEmailText('Email copied!');
