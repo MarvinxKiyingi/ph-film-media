@@ -36,7 +36,7 @@ const ImageWithText = (block: IImageWithTextBlocks) => {
       </div>
 
       {mediaItem?.media && (
-        <div className='grid gap-5 h-fit md:row-start-1 md:col-start-1 md:col-span-8 lg:col-span-6'>
+        <div className='grid gap-5 h-fit md:row-start-1 md:col-start-1 md:col-span-10'>
           <SanityImage
             {...mediaItem}
             className='aspect-4/5 rounded-lg'
