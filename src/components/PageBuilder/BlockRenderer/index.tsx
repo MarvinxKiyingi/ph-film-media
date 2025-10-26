@@ -7,7 +7,6 @@ import LogoCarousel from '@/components/Blocks/LogoCarousel';
 import PageTitle from '@/components/Blocks/PageTitle';
 import MoviesHeroCarousel from '@/components/Blocks/MoviesHeroCarousel';
 import DistributionList from '@/components/Blocks/DistributionList';
-import FeaturedProjectCard from '@/components/Blocks/FeaturedProjectCard';
 import ProjectsGrid from '@/components/Blocks/ProjectsGrid';
 import type {
   FetchHomeResult,
@@ -45,7 +44,6 @@ const BLOCK_COMPONENTS = {
   imageWithText: ImageWithText,
   logoCarousel: LogoCarousel,
   distributionList: DistributionList,
-  featuredProjectCard: FeaturedProjectCard,
   projectsGrid: ProjectsGrid,
 } as const;
 

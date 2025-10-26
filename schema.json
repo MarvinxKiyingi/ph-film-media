@@ -1492,13 +1492,6 @@
             "dereferencesTo": "projects"
           },
           "optional": true
-        },
-        "showSubstackPostsCard": {
-          "type": "objectAttribute",
-          "value": {
-            "type": "boolean"
-          },
-          "optional": true
         }
       }
     }

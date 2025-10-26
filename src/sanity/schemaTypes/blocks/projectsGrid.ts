@@ -23,34 +23,16 @@ export const projectsGrid = defineType({
       type: 'reference',
       to: [{ type: 'projects' }],
       hidden: ({ parent }) => !parent?.showFeaturedProjectCard,
-      validation: (Rule) =>
-        Rule.custom((value, context) => {
-          const parent = context.parent as {
-            showFeaturedProjectCard?: boolean;
-          };
-          if (parent?.showFeaturedProjectCard && !value) {
-            return 'Project is required when Featured Project Card is shown.';
-          }
-          return true;
-        }),
-    }),
-    defineField({
-      name: 'showSubstackPostsCard',
-      title: 'Show Substack Posts Card',
-      type: 'boolean',
-      description: 'Enable to display Substack posts at the top of the grid.',
-      initialValue: true,
     }),
   ],
   preview: {
     select: {
       showFeaturedProjectCard: 'showFeaturedProjectCard',
-      showSubstackPostsCard: 'showSubstackPostsCard',
     },
-    prepare({ showFeaturedProjectCard, showSubstackPostsCard }) {
+    prepare({ showFeaturedProjectCard }) {
       return {
         title: 'Projects Grid',
-        subtitle: `Featured: ${showFeaturedProjectCard ? '🟢' : '🔴'} | Substack: ${showSubstackPostsCard ? '🟢' : '🔴'}`,
+        subtitle: `Featured Card: ${showFeaturedProjectCard ? '🟢' : '🔴'}`,
         media: ThLargeIcon,
       };
     },

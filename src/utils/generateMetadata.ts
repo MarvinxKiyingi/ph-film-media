@@ -8,6 +8,10 @@ import {
 } from '@/sanity/lib/queries';
 import { sanityFetch } from '@/sanity/lib/live';
 
+// ============================================================================
+// Types & Constants
+// ============================================================================
+
 type RichTextBlock = {
   children?: Array<{ text?: string }>;
   _type?: string;
@@ -18,103 +22,204 @@ type Props = {
   params: Promise<{ slug: string; movieSlug?: string }>;
   searchParams?: Promise<{ [key: string]: string | string[] | undefined }>;
 };
-const DEFAULT_TITLE = 'PH Film & Media';
-const DEFAULT_DESCRIPTION = 'Default description';
-const DEFAULT_IMAGE_URL = '/images/default-image.png';
-const DEFAULT_IMAGE_WIDTH = 1200;
-const DEFAULT_IMAGE_HEIGHT = 630;
 
-const DEFAULT_IMAGE = {
-  url: DEFAULT_IMAGE_URL,
-  alt: 'Page',
-  width: DEFAULT_IMAGE_WIDTH,
-  height: DEFAULT_IMAGE_HEIGHT,
+type ProjectData = {
+  title: string | null;
+  description: RichTextBlock[] | null;
+  image: unknown | null;
 };
 
-function getSeoField<T>(
-  distributionMovie: T | undefined,
-  pageValue: T | undefined,
-  settingsValue: T | undefined,
-  fallback: T
-): T {
-  return distributionMovie ?? pageValue ?? settingsValue ?? fallback;
-}
+const DEFAULTS = {
+  TITLE: 'PH Film & Media',
+  DESCRIPTION: 'Default description',
+  IMAGE_URL: '/images/default-image.png',
+  IMAGE_WIDTH: 1200,
+  IMAGE_HEIGHT: 630,
+  MAX_DESCRIPTION_LENGTH: 155,
+} as const;
 
-function getDescriptionText(
+const DEFAULT_IMAGE = {
+  url: DEFAULTS.IMAGE_URL,
+  alt: 'Page',
+  width: DEFAULTS.IMAGE_WIDTH,
+  height: DEFAULTS.IMAGE_HEIGHT,
+};
+
+// ============================================================================
+// Text Processing Helpers
+// ============================================================================
+
+function extractTextFromRichText(
   description: string | RichTextBlock[] | undefined | null
 ): string {
   if (typeof description === 'string') return description;
-  if (!description || !Array.isArray(description) || description.length === 0)
-    return DEFAULT_DESCRIPTION;
+  if (!description?.length) return DEFAULTS.DESCRIPTION;
 
-  const first = description[0];
-  if (first?.children?.[0]?.text) return first.children[0].text;
-  return DEFAULT_DESCRIPTION;
+  const text = description
+    .filter((block) => block._type === 'block' && block.children)
+    .map((block) =>
+      block
+        .children!.map((child) => child.text || '')
+        .join('')
+        .trim()
+    )
+    .filter(Boolean)
+    .join(' ');
+
+  return text || DEFAULTS.DESCRIPTION;
 }
 
-function truncateDescription(text: string): string {
-  if (text.length <= 155) return text;
-  return text.slice(0, 152) + '...';
+function truncateText(
+  text: string,
+  maxLength = DEFAULTS.MAX_DESCRIPTION_LENGTH
+): string {
+  return text.length <= maxLength ? text : `${text.slice(0, maxLength - 3)}...`;
 }
 
-async function extractFirstImageFromProjectsGrid(
+// ============================================================================
+// Project Data Extraction
+// ============================================================================
+
+async function getProjectData(
   blockList: Array<{ _type: string; [key: string]: unknown }> | undefined | null
-): Promise<unknown | null> {
-  if (!blockList || !Array.isArray(blockList)) return null;
-
-  // Check if page has a projectsGrid block
-  const hasProjectsGrid = blockList.some(
+): Promise<ProjectData | null> {
+  const projectsGrid = blockList?.find(
     (block) => block._type === 'projectsGrid'
-  );
+  ) as
+    | {
+        showFeaturedProjectCard?: boolean;
+        featuredProjectCardOverride?: ProjectData & {
+          projectImage?: { media?: unknown };
+        };
+      }
+    | undefined;
 
-  if (!hasProjectsGrid) return null;
+  // No projectsGrid block found
+  if (!projectsGrid) return null;
 
-  // Optimized: Only fetch minimal data needed for comparison
+  // If featured project card is enabled and has an override, use it
+  if (
+    projectsGrid.showFeaturedProjectCard &&
+    projectsGrid.featuredProjectCardOverride
+  ) {
+    const { title, description, projectImage } =
+      projectsGrid.featuredProjectCardOverride;
+    return {
+      title: title || null,
+      description: description || null,
+      image: projectImage?.media || null,
+    };
+  }
+
+  // Otherwise, always fetch the first project for metadata
+  // (regardless of showFeaturedProjectCard setting)
   try {
     const { client } = await import('@/sanity/lib/client');
     const { defineQuery } = await import('groq');
 
-    // Optimized query: Only fetch the most recent project with an image
-    const firstProjectQuery = defineQuery(`
-      *[_type == "projects" && defined(projectImage.media)] 
-      | order(_createdAt desc) [0] {
-        _createdAt,
+    return await client.fetch(
+      defineQuery(`*[_type == "projects"] | order(_createdAt desc) [0] {
+        title,
+        description,
         "image": projectImage.media
-      }
-    `);
-
-    const firstProject = await client.fetch(
-      firstProjectQuery,
+      }`),
       {},
       { next: { revalidate: 3600 } }
     );
-
-    // Try Substack only if project is missing or might not be most recent
-    // Substack API is already cached, so this fetch is cheap
-    const { fetchSubstackPosts } = await import('@/utils/fetchSubstackPosts');
-    const substackPosts = await fetchSubstackPosts();
-    const firstSubstack = substackPosts[0];
-
-    // Compare dates to determine which is most recent
-    const projectDate = firstProject?._createdAt
-      ? new Date(firstProject._createdAt).getTime()
-      : 0;
-    const substackDate = firstSubstack?.pubDate
-      ? new Date(firstSubstack.pubDate).getTime()
-      : 0;
-
-    // Return the most recent image
-    if (substackDate > projectDate && firstSubstack?.image) {
-      return firstSubstack.image;
-    } else if (firstProject?.image) {
-      return firstProject.image;
-    }
   } catch (error) {
-    console.error('Error fetching projects for metadata:', error);
+    console.error('Error fetching project metadata:', error);
+    return null;
   }
-
-  return null;
 }
+
+// ============================================================================
+// Metadata Resolution Helpers
+// ============================================================================
+
+type MovieData = {
+  title?: string | null;
+  description?: RichTextBlock[] | null;
+  movieBanner?: { media?: unknown } | null;
+  moviePoster?: { media?: unknown } | null;
+};
+
+type SeoData = {
+  metaTitle?: string | null;
+  metaDescription?: string | null;
+  metaImage?: { media?: unknown } | null;
+};
+
+function resolveTitle(
+  movie: MovieData | undefined | null,
+  pageSeo: SeoData | undefined | null,
+  projectData: ProjectData | null,
+  pageTitle?: string | null
+): string {
+  const title =
+    movie?.title ||
+    pageSeo?.metaTitle ||
+    projectData?.title ||
+    pageTitle ||
+    DEFAULTS.TITLE;
+
+  return title !== DEFAULTS.TITLE
+    ? `${title} | ${DEFAULTS.TITLE}`
+    : DEFAULTS.TITLE;
+}
+
+function resolveDescription(
+  movie: MovieData | undefined | null,
+  pageSeo: SeoData | undefined | null,
+  projectData: ProjectData | null,
+  settingsSeo: SeoData | undefined | null
+): string {
+  const description =
+    (movie?.description && extractTextFromRichText(movie.description)) ||
+    pageSeo?.metaDescription ||
+    (projectData?.description &&
+      extractTextFromRichText(projectData.description)) ||
+    settingsSeo?.metaDescription ||
+    DEFAULTS.DESCRIPTION;
+
+  return truncateText(description);
+}
+
+function resolveImage(
+  movie: MovieData | undefined | null,
+  pageSeo: SeoData | undefined | null,
+  projectData: ProjectData | null,
+  settingsSeo: SeoData | undefined | null
+) {
+  const image =
+    movie?.movieBanner?.media ||
+    movie?.moviePoster?.media ||
+    pageSeo?.metaImage?.media ||
+    projectData?.image ||
+    settingsSeo?.metaImage?.media;
+
+  return (
+    resolveOpenGraphImage(image, DEFAULTS.IMAGE_WIDTH, DEFAULTS.IMAGE_HEIGHT) ||
+    DEFAULT_IMAGE
+  );
+}
+
+function buildCanonicalUrl(
+  baseUrl: string,
+  isHome: boolean,
+  isDistributionMovie: boolean,
+  slug?: string,
+  movieSlug?: string
+): string {
+  const cleanBaseUrl = baseUrl.replace(/\/$/, '');
+
+  if (isHome) return `${cleanBaseUrl}/`;
+  if (isDistributionMovie) return `${cleanBaseUrl}/${slug}/${movieSlug}`;
+  return `${cleanBaseUrl}/${slug?.replace(/^\/+/, '')}`;
+}
+
+// ============================================================================
+// Main Metadata Generator
+// ============================================================================
 
 export async function generateMetadata(
   { params }: Props,
@@ -122,120 +227,75 @@ export async function generateMetadata(
 ): Promise<Metadata> {
   const { slug, movieSlug } = await params;
   const isHome = !slug || slug === '/';
-  const isDistributionMovie = slug && movieSlug;
+  const isDistributionMovie = !!(slug && movieSlug);
 
   const baseUrl =
     process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL ||
     'http://localhost:3000';
 
-  // Handle regular pages
-  const { data: settings } = await sanityFetch({ query: settingsQuery });
+  // Fetch all data in parallel
+  const [{ data: settings }, { data: page }, { data: movie }] =
+    await Promise.all([
+      sanityFetch({ query: settingsQuery }),
+      isHome
+        ? sanityFetch({ query: fetchHome, params: { slug: '/' } })
+        : sanityFetch({ query: fetchPage, params: { slug } }),
+      isDistributionMovie
+        ? sanityFetch({
+            query: fetchDistributionMovie,
+            params: { slug: movieSlug },
+          })
+        : Promise.resolve({ data: undefined }),
+    ]);
 
-  const { data: page } = isHome
-    ? await sanityFetch({ query: fetchHome, params: { slug: '/' } })
-    : await sanityFetch({ query: fetchPage, params: { slug } });
+  const projectData = await getProjectData(page?.blockList);
 
-  // Handle distribution movie pages
-  const { data: movie } = isDistributionMovie
-    ? await sanityFetch({
-        query: fetchDistributionMovie,
-        params: { slug: movieSlug },
-      })
-    : { data: undefined };
-
-  const pageSeo = page?.seo;
-  const settingsSeo = settings?.seo;
-
-  // Title
-  const titleFromPage =
-    movie?.title || pageSeo?.metaTitle || page?.pageTitle || DEFAULT_TITLE;
-  const fullTitle =
-    titleFromPage && titleFromPage !== DEFAULT_TITLE
-      ? `${titleFromPage} | ${DEFAULT_TITLE}`
-      : DEFAULT_TITLE;
-
-  // Description
-  const movieDescription = movie?.description
-    ? getDescriptionText(movie.description)
-    : undefined;
-  const pageDescription = pageSeo?.metaDescription || undefined;
-  const settingsDescription = settingsSeo?.metaDescription || undefined;
-
-  const description = truncateDescription(
-    getSeoField(
-      movieDescription,
-      pageDescription,
-      settingsDescription,
-      DEFAULT_DESCRIPTION
-    )
+  // Resolve metadata fields
+  const title = resolveTitle(movie, page?.seo, projectData, page?.pageTitle);
+  const description = resolveDescription(
+    movie,
+    page?.seo,
+    projectData,
+    settings?.seo
   );
-
-  // Image - try SEO fields first, only fetch project image if needed
-  const seoImage =
-    movie?.movieBanner?.media ||
-    movie?.moviePoster?.media ||
-    pageSeo?.metaImage?.media ||
-    settingsSeo?.metaImage?.media;
-
-  // Only fetch project grid image if no SEO image is set (performance optimization)
-  const firstProjectImage = !seoImage
-    ? await extractFirstImageFromProjectsGrid(page?.blockList)
-    : null;
-
-  const image = seoImage || firstProjectImage;
-
-  // Handle both Sanity media objects and plain URL strings (Substack)
-  let ogImage;
-  if (typeof image === 'string') {
-    // Substack image URL
-    ogImage = {
-      url: image,
-      alt: fullTitle,
-      width: DEFAULT_IMAGE_WIDTH,
-      height: DEFAULT_IMAGE_HEIGHT,
-    };
-  } else {
-    // Sanity media object
-    ogImage =
-      resolveOpenGraphImage(image, DEFAULT_IMAGE_WIDTH, DEFAULT_IMAGE_HEIGHT) ||
-      DEFAULT_IMAGE;
-  }
+  const ogImage = resolveImage(movie, page?.seo, projectData, settings?.seo);
+  const canonical = buildCanonicalUrl(
+    baseUrl,
+    isHome,
+    isDistributionMovie,
+    slug,
+    movieSlug
+  );
+  const siteName =
+    movie?.title ||
+    page?.pageTitle ||
+    settings?.seo?.metaTitle ||
+    DEFAULTS.TITLE;
 
   const previousImages = (await parent).openGraph?.images || [];
 
   return {
-    title: fullTitle,
+    title,
     description,
+    metadataBase: new URL(baseUrl),
+    alternates: { canonical },
     openGraph: {
-      title: fullTitle,
+      title,
       description,
       images: [ogImage, ...previousImages],
     },
     twitter: {
       card: 'summary_large_image',
-      title: fullTitle,
+      title,
       description,
       images: [ogImage.url],
     },
-    metadataBase: new URL(baseUrl),
-    alternates: {
-      canonical: isHome
-        ? `${baseUrl.replace(/\/$/, '')}/`
-        : isDistributionMovie
-          ? `${baseUrl.replace(/\/$/, '')}/${slug}/${movieSlug}`
-          : `${baseUrl.replace(/\/$/, '')}/${slug.replace(/^\/+/, '')}`,
-    },
     other: {
-      'og:site_name':
-        movie?.title ||
-        page?.pageTitle ||
-        settingsSeo?.metaTitle ||
-        settings?.seo?.metaTitle ||
-        DEFAULT_TITLE,
+      'og:site_name': siteName,
       'og:locale': 'en_US',
       'og:type': 'website',
-      'og:image:width': '1200',
-      'og:image:height': '630',
+      'og:image:width': String(DEFAULTS.IMAGE_WIDTH),
+      'og:image:height': String(DEFAULTS.IMAGE_HEIGHT),
       'og:image:alt': ogImage.alt,
       'og:image:secure_url': ogImage.url,
       'og:image:type': 'image/jpeg',

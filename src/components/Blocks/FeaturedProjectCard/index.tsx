@@ -15,6 +15,7 @@ const index = async () => {
             <SanityImage
               {...projectToDisplay.projectImage}
               className='object-cover w-full h-full'
+              mode='cover'
             />
           </div>
         )}

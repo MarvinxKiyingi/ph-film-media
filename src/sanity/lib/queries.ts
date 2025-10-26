@@ -334,8 +334,7 @@ export const fetchHome = defineQuery(`
               slug
             }
           }
-        },
-        showSubstackPostsCard
+        }
       }
     },
     seo {
@@ -583,8 +582,7 @@ export const fetchPage = defineQuery(`
               slug
             }
           }
-        },
-        showSubstackPostsCard
+        }
       }
     },
     seo {
