@@ -307,6 +307,34 @@ export const fetchHome = defineQuery(`
         _key,
         _type,
         showFeaturedProjectCard,
+        featuredProjectCardOverride->{
+          _id,
+          _type,
+          _createdAt,
+          _updatedAt,
+          _rev,
+          title,
+          description,
+          projectImage {
+            _type,
+            media {
+              _type,
+              alt,
+              crop,
+              hotspot,
+              asset->{ ... }
+            }
+          },
+          link{
+            linkType,
+            externalLink,
+            internalLink->{
+              _id,
+              pageTitle,
+              slug
+            }
+          }
+        },
         showSubstackPostsCard
       }
     },
@@ -528,6 +556,34 @@ export const fetchPage = defineQuery(`
         _key,
         _type,
         showFeaturedProjectCard,
+        featuredProjectCardOverride->{
+          _id,
+          _type,
+          _createdAt,
+          _updatedAt,
+          _rev,
+          title,
+          description,
+          projectImage {
+            _type,
+            media {
+              _type,
+              alt,
+              crop,
+              hotspot,
+              asset->{ ... }
+            }
+          },
+          link{
+            linkType,
+            externalLink,
+            internalLink->{
+              _id,
+              pageTitle,
+              slug
+            }
+          }
+        },
         showSubstackPostsCard
       }
     },

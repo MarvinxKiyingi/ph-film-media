@@ -16,6 +16,25 @@ export const projectsGrid = defineType({
       initialValue: true,
     }),
     defineField({
+      name: 'featuredProjectCardOverride',
+      title: 'Featured Project Card override (Optional)',
+      description:
+        'Choose a project to override the featured project card with. If no project is selected, the featured project card will display the latest project added to the grid.',
+      type: 'reference',
+      to: [{ type: 'projects' }],
+      hidden: ({ parent }) => !parent?.showFeaturedProjectCard,
+      validation: (Rule) =>
+        Rule.custom((value, context) => {
+          const parent = context.parent as {
+            showFeaturedProjectCard?: boolean;
+          };
+          if (parent?.showFeaturedProjectCard && !value) {
+            return 'Project is required when Featured Project Card is shown.';
+          }
+          return true;
+        }),
+    }),
+    defineField({
       name: 'showSubstackPostsCard',
       title: 'Show Substack Posts Card',
       type: 'boolean',
