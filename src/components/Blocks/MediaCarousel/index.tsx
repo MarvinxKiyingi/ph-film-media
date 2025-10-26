@@ -17,17 +17,22 @@ const MediaCarousel = (block: IMediaCarouselBlock) => {
 
   return (
     <section className='pb-3 md:pb-10' data-sanity-edit-target>
-      <Marquee pauseOnHover autoFill speed={40}>
-        <ul
-          className='grid grid-flow-col gap-1.5 pr-1.5'
-          role='list'
-          aria-label='Scrolling list of featured media cards'
-        >
-          {carouselItems?.map((carouselItem, idx) => (
-            <MediaCard key={idx} carouselItem={carouselItem} />
-          ))}
-        </ul>
-      </Marquee>
+      <div className='h-[calc(265px+1rem+1.5rem)] lg:h-[calc(265px+1.5rem+1.5rem)] opacity-0 animate-[fadeIn_0.7s_ease-in-out_0.1s_forwards]'>
+        <Marquee pauseOnHover autoFill speed={40}>
+          <ul
+            className='grid grid-flow-col gap-1.5 pr-1.5'
+            role='list'
+            aria-label='Scrolling list of featured media cards'
+          >
+            {carouselItems?.map((carouselItem, idx) => (
+              <MediaCard
+                key={carouselItem._key || idx}
+                carouselItem={carouselItem}
+              />
+            ))}
+          </ul>
+        </Marquee>
+      </div>
     </section>
   );
 };
