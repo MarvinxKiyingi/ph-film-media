@@ -28,11 +28,11 @@ const SanityProjectCard = ({
         {project.projectImage && (
           <SanityImage
             {...(project.projectImage as unknown as SanityImageObject)}
-            className='object-cover rounded-lg lg:w-2/3'
+            className='object-cover rounded-sm lg:w-2/3'
             aspectRatio='16/9'
           />
         )}
-        <div className='flex flex-col gap-5 max-lg:pb-2.5 lg:flex-1 lg:px-10 lg:py-6'>
+        <div className='flex flex-col gap-5 lg:flex-1 lg:px-10 lg:py-6'>
           <h2 className='font-oswald text-h-21 lg:text-h-28 xl:text-h-37'>
             {project.title}
           </h2>
