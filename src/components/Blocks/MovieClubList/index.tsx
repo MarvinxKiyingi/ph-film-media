@@ -13,7 +13,6 @@ export type IMovieClubListBlocks = Extract<
   { _type: 'movieClubList' }
 >;
 
-// Container variants with staggerChildren
 const containerVariants: Variants = {
   hidden: {},
   visible: {
@@ -23,7 +22,6 @@ const containerVariants: Variants = {
   },
 };
 
-// Card variants - animates opacity and y (GPU-accelerated)
 const cardVariants: Variants = {
   hidden: {
     opacity: 0,
@@ -49,6 +47,8 @@ const MovieClubList = (block: IMovieClubListBlocks) => {
   const { movies } = block;
   if (movies?.length === 0) return null;
 
+  const columnsPerRow = isDesktop ? 3 : 1;
+
   return (
     <motion.section
       className='page-x-spacing grid gap-10 grid-cols-1 md:grid-cols-2 lg:gap-2 lg:grid-cols-3 xl:grid-cols-4'
@@ -68,7 +68,7 @@ const MovieClubList = (block: IMovieClubListBlocks) => {
             transition={{
               duration: 0.9,
               ease: [0.25, 0.46, 0.45, 0.94],
-              delay: (index % (isDesktop ? 4 : 1)) * 0.1, // Stagger by row
+              delay: (index % columnsPerRow) * 0.2,
             }}
           >
             <MovieClubCard movie={movieItem} />
