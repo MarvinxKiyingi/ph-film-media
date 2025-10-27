@@ -4,6 +4,7 @@ import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import SanityProjectCard from './ProjectsCard';
 import type { FetchAllProjectsResult } from '../../../../sanity.types';
+import { useIsDesktop } from '../../../utils/isDesktop';
 
 type IProjectsGridClient = {
   featuredProject: FetchAllProjectsResult[number] | null;
@@ -19,7 +20,7 @@ const featuredVariants: Variants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.8,
+      duration: 0.6,
       ease: [0.25, 0.46, 0.45, 0.94], // easeOutCubic
     },
   },
@@ -29,7 +30,7 @@ const containerVariants: Variants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.2,
+      staggerChildren: 0.15,
     },
   },
 };
@@ -55,13 +56,20 @@ const ProjectsGridClient = ({
   featuredProject,
   regularProjects,
 }: IProjectsGridClient) => {
+  const isDesktop = useIsDesktop();
+
+  if (!regularProjects || (regularProjects.length === 0 && !featuredProject)) {
+    return null;
+  }
+
   return (
     <section className='page-x-spacing grid gap-2'>
       {featuredProject && (
         <motion.div
           variants={featuredVariants}
           initial='hidden'
-          animate='visible'
+          whileInView='visible'
+          viewport={{ once: true, amount: isDesktop ? 0.1 : 0 }}
         >
           <SanityProjectCard
             key={featuredProject._id}
@@ -74,22 +82,15 @@ const ProjectsGridClient = ({
         className='grid gap-x-2 gap-y-5 grid-cols-1 md:grid-cols-2 lg:gap-y-10 lg:grid-cols-3 2xl:grid-cols-4 auto-rows-fr'
         variants={containerVariants}
         initial='hidden'
-        animate='visible'
+        whileInView='visible'
+        viewport={{ once: true, amount: isDesktop ? 0.1 : 0 }}
       >
         {regularProjects.map((project, index) => {
           const isFirstHighlighted = !featuredProject && index === 0;
           const className = `flex flex-col gap-6 hover:opacity-80 transition-opacity h-full ${isFirstHighlighted ? 'p-2.5 bg-dark-gray rounded-lg' : ''}`;
 
           return (
-            <motion.div
-              key={project._id}
-              variants={cardVariants}
-              transition={{
-                duration: 0.9,
-                ease: [0.25, 0.46, 0.45, 0.94],
-                delay: (index % 3) * 0.2,
-              }}
-            >
+            <motion.div key={project._id} variants={cardVariants}>
               <SanityProjectCard project={project} className={className} />
             </motion.div>
           );
