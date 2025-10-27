@@ -65,11 +65,7 @@ const ProjectsGridClient = ({
         <motion.div
           variants={featuredVariants}
           initial='hidden'
-          whileInView='visible'
-          viewport={{
-            once: true,
-            amount: 0.2,
-          }}
+          animate='visible'
         >
           <SanityProjectCard
             key={featuredProject._id}
@@ -82,11 +78,7 @@ const ProjectsGridClient = ({
         className='grid gap-x-2 gap-y-5 grid-cols-1 md:grid-cols-2 lg:gap-y-10 lg:grid-cols-3 2xl:grid-cols-4 auto-rows-fr'
         variants={containerVariants}
         initial='hidden'
-        whileInView='visible'
-        viewport={{
-          once: true,
-          amount: 0.1,
-        }}
+        animate='visible'
       >
         {regularProjects.map((project, index) => {
           const isFirstHighlighted = !featuredProject && index === 0;

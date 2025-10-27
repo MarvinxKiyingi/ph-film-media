@@ -54,11 +54,7 @@ const MovieClubList = (block: IMovieClubListBlocks) => {
       className='page-x-spacing grid gap-10 grid-cols-1 md:grid-cols-2 lg:gap-2 lg:grid-cols-3 xl:grid-cols-4'
       variants={containerVariants}
       initial='hidden'
-      whileInView='visible'
-      viewport={{
-        once: true,
-        amount: 0.1,
-      }}
+      animate='visible'
     >
       {movies?.map((movieItem, index) =>
         movieItem && '_id' in movieItem && 'title' in movieItem ? (
