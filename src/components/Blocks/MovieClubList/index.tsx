@@ -4,7 +4,6 @@ import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import { FetchHomeResult, FetchPageResult } from '../../../../sanity.types';
 import MovieClubCard from './MovieClubCard';
-import { useIsDesktop } from '@/utils/isDesktop';
 
 export type IMovieClubListBlocks = Extract<
   NonNullable<
@@ -40,14 +39,10 @@ const cardVariants: Variants = {
 };
 
 const MovieClubList = (block: IMovieClubListBlocks) => {
-  const isDesktop = useIsDesktop();
-
   if (block._type !== 'movieClubList') return null;
 
   const { movies } = block;
   if (movies?.length === 0) return null;
-
-  const columnsPerRow = isDesktop ? 3 : 1;
 
   return (
     <motion.section
@@ -64,7 +59,7 @@ const MovieClubList = (block: IMovieClubListBlocks) => {
             transition={{
               duration: 0.9,
               ease: [0.25, 0.46, 0.45, 0.94],
-              delay: (index % columnsPerRow) * 0.2,
+              delay: (index % 3) * 0.2,
             }}
           >
             <MovieClubCard movie={movieItem} />

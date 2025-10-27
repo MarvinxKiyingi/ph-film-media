@@ -4,7 +4,6 @@ import React from 'react';
 import { motion, Variants } from 'framer-motion';
 import SanityProjectCard from './ProjectsCard';
 import type { FetchAllProjectsResult } from '../../../../sanity.types';
-import { useIsDesktop } from '@/utils/isDesktop';
 
 type IProjectsGridClient = {
   featuredProject: FetchAllProjectsResult[number] | null;
@@ -26,7 +25,6 @@ const featuredVariants: Variants = {
   },
 };
 
-// Container variants with staggerChildren
 const containerVariants: Variants = {
   hidden: {},
   visible: {
@@ -57,8 +55,6 @@ const ProjectsGridClient = ({
   featuredProject,
   regularProjects,
 }: IProjectsGridClient) => {
-  const isDesktop = useIsDesktop();
-
   return (
     <section className='page-x-spacing grid gap-2'>
       {featuredProject && (
@@ -84,8 +80,6 @@ const ProjectsGridClient = ({
           const isFirstHighlighted = !featuredProject && index === 0;
           const className = `flex flex-col gap-6 hover:opacity-80 transition-opacity h-full ${isFirstHighlighted ? 'p-2.5 bg-dark-gray rounded-lg' : ''}`;
 
-          const columnsPerRow = isDesktop ? 3 : 1;
-
           return (
             <motion.div
               key={project._id}
@@ -93,7 +87,7 @@ const ProjectsGridClient = ({
               transition={{
                 duration: 0.9,
                 ease: [0.25, 0.46, 0.45, 0.94],
-                delay: (index % columnsPerRow) * 0.2,
+                delay: (index % 3) * 0.2,
               }}
             >
               <SanityProjectCard project={project} className={className} />
