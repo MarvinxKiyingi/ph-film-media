@@ -13,7 +13,7 @@ const MediaCard = ({ carouselItem }: { carouselItem: IMediaCard }) => {
 
   return (
     <li
-      className='flex flex-col gap-4 lg:gap-6 w-[25vw] min-w-[354px] max-w-[600px]'
+      className='flex flex-col gap-4 lg:gap-6 w-[354px] xl:w-[400px]'
       role='listitem'
       data-sanity-edit-target
     >
