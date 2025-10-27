@@ -13,7 +13,7 @@ const CARD_VARIANTS: Variants = {
   hidden: {
     opacity: 0,
     y: 15,
-    scale: 0.9,
+    scale: 0.98,
   },
   visible: {
     opacity: 1,
