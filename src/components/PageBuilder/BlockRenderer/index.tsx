@@ -7,7 +7,7 @@ import LogoCarousel from '@/components/Blocks/LogoCarousel';
 import PageTitle from '@/components/Blocks/PageTitle';
 import MoviesHeroCarousel from '@/components/Blocks/MoviesHeroCarousel';
 import DistributionList from '@/components/Blocks/DistributionList';
-import ProjectsGrid from '@/components/Blocks/ProjectsGrid';
+import ProjectsList from '@/components/Blocks/ProjectsList';
 import type {
   FetchHomeResult,
   FetchPageResult,
@@ -44,7 +44,7 @@ const BLOCK_COMPONENTS = {
   imageWithText: ImageWithText,
   logoCarousel: LogoCarousel,
   distributionList: DistributionList,
-  projectsGrid: ProjectsGrid,
+  projectsList: ProjectsList,
 } as const;
 
 export default function BlockRenderer({

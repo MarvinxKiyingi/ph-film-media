@@ -1444,7 +1444,7 @@
     }
   },
   {
-    "name": "projectsGrid",
+    "name": "projectsList",
     "type": "type",
     "value": {
       "type": "object",
@@ -1453,7 +1453,7 @@
           "type": "objectAttribute",
           "value": {
             "type": "string",
-            "value": "projectsGrid"
+            "value": "projectsList"
           }
         },
         "showFeaturedProjectCard": {
@@ -2269,7 +2269,7 @@
                 },
                 "rest": {
                   "type": "inline",
-                  "name": "projectsGrid"
+                  "name": "projectsList"
                 }
               }
             ]

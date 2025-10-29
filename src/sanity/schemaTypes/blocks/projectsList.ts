@@ -1,9 +1,9 @@
 import { ThLargeIcon } from '@sanity/icons';
 import { defineField, defineType } from 'sanity';
 
-export const projectsGrid = defineType({
-  name: 'projectsGrid',
-  title: 'Projects Grid',
+export const projectsList = defineType({
+  name: 'projectsList',
+  title: 'Projects List',
   type: 'object',
   icon: ThLargeIcon,
   fields: [
@@ -31,7 +31,7 @@ export const projectsGrid = defineType({
     },
     prepare({ showFeaturedProjectCard }) {
       return {
-        title: 'Projects Grid',
+        title: 'Projects List',
         subtitle: `Featured Card: ${showFeaturedProjectCard ? '🟢' : '🔴'}`,
         media: ThLargeIcon,
       };

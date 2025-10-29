@@ -302,8 +302,8 @@ export const fetchHome = defineQuery(`
         }
       }
       },
-      // Projects Grid Block
-      _type == "projectsGrid" => {
+      // Projects List Block
+      _type == "projectsList" => {
         _key,
         _type,
         showFeaturedProjectCard,
@@ -550,8 +550,8 @@ export const fetchPage = defineQuery(`
         }
       }
       },
-      // Projects Grid Block
-      _type == "projectsGrid" => {
+      // Projects List Block
+      _type == "projectsList" => {
         _key,
         _type,
         showFeaturedProjectCard,

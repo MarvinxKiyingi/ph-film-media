@@ -1,22 +1,23 @@
 import React from 'react';
 import { client } from '@/sanity/lib/client';
 import { fetchAllProjects } from '@/sanity/lib/queries';
-import ProjectsGridClient from './ProjectsGridClient';
+
 import type { FetchHomeResult } from '../../../../sanity.types';
+import ProjectsGrid from './ProjectsGrid';
 
-type ProjectsGridBlock = NonNullable<
+type ProjectsListBlock = NonNullable<
   NonNullable<FetchHomeResult>['blockList']
->[number] & { _type: 'projectsGrid' };
+>[number] & { _type: 'projectsList' };
 
-type IProjectsGrid = {
+type IProjectsList = {
   showFeaturedProjectCard?: boolean;
-  featuredProjectCardOverride?: ProjectsGridBlock['featuredProjectCardOverride'];
+  featuredProjectCardOverride?: ProjectsListBlock['featuredProjectCardOverride'];
 };
 
-const ProjectsGrid = async ({
+const ProjectsList = async ({
   showFeaturedProjectCard,
   featuredProjectCardOverride,
-}: IProjectsGrid) => {
+}: IProjectsList) => {
   const projects = await client.fetch(fetchAllProjects);
 
   // Sort projects by creation date
@@ -37,11 +38,11 @@ const ProjectsGrid = async ({
     : sortedProjects;
 
   return (
-    <ProjectsGridClient
+    <ProjectsGrid
       featuredProject={featuredProject}
       regularProjects={regularProjects}
     />
   );
 };
 
-export default ProjectsGrid;
+export default ProjectsList;

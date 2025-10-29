@@ -1,9 +1,8 @@
 'use client';
 
 import React from 'react';
-import { motion, Variants } from 'framer-motion';
 import { FetchHomeResult, FetchPageResult } from '../../../../sanity.types';
-import MovieClubCard from './MovieClubCard';
+import MovieClubGrid from './MovieClubGrid';
 
 export type IMovieClubListBlocks = Extract<
   NonNullable<
@@ -12,32 +11,6 @@ export type IMovieClubListBlocks = Extract<
   { _type: 'movieClubList' }
 >;
 
-const containerVariants: Variants = {
-  hidden: {},
-  visible: {
-    transition: {
-      staggerChildren: 0.1,
-    },
-  },
-};
-
-const cardVariants: Variants = {
-  hidden: {
-    opacity: 0,
-    y: 15,
-    scale: 0.9,
-  },
-  visible: {
-    opacity: 1,
-    y: 0,
-    scale: 1,
-    transition: {
-      duration: 0.9,
-      ease: [0.25, 0.46, 0.45, 0.94], // easeOutCubic
-    },
-  },
-};
-
 const MovieClubList = (block: IMovieClubListBlocks) => {
   if (block._type !== 'movieClubList') return null;
 
@@ -45,28 +18,12 @@ const MovieClubList = (block: IMovieClubListBlocks) => {
   if (movies?.length === 0) return null;
 
   return (
-    <motion.section
+    <section
+      key={block._key || 'movieClubList'}
       className='page-x-spacing grid gap-10 grid-cols-1 md:grid-cols-2 lg:gap-2 lg:grid-cols-3 xl:grid-cols-4'
-      variants={containerVariants}
-      initial='hidden'
-      animate='visible'
     >
-      {movies?.map((movieItem, index) =>
-        movieItem && '_id' in movieItem && 'title' in movieItem ? (
-          <motion.div
-            key={`${movieItem._id}-${index}`}
-            variants={cardVariants}
-            transition={{
-              duration: 0.9,
-              ease: [0.25, 0.46, 0.45, 0.94],
-              delay: (index % 3) * 0.2,
-            }}
-          >
-            <MovieClubCard movie={movieItem} />
-          </motion.div>
-        ) : null
-      )}
-    </motion.section>
+      <MovieClubGrid movies={movies} />
+    </section>
   );
 };
 
