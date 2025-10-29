@@ -1,6 +1,6 @@
 import React from 'react';
 import SanityImage from '@/components/Media/SanityImage';
-import { FetchHomeResult, FetchPageResult } from '../../../../sanity.types';
+import { FetchHomeResult, FetchPageResult } from '../../../../../sanity.types';
 
 export type IMovieClubListBlocks = Extract<
   NonNullable<
