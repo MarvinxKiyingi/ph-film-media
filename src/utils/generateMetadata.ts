@@ -83,8 +83,8 @@ function truncateText(
 async function getProjectData(
   blockList: Array<{ _type: string; [key: string]: unknown }> | undefined | null
 ): Promise<ProjectData | null> {
-  const projectsGrid = blockList?.find(
-    (block) => block._type === 'projectsGrid'
+  const projectsList = blockList?.find(
+    (block) => block._type === 'projectsList'
   ) as
     | {
         showFeaturedProjectCard?: boolean;
@@ -94,16 +94,16 @@ async function getProjectData(
       }
     | undefined;
 
-  // No projectsGrid block found
-  if (!projectsGrid) return null;
+  // No projectsList block found
+  if (!projectsList) return null;
 
   // If featured project card is enabled and has an override, use it
   if (
-    projectsGrid.showFeaturedProjectCard &&
-    projectsGrid.featuredProjectCardOverride
+    projectsList.showFeaturedProjectCard &&
+    projectsList.featuredProjectCardOverride
   ) {
     const { title, description, projectImage } =
-      projectsGrid.featuredProjectCardOverride;
+      projectsList.featuredProjectCardOverride;
     return {
       title: title || null,
       description: description || null,

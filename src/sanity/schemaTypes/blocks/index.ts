@@ -6,4 +6,4 @@ export { mediaCarousel } from './mediaCarousel';
 export { imageWithText } from './imageWithText';
 export { logoCarousel } from './logoCarousel';
 export { pageTitle } from './pageTitle';
-export { projectsGrid } from './projectsGrid';
+export { projectsList } from './projectsList';

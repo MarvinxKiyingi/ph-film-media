@@ -2,11 +2,11 @@
 
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
-import SanityProjectCard from './ProjectsCard';
-import type { FetchAllProjectsResult } from '../../../../sanity.types';
-import { useIsDesktop } from '../../../utils/isDesktop';
+import SanityProjectCard from '../ProjectsCard';
+import type { FetchAllProjectsResult } from '../../../../../sanity.types';
+import { useIsDesktop } from '../../../../utils/isDesktop';
 
-type IProjectsGridClient = {
+type IProjectsGrid = {
   featuredProject: FetchAllProjectsResult[number] | null;
   regularProjects: FetchAllProjectsResult;
 };
@@ -52,10 +52,7 @@ const cardVariants: Variants = {
   },
 };
 
-const ProjectsGridClient = ({
-  featuredProject,
-  regularProjects,
-}: IProjectsGridClient) => {
+const ProjectsGrid = ({ featuredProject, regularProjects }: IProjectsGrid) => {
   const isDesktop = useIsDesktop();
 
   if (!regularProjects || (regularProjects.length === 0 && !featuredProject)) {
@@ -100,4 +97,4 @@ const ProjectsGridClient = ({
   );
 };
 
-export default ProjectsGridClient;
+export default ProjectsGrid;
