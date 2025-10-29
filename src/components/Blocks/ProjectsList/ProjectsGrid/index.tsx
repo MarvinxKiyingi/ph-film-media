@@ -2,6 +2,7 @@
 
 import React from 'react';
 import { motion, Variants } from 'framer-motion';
+import { usePathname } from 'next/navigation';
 import SanityProjectCard from '../ProjectsCard';
 import type { FetchAllProjectsResult } from '../../../../../sanity.types';
 import { useIsDesktop } from '../../../../utils/isDesktop';
@@ -14,7 +15,7 @@ type IProjectsGrid = {
 const featuredVariants: Variants = {
   hidden: {
     opacity: 0,
-    y: 20,
+    y: 10,
   },
   visible: {
     opacity: 1,
@@ -38,7 +39,7 @@ const containerVariants: Variants = {
 const cardVariants: Variants = {
   hidden: {
     opacity: 0,
-    y: 15,
+    y: 10,
     scale: 0.9,
   },
   visible: {
@@ -54,13 +55,14 @@ const cardVariants: Variants = {
 
 const ProjectsGrid = ({ featuredProject, regularProjects }: IProjectsGrid) => {
   const isDesktop = useIsDesktop();
+  const pathname = usePathname();
 
   if (!regularProjects || (regularProjects.length === 0 && !featuredProject)) {
     return null;
   }
 
   return (
-    <section className='page-x-spacing grid gap-2'>
+    <section key={pathname} className='page-x-spacing grid gap-2'>
       {featuredProject && (
         <motion.div
           variants={featuredVariants}

@@ -12,7 +12,7 @@ import CardWrapper from './CardWrapper';
 const CARD_VARIANTS: Variants = {
   hidden: {
     opacity: 0,
-    y: 15,
+    y: 10,
     scale: 0.98,
   },
   visible: {
