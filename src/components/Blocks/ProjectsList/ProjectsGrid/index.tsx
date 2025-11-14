@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import SanityProjectCard from '../ProjectsCard';
 import type { FetchAllProjectsResult } from '../../../../../sanity.types';
 import { useIsDesktop } from '../../../../utils/isDesktop';
+import { useViewTransitionAnimation } from '@/hooks/useViewTransitionReady';
 
 type IProjectsGrid = {
   featuredProject: FetchAllProjectsResult[number] | null;
@@ -56,18 +57,20 @@ const cardVariants: Variants = {
 const ProjectsGrid = ({ featuredProject, regularProjects }: IProjectsGrid) => {
   const isDesktop = useIsDesktop();
   const pathname = usePathname();
+  const { isReady, animationKey } = useViewTransitionAnimation(pathname);
 
   if (!regularProjects || (regularProjects.length === 0 && !featuredProject)) {
     return null;
   }
 
   return (
-    <section key={pathname} className='page-x-spacing grid gap-2'>
+    <section key={animationKey} className='page-x-spacing grid gap-2'>
       {featuredProject && (
         <motion.div
           variants={featuredVariants}
           initial='hidden'
-          whileInView='visible'
+          animate={isReady ? 'visible' : 'hidden'}
+          whileInView={!isReady ? undefined : 'visible'}
           viewport={{ once: true, amount: isDesktop ? 0.1 : 0 }}
         >
           <SanityProjectCard
@@ -81,7 +84,8 @@ const ProjectsGrid = ({ featuredProject, regularProjects }: IProjectsGrid) => {
         className='grid gap-x-2 gap-y-5 grid-cols-1 md:grid-cols-2 lg:gap-y-10 lg:grid-cols-3 2xl:grid-cols-4 auto-rows-fr'
         variants={containerVariants}
         initial='hidden'
-        whileInView='visible'
+        animate={isReady ? 'visible' : 'hidden'}
+        whileInView={!isReady ? undefined : 'visible'}
         viewport={{ once: true, amount: isDesktop ? 0.1 : 0 }}
       >
         {regularProjects.map((project, index) => {
