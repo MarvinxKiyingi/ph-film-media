@@ -1577,10 +1577,35 @@
             "value": "pageTitle"
           }
         },
+        "titleType": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "union",
+            "of": [
+              {
+                "type": "string",
+                "value": "text"
+              },
+              {
+                "type": "string",
+                "value": "image"
+              }
+            ]
+          },
+          "optional": true
+        },
         "title": {
           "type": "objectAttribute",
           "value": {
             "type": "string"
+          },
+          "optional": true
+        },
+        "pageTitleImage": {
+          "type": "objectAttribute",
+          "value": {
+            "type": "inline",
+            "name": "mediaType"
           },
           "optional": true
         },

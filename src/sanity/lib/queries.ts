@@ -117,7 +117,18 @@ export const fetchHome = defineQuery(`
       _type == "pageTitle" => {
         _key,
         _type,
+        titleType,
         title,
+        pageTitleImage{
+          _type,
+          media{
+            _type,
+            alt,
+            crop,
+            hotspot,
+            asset->{ ... }
+          }
+        },
         visibility {
           hideOnMobile,
           hideOnDesktop
@@ -365,7 +376,18 @@ export const fetchPage = defineQuery(`
       _type == "pageTitle" => {
         _key,
         _type,
+        titleType,
         title,
+        pageTitleImage{
+          _type,
+          media{
+            _type,
+            alt,
+            crop,
+            hotspot,
+            asset->{ ... }
+          }
+        },
         visibility {
           hideOnMobile,
           hideOnDesktop
