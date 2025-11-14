@@ -64,14 +64,17 @@ const ProjectsGrid = ({ featuredProject, regularProjects }: IProjectsGrid) => {
   }
 
   return (
-    <section key={animationKey} className='page-x-spacing grid gap-2'>
+    <section key={animationKey} className="page-x-spacing grid gap-2">
       {featuredProject && (
         <motion.div
           variants={featuredVariants}
-          initial='hidden'
+          initial="hidden"
           animate={isReady ? 'visible' : 'hidden'}
           whileInView={!isReady ? undefined : 'visible'}
           viewport={{ once: true, amount: isDesktop ? 0.1 : 0 }}
+          className={
+            featuredProject.link ? 'hover:opacity-80 transition-opacity' : ''
+          }
         >
           <SanityProjectCard
             key={featuredProject._id}
@@ -81,16 +84,17 @@ const ProjectsGrid = ({ featuredProject, regularProjects }: IProjectsGrid) => {
         </motion.div>
       )}
       <motion.div
-        className='grid gap-x-2 gap-y-5 grid-cols-1 md:grid-cols-2 lg:gap-y-10 lg:grid-cols-3 2xl:grid-cols-4 auto-rows-fr'
+        className="grid gap-x-2 gap-y-5 grid-cols-1 md:grid-cols-2 lg:gap-y-10 lg:grid-cols-3 2xl:grid-cols-4 auto-rows-fr"
         variants={containerVariants}
-        initial='hidden'
+        initial="hidden"
         animate={isReady ? 'visible' : 'hidden'}
         whileInView={!isReady ? undefined : 'visible'}
         viewport={{ once: true, amount: isDesktop ? 0.1 : 0 }}
       >
         {regularProjects.map((project, index) => {
           const isFirstHighlighted = !featuredProject && index === 0;
-          const className = `flex flex-col gap-6 hover:opacity-80 transition-opacity h-full ${isFirstHighlighted ? 'p-2.5 bg-dark-gray rounded-lg' : ''}`;
+          const hasLink = !!project.link;
+          const className = `flex flex-col gap-6 ${hasLink ? 'hover:opacity-80 transition-opacity' : ''} h-full ${isFirstHighlighted ? 'p-2.5 bg-dark-gray rounded-lg' : ''}`;
 
           return (
             <motion.div key={project._id} variants={cardVariants}>
