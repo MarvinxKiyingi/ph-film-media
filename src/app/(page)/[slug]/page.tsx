@@ -1,16 +1,38 @@
 import { sanityFetch } from '@/sanity/lib/live';
-import { fetchPage, fetchFooter } from '@/sanity/lib/queries';
+import {
+  fetchPage,
+  fetchFooter,
+  fetchAllPageSlugs,
+} from '@/sanity/lib/queries';
 import { notFound } from 'next/navigation';
 import { generateMetadata } from '@/utils/generateMetadata';
 import BlockRenderer from '@/components/PageBuilder/BlockRenderer';
 import type {
   FetchPageResult,
   FetchFooterResult,
+  FetchAllPageSlugsResult,
 } from '../../../../sanity.types';
 import Header from '@/components/Header/Header';
 import Footer from '@/components/Footer/Footer';
+import { client } from '@/sanity/lib/client';
 
 export { generateMetadata };
+
+// Generate static params for all pages at build time
+export async function generateStaticParams() {
+  const pages = await client.fetch<FetchAllPageSlugsResult>(fetchAllPageSlugs);
+
+  return (
+    pages
+      ?.filter((page) => page.slug && page.slug !== '/') // Filter out home page since it's handled separately
+      .map((page) => ({
+        slug: page.slug,
+      })) || []
+  );
+}
+
+// Optional: Set to false to return 404 for paths not returned by generateStaticParams
+// export const dynamicParams = false;
 
 export default async function Page({
   params,
@@ -36,8 +58,8 @@ export default async function Page({
     <>
       <Header />
       <main
-        className='grid grid-cols-1 max-lg:pt-[22%] mt-[var(--header-height-mobile)] lg:mt-0 lg:col-span-10 lg:row-span-full lg:overflow-y-scroll lg:py-p-desktop'
-        id='page-main-content'
+        className="grid grid-cols-1 max-lg:pt-[22%] mt-[var(--header-height-mobile)] lg:mt-0 lg:col-span-10 lg:row-span-full lg:overflow-y-scroll lg:py-p-desktop"
+        id="page-main-content"
       >
         {data.blockList?.map((block, idx) => {
           if (!('_type' in block)) return null;
@@ -47,7 +69,7 @@ export default async function Page({
               block={block}
               index={idx}
               slug={data.slug || undefined}
-              className='grid grid-cols-1'
+              className="grid grid-cols-1"
             />
           );
         })}

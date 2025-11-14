@@ -1,16 +1,78 @@
-// Helper for Organization JSON-LD
-export function getOrganizationJsonLd({
+// Helper for WebSite JSON-LD (for search box sitelinks)
+export function getWebSiteJsonLd({
   name,
   url,
+  searchUrl,
 }: {
   name: string;
   url: string;
+  searchUrl?: string;
+}) {
+  const schema: Record<string, unknown> = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name,
+    url,
+  };
+
+  // Add search action if search functionality exists
+  if (searchUrl) {
+    schema.potentialAction = {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${searchUrl}?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    };
+  }
+
+  return schema;
+}
+
+// Helper for Organization JSON-LD (for knowledge panel)
+export function getOrganizationJsonLd({
+  name,
+  url,
+  logo,
+  description,
+  email,
+  socialLinks,
+}: {
+  name: string;
+  url: string;
+  logo?: string;
+  description?: string;
+  email?: string;
+  socialLinks?: string[];
 }) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name,
     url,
+    logo,
+    description,
+    email,
+    sameAs: socialLinks,
+  };
+}
+
+// Helper for Breadcrumb JSON-LD
+export function getBreadcrumbJsonLd({
+  items,
+}: {
+  items: Array<{ name: string; url: string }>;
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.name,
+      item: item.url,
+    })),
   };
 }
 
