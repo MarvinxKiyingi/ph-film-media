@@ -18,7 +18,7 @@ export default async function HomePage() {
   if (!data?.blockList) return null;
 
   const baseUrl =
-    (process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL || '').trim() ||
+    process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL ||
     'http://localhost:3000';
 
   // Extract social media links for Organization schema

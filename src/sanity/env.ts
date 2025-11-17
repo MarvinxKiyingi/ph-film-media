@@ -20,5 +20,4 @@ export const projectId = assertValue(
 );
 
 export const studioUrl =
-  (process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL || '').trim() ||
-  'http://localhost:3000';
+  process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL || 'http://localhost:3000';

@@ -230,7 +230,7 @@ export async function generateMetadata(
   const isDistributionMovie = !!(slug && movieSlug);
 
   const baseUrl =
-    (process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL || '').trim() ||
+    process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL ||
     'http://localhost:3000';
 
   // Fetch all data in parallel

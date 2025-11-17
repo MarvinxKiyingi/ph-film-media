@@ -68,7 +68,7 @@ export default async function MoviePage({ params }: Props) {
   if (!movie) notFound();
 
   const baseUrl =
-    (process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL || '').trim() ||
+    process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL ||
     'http://localhost:3000';
 
   // Movie schema for rich snippets
