@@ -229,9 +229,10 @@ export async function generateMetadata(
   const isHome = !slug || slug === '/';
   const isDistributionMovie = !!(slug && movieSlug);
 
+  // Safely get baseUrl - handle empty strings and invalid values
+  const envUrl = process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL;
   const baseUrl =
-    process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL ||
-    'http://localhost:3000';
+    envUrl && envUrl.trim() ? envUrl.trim() : 'http://localhost:3000';
 
   // Fetch all data in parallel
   const [{ data: settings }, { data: page }, { data: movie }] =
@@ -274,10 +275,23 @@ export async function generateMetadata(
 
   const previousImages = (await parent).openGraph?.images || [];
 
+  // Safely create metadataBase - only include if URL is valid
+  // This prevents "Invalid URL" errors during build
+  let metadataBase: URL | undefined;
+  try {
+    if (baseUrl && baseUrl.trim()) {
+      metadataBase = new URL(baseUrl.trim());
+    }
+  } catch {
+    // If URL is invalid, metadataBase will be undefined
+    // Next.js will handle this gracefully
+    metadataBase = undefined;
+  }
+
   return {
     title,
     description,
-    metadataBase: new URL(baseUrl),
+    ...(metadataBase && { metadataBase }),
     alternates: { canonical },
     openGraph: {
       title,
