@@ -13,7 +13,7 @@ import type {
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl =
-    process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL ||
+    (process.env.NEXT_PUBLIC_SANITY_STUDIO_PREVIEW_URL || '').trim() ||
     'http://localhost:3000';
 
   // Fetch all data in parallel
